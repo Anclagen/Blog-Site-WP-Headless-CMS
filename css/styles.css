@@ -1,0 +1,113 @@
+/* colors */
+:root {
+  --dark-brown: #734429;
+  --light-brown: #D9C3B0;
+  --off-white: #F2F2F2;
+  --background-blue: #E5F5FB;
+}
+
+/*
+Font Sizes:
+10px = 0.625rem
+12px = 0.75rem      captions sorting
+14px = 0.875rem 
+16px = 1rem         (base) regular (400) - body, medium (500) - subhead 2
+18px = 1.125rem     medium (500)- buttons + subhead 1
+20px = 1.25rem      medium (500)- page header
+24px = 1.5rem       medium (500)- home pic caption text
+30px = 1.875rem
+32px = 2rem         regular (400) - picture headers
+
+*/
+
+body {
+  margin: auto;
+  padding-top: 0px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  /* overflow-x: hidden; /*prevent drop down menu overflow*/
+}
+
+figure.wp-block-gallery {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+/*----Navigation------*/
+
+.logo-header{
+  max-width: 1100px;
+  margin: 0 auto;
+  height: fit-content;
+  max-height: 100px;
+}
+
+.logo-header img{
+  max-height: 100px;
+  margin: 0;
+}
+
+nav{
+  width: 100%;
+  height: 70px;
+  background-color: var(--light-brown);
+}
+
+nav ul{
+  vertical-align: middle;
+  line-height: 70px;
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+nav li:nth-last-of-type(2) {
+	margin-left: auto;
+}
+
+nav li{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem; 
+  font-weight: 700;
+}
+
+nav li a:hover{
+  background-color: var(--dark-brown);
+  color: var(--off-white);
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  padding: 20px;
+}
+
+/*-----Main page layout-------*/
+
+main{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+/*-----footer------*/
+
+footer{
+  background-color: var(--light-brown);
+}
+
+footer div {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}

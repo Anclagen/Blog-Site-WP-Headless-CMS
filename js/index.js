@@ -9,8 +9,4 @@ async function callAPI (url){
   console.log(data);
   main.innerHTML = content;
 }
-
-
-
-
-callAPI (url)
+//callAPI (url)

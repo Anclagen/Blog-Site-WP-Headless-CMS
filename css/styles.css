@@ -32,6 +32,11 @@ body {
   /* overflow-x: hidden; /*prevent drop down menu overflow*/
 }
 
+h1, h2{
+  font-family:'Segoe Print', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+}
+
 figure.wp-block-gallery {
   display: flex;
   flex-wrap: nowrap;
@@ -41,7 +46,7 @@ figure.wp-block-gallery {
 /*----Navigation------*/
 
 .logo-header{
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   height: fit-content;
   max-height: 100px;
@@ -91,14 +96,27 @@ nav a {
   padding: 20px;
 }
 
+/*----Heading-----*/
+
+h1, h2{
+  background-color: var(--light-brown);
+  margin-top: 0;
+  text-align: center;
+}
+
+.index-heading {
+  display: grid;
+}
+
+.heading-image img{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 /*-----Main page layout-------*/
 
-main{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-}
+
 
 /*-----footer------*/
 
@@ -107,7 +125,38 @@ footer{
 }
 
 footer div {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+}
+
+@media only screen and (min-width: 850px) {
+
+  /*----Heading-----*/
+
+
+  .index-heading,
+  .two-one-grid {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }  
+  
+  .index-heading {
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    margin: 20px auto;
+  }
+
+  .heading-text{
+    background-color: var(--light-brown);
+  }
+
+  .heading-text h1{
+    margin: auto 0;
+  }
+
 }

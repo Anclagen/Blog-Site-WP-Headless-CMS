@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Blog Of Fluffy Piranha</title>
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/tester.css" rel="stylesheet" />
     <script src="/js/index.js" type="module" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,13 +19,11 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="posts.html">Posts</a></li>
-          <li><a href="posts.html?category=diary">Diary</a></li>
-          <li><a href="posts.html?category=food">Food</a></li>
-          <li><a href="posts.html?category=food">Food</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        
       </nav>
     </header>
     <main>
@@ -40,36 +39,77 @@
         <div class="main-content">
           <section>
             <h2>Latest Posts</h2>
-            <div class="post-slider"></div>
+            <div class="latest-post-slider-container">
+              <div class="latest-post-slider">
+                <div class="loader">
+                <div class="outer-loader"></div>
+                <div class="inner-loader"></div>
+                <p>Getting posts, please wait...</p>
+                </div>
+              </div>
+            </div>
+            <div class="slider-buttons">
+              <button class="latest-previous cta" disabled>&#8592; Previous Page</button>
+              <button class="latest-next cta">Next Page &#8594;</button>
+            </div>
           </section>
           <section>
             <h2>Featured</h2>
-            <div class="post-slider"></div>
+            <div class="post-slider">
+              <div class="featured-slider-content"><div class="loader">
+                <div class="outer-loader"></div>
+                <div class="inner-loader"></div>
+                <p>Getting posts, please wait...</p>
+              </div>
+            </div>
+            </div>
           </section>
           <section>
             <!--Hide if none are saved-->
             <h2>Recently Viewed Posts</h2>
-            <div class="post-slider"></div>
+            <div class="post-slider">
+              <div class="recent-slider-content">
+                <div class="loader">
+                  <div class="outer-loader"></div>
+                  <div class="inner-loader"></div>
+                  <p>Getting posts, please wait...</p>
+                </div>
+              </div>
+            </div>
           </section>
           </section>
         </div>
         <div class="side-bar">
           <section>
-            <h2>Connect With Us</h2>
-            <div class="social-media"></div>
-          </section>
-          <section>
-            <h2>Popular Posts</h2>
-            <div class="popular-post-container"></div>
-          </section>
-          <section>
             <h2>Search Posts</h2>
             <div class="search-post-container"></div>
           </section>
           <section>
-            <h2>Our Sponsors</h2>
-            <div class="sponsors-post-container"></div>
+            <h2>Connect With Us</h2>
+            <div class="social-media"></div>
           </section>
+          <section>
+            <h2>Our Sponsors</h2>
+            <div class="sponsors-post-container">
+              <div class="loader">
+                <div class="outer-loader"></div>
+                <div class="inner-loader"></div>
+                <p>Getting sponsors, please wait...</p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Popular Posts</h2>
+            <div class="popular-post-container">
+              <div class="loader">
+                <div class="outer-loader"></div>
+                <div class="inner-loader"></div>
+                <p>Getting posts, please wait...</p>
+              </div>
+            </div>
+          </section>
+
+
 
         </div>
       </div>

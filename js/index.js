@@ -1,6 +1,7 @@
 // ------- imports --------
 import {baseUrl, routes, callAPI, parameters, addLoader} from "./components/api_utilities.js"
-
+import {menuLinks, menuBtn, hamBotLine, hamMidLine, hamTopLine} from "./constants/constants.js"
+import {} from "./components/components.js"
 //const corsUrl = "https://noroffcors.herokuapp.com/";
 const main = document.querySelector(".main-content");
 const latestContainer = document.querySelector(".latest-post-slider");
@@ -8,12 +9,20 @@ const featuredContainer = document.querySelector(".featured-slider-content");
 const recentContainer = document.querySelector(".recent-slider-content");
 const popularContainer = document.querySelector(".popular-post-container");
 
-// callAPI (url) and return data
+//navigation menu
+menuBtn.addEventListener("click", openCloseMenu);
+function openCloseMenu(){
+  menuLinks.classList.toggle("hide-menu");
+  hamTopLine.classList.toggle("menu-open-rotate1");
+  hamBotLine.classList.toggle("menu-open-rotate3");
+  hamMidLine.classList.toggle("menu-open-transparent");
+}
 
+// callAPI (url) and return data
 const sponsorUrl = baseUrl + routes.sponsors + "?" + parameters.acf;
 const blogPostUrl = baseUrl + routes.blogPosts + "?" + parameters.acf
 
-//page number for latest posts
+// variables for next and previous button functions of latest images slider.
 let latestPageCurrent = 1;
 let latestPageMax = 1;
 let slidePercentage = 0;
@@ -33,6 +42,7 @@ async function createPageContent(){
 
 createPageContent()
 
+//create responsive image slider my head now hurts a little!
 function createPostImageSlider(data, container){
   container.innerHTML= "";
   let sliderWidth = `${100 * Math.ceil(data.length/4)}%`;
@@ -79,16 +89,14 @@ function createPostImageSlider(data, container){
     container.appendChild(slide);
 }
 
-//change page function for latest posts
 
+
+//change page function for latest posts
 const latestNext = document.querySelector(".latest-next");
 const latestPrevious = document.querySelector(".latest-previous");
 
-
 latestPrevious.addEventListener("click", previousPage);
 latestNext.addEventListener("click", nextPage);
-
-console.log(slidePercentage)
 
 function previousPage(){
   latestPageCurrent -= 1;
@@ -96,27 +104,20 @@ function previousPage(){
   if(latestPageCurrent === 1){
     transform = 0;
   }
-    
-  
   latestContainer.style.transform = `translateX(-${transform}%)`
   latestNext.disabled = false;
-
   if(latestPageCurrent === 1){
     console.log(latestPageCurrent)
     latestPrevious.setAttribute('disabled', 'disabled');
   }
-
 }
 
 function nextPage(){
   latestPageCurrent += 1;
-
   latestContainer.style.transform = `translateX(-${(latestPageCurrent - 1) * slidePercentage}%)`
   latestPrevious.disabled = false;
-
   if(latestPageCurrent === latestPageMax){
     latestNext.setAttribute('disabled', 'disabled');
   }
-
 }
 

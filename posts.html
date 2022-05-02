@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blog Posts</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/pages/posts.css" rel="stylesheet" />
+    <script src="/js/posts.js" type="module" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <div class="logo-header"><img src="images/leo_page_logo.png" /></div>
+      <nav>
+        <ul class="navigation-menu hide-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="posts.html">Posts</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a class="search-button">Search</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="menu-button">
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <span class="line3"></span>
+        </button>
+      </nav>
+      <div class="hidden-search search-container">
+        <form class="search-form">
+          <input type="text" class="search-input" />
+          <input type="submit" value="Search" class="search-btn cta" />
+        </form>
+      </div>
+    </header>
+    <main>
+      <section class="post-results">
+        <h1>All Posts</h1>
+        <div class="search-terms"></div>
+        <div class="filters-sort">
+          <div>
+            <label for="filter">Category:</label>
+            <select name="filter" id="filter">
+              <option value="All Posts" selected> All </option>
+              <!-- js fills filter with categories -->
+            </select>
+          </div>
+          <div>
+            <label for="sort">Sort:</label>
+            <select name="sort" id="sort">
+              <option value="Newest">Newest</option>
+              <option value="Oldest">Oldest</option>
+              <!-- Not sure further sorts are required here, sort itself seems a redundant feature too-->
+            </select>
+          </div>
+        </div>
+        <div class="post-results-container"></div>
+        <div class="show-more-container">
+           <!-- js fills values -->
+          <p>Showing: <span class="current-shown-results"></span> of <span class="total-results"></span></p>
+           <!-- js disables when all posts displayed -->
+          <button class="show-more-results cta">Show More</button>
+        </div>
+      </section>
+      <div class="social-container">
+        <section>
+          <h2>Connect With Us</h2>
+          <div class="social-media">
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
+          </div>
+          <h2>Sign Up</h2>
+          <p>Signup to are weekly newsletter to get updates on what is going on with Leo.</p>
+          <form action="POST" class="signup-form">
+            <input type="text" name="signup" id="" class="signup-input" />
+            <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
+          </form>
+        </section>
+        <section>
+          <h2>Our Sponsors</h2>
+          <div class="sponsors-post-container">
+            <div class="loader">
+              <div class="outer-loader"></div>
+              <div class="inner-loader"></div>
+              <p>Getting sponsors, please wait...</p>
+            </div>
+          </div>
+        </section>
+    </main>
+    <footer>
+      <div>
+        <p>Terms and conditions</p>
+        <p>Privacy</p>
+        <p>Sponsorships</p>
+        <p>Copyright 2022 Fluffy Piranha</p>
+      </div>
+    </footer>
+  </body>
+</html>

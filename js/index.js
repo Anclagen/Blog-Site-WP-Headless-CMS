@@ -1,21 +1,24 @@
 // ------- imports --------
 import {baseUrl, routes, callAPI, parameters, addLoader} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, hamBotLine, hamMidLine, hamTopLine} from "./constants/constants.js"
+import {menuLinks, menuBtn, searchBtn, searchContainer, hamBotLine, hamMidLine, hamTopLine} from "./constants/constants.js"
 import {} from "./components/components.js"
 //const corsUrl = "https://noroffcors.herokuapp.com/";
-const main = document.querySelector(".main-content");
 const latestContainer = document.querySelector(".latest-post-slider");
-const featuredContainer = document.querySelector(".featured-slider-content");
-const recentContainer = document.querySelector(".recent-slider-content");
-const popularContainer = document.querySelector(".popular-post-container");
+const sponsorsContainer = document.querySelector(".sponsors-post-container");
 
-//navigation menu
+/*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
 function openCloseMenu(){
   menuLinks.classList.toggle("hide-menu");
   hamTopLine.classList.toggle("menu-open-rotate1");
   hamBotLine.classList.toggle("menu-open-rotate3");
   hamMidLine.classList.toggle("menu-open-transparent");
+}
+
+searchBtn.addEventListener("click", openCloseSearch);
+
+function openCloseSearch(){
+  searchContainer.classList.toggle("hidden-search"); 
 }
 
 // callAPI (url) and return data
@@ -37,10 +40,15 @@ async function createPageContent(){
 
   createPostImageSlider(doubletime, latestContainer);
 
-  //const sponsorData = await callAPI(sponsorUrl);
-}
+  const sponsorData = await callAPI(sponsorUrl);
+  console.log(sponsorData);
+  createSponsoredContent(sponsorData, sponsorsContainer);
+  }
 
 createPageContent()
+
+
+/*-------------- Latest content slider -----------------*/
 
 //create responsive image slider my head now hurts a little!
 function createPostImageSlider(data, container){
@@ -63,23 +71,29 @@ function createPostImageSlider(data, container){
       slide.classList = "latest-slider-content";
       slide.style.width = slideWidth;
     }
+
     let tags ="";
      data[i].post_category.forEach(element => {
        tags += element.name + ", ";
      });
+
     let post = `
                 <div class="post-container">
-                  <div class="post-image-title">
-                    <a href="post_specific.html?id=${data[i].id}"><img src="${data[i].featured_image.size_thumbnail}" alt="${data[i].acf.post_summary}" class="post-thumbnail"></a>
-                    <div>
-                      <a href="post_specific.html?id=${data[i].id}" class="post-heading"><h3>${data[i].title.rendered}</h3></a>
-                      <a href="post_specific.html?id=${data[i].id}" class="post-button">View More</a>
+                  <div class="post-image-container">
+                    <a href="post_specific.html?id=${data[i].id}"><img src="${data[i].featured_image.size_large}" alt="${data[i].acf.post_summary}" class="post-image"></a>
+                    <div class="author-image">
+                      <img src="images/leo_bow_tie_square.jpg" alt="Leo">
+                    </div>
+                    <div class="post-date">
+                      <span>${data[i].date}</span><span class="author-text">Author: ${data[i].acf.author}</span>
                     </div>
                   </div>
+                  <div class="post-heading">
+                    <a href="post_specific.html?id=${data[i].id}" ><h3>${data[i].title.rendered}</h3></a>
+                    <p>${data[i].acf.post_summary}</p>
+                  </div>
                   <div class="post-details">
-                    <span>Author: ${data[i].acf.author}</span>
                     <span>Tags: ${tags}</span>
-                    <span>Published: ${data[i].date}</span>
                   </div>
                 </div>
                 `;
@@ -88,8 +102,6 @@ function createPostImageSlider(data, container){
 
     container.appendChild(slide);
 }
-
-
 
 //change page function for latest posts
 const latestNext = document.querySelector(".latest-next");
@@ -121,3 +133,21 @@ function nextPage(){
   }
 }
 
+/*-------------- sponsor content creator slider -----------------*/
+
+function createSponsoredContent(sponsorData, sponsorsContainer){
+  sponsorsContainer.innerHTML="";
+  let sponsorPost = "<p>No Sponsors, No Money!</p>";
+  for(let i = 0; i < sponsorData.length; i++){
+    sponsorPost = `<div>
+                    <a href="${sponsorData[i].acf.sponsor_url}">
+                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image">
+                    <a>
+                  </div>
+                  <div class="leo-sponsor-comment">
+                    <p>${sponsorData[i].acf.our_quote}</p>
+                    <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
+                  </div>`
+    sponsorsContainer.innerHTML += sponsorPost
+  }
+}

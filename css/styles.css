@@ -36,6 +36,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   font: var(--body);
+  background-color: var(--background-blue);
   /* overflow-x: hidden; /*prevent drop down menu overflow*/
 }
 
@@ -63,6 +64,12 @@ figure.wp-block-gallery {
   overflow: hidden;
 }
 
+.search-form,
+main{
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
 /*----Navigation------*/
 
 .logo-header{
@@ -75,6 +82,8 @@ figure.wp-block-gallery {
 .logo-header img{
   max-height: 100px;
   margin: 0;
+  width: 100%;
+  max-width: 555px;
 }
 
 nav{
@@ -115,6 +124,37 @@ nav a {
   padding: 20px;
 }
 
+.hidden-search{
+  display: none;
+}
+
+
+.search-container{
+  background-color: #D9C3B0;
+  height: 69px;
+}
+
+.search-form{
+  position: relative;
+  width: 40%;
+  min-width: 300px;
+}
+
+.search-container .search-btn{
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 15px;
+  top: 0;
+  right: -6px;
+}
+
+.search-input{
+  width: 100%;
+  font: var(--body);
+  height: 53px;
+  border: 2px solid var(--dark-brown);
+}
 /*hamburger menu icon and animation*/
 
 nav button {
@@ -180,13 +220,17 @@ h1, h2{
 }
 
 .index-heading {
-  display: grid;
+  margin: 0;
+  position: relative;
+  height: 450px;
+  background-image: url("/images/green_fields_banner.jpg");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+
 }
 
-.heading-image img{
-  height: 100%;
+.index-heading img{
   width: 100%;
-  overflow: hidden;
 }
 
 /*-----Main page layout-------*/
@@ -200,9 +244,9 @@ footer{
 }
 
 footer div {
-  max-width: 1200px;
+  max-width: 1300px;
+  width: 98%;
   margin: 0 auto;
-  text-align: center;
 }
 
 /*------Loader styles------*/
@@ -280,14 +324,41 @@ footer div {
   flex-wrap: wrap;
   gap: 10px;
 }
-.post-image-title{
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 5px;
-}
 
 .post-container {
   padding: 10px;
+  overflow: hidden;
+}
+.post-image{
+  object-fit: cover;
+  max-height: 250px;
+  width: 100%;
+}
+
+.post-image-container{
+  position: relative;
+}
+
+.author-image img{
+  position: absolute;
+  border-radius: 50%;
+  max-width: 80px;
+  border: 1px solid black;
+  bottom: 10px;
+  right: 20px;
+}
+
+.author-text{
+  margin-right: 105px;
+}
+
+.post-date{
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  gap:0 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 /*----Slider Buttons-----*/
@@ -318,7 +389,54 @@ footer div {
   opacity: 0.2;
 }
 
-@media only screen and (min-width: 575px) {
+/*social and sponsor*/
+.social-media{
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+.social-media-icons{
+  max-height: 70px;
+}
+
+.signup-form{
+  position: relative;
+  text-align: center;
+}
+
+.signup-input {
+  height: 39px;
+  border: 1px solid var(--dark-brown);
+  padding: 0px;
+  width: 90%;
+}
+
+.signup-submit{
+  position: absolute;
+  right: 5%;
+}
+
+.sponsor-logo-image{
+  width: 100%;
+}
+
+.leo-sponsor-comment{
+  display: grid;
+  grid-template-columns: 1fr 100px;
+}
+
+.leo-sponsor-comment img{
+  width: 100%;
+}
+
+.leo-sponsor-comment p{
+  border: 1px solid black;
+  height: fit-content;
+  padding: 15px;
+  border-radius: 20px
+}
+
+@media only screen and (min-width: 700px) {
   nav button {
     display: none;
   }
@@ -327,7 +445,8 @@ footer div {
     vertical-align: middle;
     line-height: 70px;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: 1300px;
+    width: 99%;
     display: flex;
     justify-content: flex-start;
     padding: 0;
@@ -353,7 +472,8 @@ footer div {
 }
 
 @media only screen and (min-width: 680px) {
-   /*------post items-------*/ 
+   /*------post items-------*/
+   .social-container, 
    .latest-slider-content{
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -361,48 +481,18 @@ footer div {
     grid-auto-flow: row;
     gap: 20px 10px;
   }
+
+  .social-container{
+    grid-template-rows: 1fr;
+    margin-bottom: 50px;
+  }
 }
 
 @media only screen and (min-width: 850px) {
-  /*----Heading-----*/
-
-  .index-heading,
-  .two-one-grid {
-    max-width: 1200px;
-    width: 95%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 20px;
-  }  
-  
-  .index-heading {
-    grid-template-columns: 1fr 2fr;
-    gap: 0;
-    margin: 20px auto;
-  }
-
-  .heading-text{
-    background-color: var(--light-brown);
-  }
-
-  .heading-text h1{
-    margin: auto 0;
-  }
- 
-
-  .post-image-title{
-    grid-template-columns: 1fr;
-  }
 
 }
 
 @media only screen and (min-width: 1100px){
-  /*-----post grid-----*/
-
-.post-image-title{
-  grid-template-columns: 0.8fr 1fr;
-}
 
 
 }

@@ -15,112 +15,87 @@
   </head>
   <body>
     <header>
-      <!-- <div class="logo-header"><img src="images/leo_page_logo.png" /></div> -->
+      <div class="logo-header"><img src="images/leo_page_logo.png" /></div>
       <nav>
         <ul class="navigation-menu hide-menu">
           <li><a href="index.html">Home</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="gallery.html">Gallery</a></li>
+          <li><a class="search-button">Search</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <button class="menu-button"> 
+        <button class="menu-button">
           <span class="line1"></span>
           <span class="line2"></span>
           <span class="line3"></span>
         </button>
       </nav>
+      <div class="hidden-search search-container">
+        <form class="search-form">
+          <input type="text" class="search-input" />
+          <input type="submit" value="Search" class="search-btn cta" />
+        </form>
+      </div>
     </header>
     <main>
       <div class="index-heading">
         <div class="heading-text">
           <h1>Welcome To Fluffy Piranha</h1>
-        </div>
-        <div class="heading-image">
-          <img src="/images/green_fields_banner.jpg" alt="green fields banner" />
+          <span>Following the day and life of Leo.</span>
         </div>
       </div>
-      <div class="two-one-grid">
-        <div class="main-content">
-          <section>
-            <h2>Latest Posts</h2>
-            <div class="latest-post-slider-container">
-              <div class="latest-post-slider">
-                <div class="loader">
-                <div class="outer-loader"></div>
-                <div class="inner-loader"></div>
-                <p>Getting posts, please wait...</p>
-                </div>
-              </div>
-            </div>
-            <div class="slider-buttons">
-              <button class="latest-previous cta" disabled>&#8592; Previous Page</button>
-              <button class="latest-next cta">Next Page &#8594;</button>
-            </div>
-          </section>
-          <section>
-            <h2>Featured</h2>
-            <div class="post-slider">
-              <div class="featured-slider-content"><div class="loader">
-                <div class="outer-loader"></div>
-                <div class="inner-loader"></div>
-                <p>Getting posts, please wait...</p>
-              </div>
-            </div>
-            </div>
-          </section>
-          <section>
-            <!--Hide if none are saved-->
-            <h2>Recently Viewed Posts</h2>
-            <div class="post-slider">
-              <div class="recent-slider-content">
-                <div class="loader">
-                  <div class="outer-loader"></div>
-                  <div class="inner-loader"></div>
-                  <p>Getting posts, please wait...</p>
-                </div>
-              </div>
-            </div>
-          </section>
-          </section>
-        </div>
-        <div class="side-bar">
-          <section>
-            <h2>Search Posts</h2>
-            <div class="search-post-container"></div>
-          </section>
-          <section>
-            <h2>Connect With Us</h2>
-            <div class="social-media"></div>
-          </section>
-          <section>
-            <h2>Our Sponsors</h2>
-            <div class="sponsors-post-container">
-              <div class="loader">
-                <div class="outer-loader"></div>
-                <div class="inner-loader"></div>
-                <p>Getting sponsors, please wait...</p>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h2>Popular Posts</h2>
-            <div class="popular-post-container">
+      <div class="main-content">
+        <section>
+          <h2>Latest Posts</h2>
+          <div class="latest-post-slider-container">
+            <div class="latest-post-slider">
               <div class="loader">
                 <div class="outer-loader"></div>
                 <div class="inner-loader"></div>
                 <p>Getting posts, please wait...</p>
               </div>
             </div>
-          </section>
-
-
-
-        </div>
+          </div>
+          <div class="slider-buttons">
+            <button class="latest-previous cta" disabled>&#8592; Previous Page</button>
+            <button class="latest-next cta">Next Page &#8594;</button>
+          </div>
+        </section>
+      </div>
+      <div class="social-container">
+        <section>
+          <h2>Connect With Us</h2>
+          <div class="social-media">
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
+            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
+          </div>
+          <h2>Sign Up</h2>
+          <p>Signup to are weekly newsletter to get updates on what is going on with Leo.</p>
+          <form action="POST" class="signup-form">
+            <input type="text" name="signup" id="" class="signup-input" />
+            <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
+          </form>
+        </section>
+        <section>
+          <h2>Our Sponsors</h2>
+          <div class="sponsors-post-container">
+            <div class="loader">
+              <div class="outer-loader"></div>
+              <div class="inner-loader"></div>
+              <p>Getting sponsors, please wait...</p>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
     <footer>
       <div>
+        <p>Terms and conditions</p>
+        <p>Privacy</p>
+        <p>Sponsorships</p>
         <p>Copyright 2022 Fluffy Piranha</p>
       </div>
     </footer>

@@ -17,6 +17,7 @@ export const parameters = {
   acf: "acf_format=standard",
   results25: "posts_per_page=25",
   results50: "posts_per_page=50",
+  search: "search=", //add search terms
 }
 
 // reused urls
@@ -33,12 +34,15 @@ export async function callAPI (url){
  return data
 }
 
-//might be needed for blog posts in the long run
-export async function callApiGetPages (url, pages){
+//callApi and returns data and updates a pages variable
+export async function callApiGetPages (url){
   const response = await fetch(url);
-  const data = await response.json();
-  pages = response.headers.get("X-WP-TotalPages");
- return data
+  //might be needed for blog posts in the long run
+  const pages = response.headers.get("X-WP-TotalPages");
+  console.log(pages)
+  const numberPosts = response.headers.get("X-WP-Total");
+  console.log(numberPosts)
+  return [pages, numberPosts]
 }
 
 export function addLoader(container){

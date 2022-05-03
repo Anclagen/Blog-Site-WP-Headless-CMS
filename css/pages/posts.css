@@ -24,3 +24,6 @@ h1{
   font: var(--body);
 }
 
+.show-more-container{
+  text-align: center;
+}

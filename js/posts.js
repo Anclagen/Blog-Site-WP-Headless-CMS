@@ -1,4 +1,4 @@
-import {baseUrl, routes, callAPI, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
 import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer} from "./constants/constants.js"
 import {createPost, createSponsoredContent, productSearch} from "./components/components.js"
 
@@ -19,45 +19,83 @@ function openCloseSearch(){
 searchForm.addEventListener("submit", productSearch);
 
 /*-------------- API and Page Creation --------------*/
-const postResultsContainer = document.querySelector(".post-results-container");
-let currentPostCreated = 10;
 
+
+let currentPostCreated = 0;
 let postData = [];
+let pagesAndPosts = [];
+
 async function createPageContent(){
-  postData = await callAPI(blogPostUrl);
+  //getting additional header info for total posts and if results are paginated.
   const categoriesData = await callAPI(categoriesUrl);
-  
-  
-  //con
+  //creates options for tags filter
   createFilterOptions(categoriesData);
+  postData = await callAPI(blogPostUrl);
+  pagesAndPosts = await callApiGetPages(blogPostUrl);
 
-  let doubletime = postData.concat(postData.reverse());
-  doubletime = doubletime.concat(doubletime);
+  console.log(pagesAndPosts)
+  //postData = postData.concat(postData.reverse());
+  //postData = postData.concat(postData);
 
-  //generate 10 items
+  //get number of results
+  if(postData.length < 10){
+    currentPostCreated = postData.length
+  } else {
+    currentPostCreated = 10;
+  }
   
-  
-  createPageHTML(doubletime);
+  fillResultsDetails(postData);
+  createPageHTML(postData);
 
   //fill sponsor content
   const sponsorData = await callAPI(sponsorUrl);
   createSponsoredContent(sponsorData, sponsorsContainer);
 }
 
+createPageContent();
+
 //create page html
-function createPageHTML(postData){
+const postResultsContainer = document.querySelector(".post-results-container");
+
+function createPageHTML(data){
+  postResultsContainer.innerHTML = "";
   let count = 0;
-  for(let i = 0; i < postData.length; i++){
+  for(let i = 0; i < data.length; i++){
     count += 1;
-    let post = createPost(postData[i])
+    let post = createPost(data[i])
     postResultsContainer.innerHTML += post;
-    if(count === 10){
+    if(count === currentPostCreated){
       break
     }
   }
 }
 
-createPageContent();
+//fill in results showing containers
+const numberShownPostsContainer = document.querySelector(".current-shown-results");
+const totalNumberPostsContainer = document.querySelector(".total-results");
+
+function fillResultsDetails(data){
+  if(data.length >=10){
+    numberShownPostsContainer.innerText = 10;
+  } else {
+    numberShownPostsContainer.innerText = data.length;
+  }
+  totalNumberPostsContainer.innerText = pagesAndPosts[1];
+}
+
+//show more button functionality
+const showMoreBtn = document.querySelector(".show-more-results");
+showMoreBtn.addEventListener("click", showMorePosts);
+
+function showMorePosts(){
+  if(currentPostCreated + 10 >= postData.length){
+    currentPostCreated = postData.length
+    showMoreBtn.disabled = true;
+  } else{
+    currentPostCreated += 10}
+  numberShownPostsContainer.innerHTML = currentPostCreated;
+  createPageHTML(postData)
+}
 
 //create filter options
 const pageHeading = document.querySelector("h1");
@@ -71,24 +109,51 @@ function createFilterOptions(data){
   });
 }
 
+//add filter sort to data
 filterSelectContainer.addEventListener("change", filterDataCreateHTML)
 
 async function filterDataCreateHTML(){
-  console.log(postData.length)
   if(filterSelectContainer.value === "All Posts"){
-    createPageHTML(postData);
-  } else if(postData.length < 50){
+    createPageContent();
+  } else {
     postResultsContainer.innerHTML = "";
     let filteredPostData = postData.filter(data => {
       return data.categories.includes(Number(filterSelectContainer.value))});
-    createPageHTML(filteredPostData);
-  } else {
-    addLoader(postResultsContainer);
-    let filterUrl = baseUrl + routes.categories + "/" + filterSelectContainer.value + "?" + parameters.acf + "&" + parameters.results50
-    let filteredPostData = await callAPI(filterUrl);
-    console.log(filteredPostData);
+    fillResultsDetails(filteredPostData);
+    totalNumberPostsContainer.innerText = filteredPostData.length;
     createPageHTML(filteredPostData);
   }
   
   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
 }
+
+
+
+
+
+
+/*-------- Trying to do too much at once ----------*/
+// with pagination I can just run query parameters through the initial page build function
+
+
+// filterSelectContainer.addEventListener("change", filterDataCreateHTML)
+
+// async function filterDataCreateHTML(){
+//   if(filterSelectContainer.value === "All Posts"){
+//     createPageHTML(postData);
+//   } else if(postData.length < 50){
+//     postResultsContainer.innerHTML = "";
+//     let filteredPostData = postData.filter(data => {
+//       return data.categories.includes(Number(filterSelectContainer.value))});
+//     createPageHTML(filteredPostData);
+//   } else {
+//     //for when the number of posts cause pagination
+//     addLoader(postResultsContainer);
+//     let filterUrl = baseUrl + routes.categories + "/" + filterSelectContainer.value + "?" + parameters.acf + "&" + parameters.results50
+//     let filteredPostData = await callAPI(filterUrl);
+//     console.log(filteredPostData);
+//     createPageHTML(filteredPostData);
+//   }
+  
+//   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
+// }

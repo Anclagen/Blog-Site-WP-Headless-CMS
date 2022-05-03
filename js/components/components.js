@@ -3,8 +3,11 @@
 export function createPost(data){
   
   let tags ="";
-  data.category.forEach(element => {
-    tags += element.name + ", ";
+  data.category.forEach((tag, i) => {
+    if(i !== 0){
+      tags += ", ";
+    }
+    tags += tag.name;
   });
 
   let post = `
@@ -38,7 +41,7 @@ export function createSponsoredContent(sponsorData, sponsorsContainer){
   for(let i = 0; i < sponsorData.length; i++){
     sponsorPost = `<div>
                     <a href="${sponsorData[i].acf.sponsor_url}">
-                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image">
+                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
                     <a>
                   </div>
                   <div class="leo-sponsor-comment">
@@ -52,6 +55,7 @@ export function createSponsoredContent(sponsorData, sponsorsContainer){
 // search function
 export function productSearch(submit) {
   submit.preventDefault();
+  //define the search input and value
   const searchInput = document.querySelector(".search-input");
   const searchTerms = searchInput.value.split(" ");
   window.location = `posts.html?search=${searchTerms}`;

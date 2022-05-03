@@ -33,9 +33,9 @@ async function createPageContent(){
   //set page max for latest
   latestPageMax = Math.ceil(sortNewPostData.length/4);
 
+  //just duplicating results for testing
   let doubletime = sortNewPostData.concat(sortNewPostData.reverse());
   doubletime = doubletime.concat(doubletime);
-
   latestPageMax = Math.ceil(doubletime.length/4);
 
   createPostImageSlider(doubletime, latestContainer);

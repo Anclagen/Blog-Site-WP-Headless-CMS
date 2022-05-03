@@ -301,7 +301,7 @@ footer div {
   }
 }
 
-/*------post items---------*/
+/*------post items and slider css---------*/
 .post-results-container,
 .main-content{
   overflow: hidden;
@@ -365,7 +365,7 @@ footer div {
   margin-bottom: 10px;
 }
 
-/*----Slider Buttons-----*/
+/*----Buttons plus slider buttons-----*/
 .slider-buttons {
   display: flex;
   justify-content: space-between;
@@ -388,6 +388,8 @@ footer div {
 .latest-next {
   min-width: 140px;
 }
+
+.show-more-results:disabled,
 .latest-next:disabled,
 .latest-previous:disabled{
   opacity: 0.2;

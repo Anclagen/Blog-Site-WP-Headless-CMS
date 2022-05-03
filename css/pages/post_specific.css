@@ -1,0 +1,53 @@
+.page-wrapper{
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.post-content-container{
+  max-width: 700px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.post-details-container,
+.featured-image{
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
+
+.image-modal-container{
+  width: 100%;
+  max-width: 300px;
+  
+}
+
+.image-background-container{
+  padding:10px;
+  background-color: var(--light-brown);
+}
+
+.modal-image{
+  width: 100%;
+}
+
+.caption{
+  background-color: var(--light-brown);
+  width:100%;
+  padding: 0 10px 10px 10px;
+}
+
+.left {
+      float: left;
+      
+}
+
+.right {
+      float: right;      
+}
+
+.centre {
+  max-width: 700px;
+}

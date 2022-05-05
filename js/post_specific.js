@@ -71,17 +71,32 @@ async function createPageHTML(data){
   
 }
 
+/*---------- image modal ----------*/
+const imageModalBackground = document.querySelector(".modal-background-container");
+const imageModal = document.querySelector(".image-modal");
+
+
 function addImageModals(){
-  const imagesModals = document.querySelectorAll(".image-modal-container");
+  const imagesModals = document.querySelectorAll(".modal-image");
+  
   console.log(imagesModals);
-  imagesModals.forEach(function(imagesModal) {
+  imagesModals.forEach(function(image) {
     //assign event listener to all checkboxes
-    imagesModal.addEventListener('click', function() {
-      this.classList.toggle("expanded-image-modal");
+    image.addEventListener('click', function() {
+      imageModal.src = this.src;
+      imageModal.alt = this.alt;
+      imageModal.classList.add("expanded-image-modal");
+      imageModalBackground.style.display = "block";
     })  
   });
 }
 
+imageModalBackground.addEventListener("click", function(){
+  imageModal.src = "";
+  imageModal.alt = "";
+  imageModal.classList.remove("expanded-image-modal");
+  imageModalBackground.style.display = "none";
+})
 
 /*-------------- Comment Posting --------------*/
 

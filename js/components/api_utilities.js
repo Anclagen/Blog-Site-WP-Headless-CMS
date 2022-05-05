@@ -55,7 +55,7 @@ export function addLoader(container){
 
 /*---------- Posts --------------*/
 
-// Subscriber key for posting comments only.
+// Subscriber key can only post comments.
 export const subscriberUsername = "Anonymous"
 export const commentKey = "Eukx 4nvk mFvr Leod G1ld afv1";
 

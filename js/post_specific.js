@@ -29,7 +29,6 @@ searchForm.addEventListener("submit", productSearch);
 async function createPageContent(){
   try{
     let postData = await callAPI(url);
-
     console.log(postData);
     createPageHTML(postData);
 
@@ -39,7 +38,6 @@ async function createPageContent(){
   } catch(error){
     console.log(error);
   }
-
 }
 
 createPageContent();
@@ -49,7 +47,6 @@ const titleContainer = document.querySelector("h1");
 const featuredImageContainer = document.querySelector(".featured-image-container");
 const mainContentContainer = document.querySelector(".post-content-container");
 const postDateContainer = document.querySelector(".post-date");
-const authorImgContainer = document.querySelector(".author-image");
 const commentsContainer = document.querySelector(".comments-container");
 const postCommentForm = document.querySelector("#comments-form");
 
@@ -70,4 +67,29 @@ function createPageHTML(data){
                                 </div>`
   mainContentContainer.innerHTML = data.content.rendered;
   
+}
+
+//comments 
+
+const commentsForm = document.querySelector("#comment-form");
+commentsForm.addEventListener("submit", submitComment);
+
+//using a subscriber user, only permissions to comment so not too must of a security risk
+function postComment(data){
+  try{
+    fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
+          {method: "POST",
+          headers:{"Content-Type": "application/json",
+                     "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
+                     body: data})
+  } catch(error){
+    console.log(error)
+  }
+}
+
+function submitComment(submission) {
+  submission.preventDefault();
+  const [name, email, comment] = submission.target.elements;
+  const data = JSON.stringify({post: Number(id), author_name: name.value, author_email:email.value, content:comment.value})
+  postComment(data);
 }

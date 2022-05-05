@@ -1,7 +1,6 @@
 
 /*-------------- standard post layout creator -----------------*/
 export function createPost(data){
-  
   let tags ="";
   data.category.forEach((tag, i) => {
     if(i !== 0){
@@ -15,7 +14,7 @@ export function createPost(data){
                   <div class="post-image-container">
                     <a href="post_specific.html?id=${data.id}"><img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image"></a>
                     <div class="author-image">
-                      <img src="images/leo_bow_tie_square.jpg" alt="Leo">
+                      <img src="${data.acf.author_image}" alt="Picture of ${data.acf.author}">
                     </div>
                     <div class="post-date">
                       <span>${data.acf.published}</span><span class="author-text">Author: ${data.acf.author}</span>

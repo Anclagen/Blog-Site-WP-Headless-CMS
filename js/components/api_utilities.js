@@ -52,3 +52,23 @@ export function addLoader(container){
                           <p>Getting products, please wait...</p>
                         </div>`;
 }
+
+/*---------- Posts --------------*/
+
+// Subscriber key for posting comments only.
+export const subscriberUsername = "Anonymous"
+export const commentKey = "Eukx 4nvk mFvr Leod G1ld afv1";
+
+export async function postComment(data, formReportingContainer){
+  try{
+    await fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
+          {method: "POST",
+          headers:{"Content-Type": "application/json",
+                     "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
+                     body: data});
+    formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`
+  } catch(error){
+    console.log(error)
+    formReportingContainer.innerHTML = `<p class="error">An error occurred when posting your message</p>`
+  }
+}

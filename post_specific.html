@@ -38,6 +38,7 @@
       </div>
     </header>
     <main>
+      <div class="modal-container"></div>
       <section class="page-wrapper">
         <h1></h1>
         <div class="featured-image-container"></div>
@@ -45,24 +46,21 @@
           <div class="post-date"></div>
         </div>
         <div class="post-content-container"></div>
-  
       </section>
       <section>
         <div class="post-comment-container">
           <form id="comment-form" novalidate>
-              <div>
-                <label for="name">Name*</label>
-                <input id="name" type="text" required />
-              </div>
-              <div>
-                <label for="email">Email*</label>
-                <input id="email" type="email" required />
-              </div>
-              <div>
-                <label for="comment">Comment*</label>
-                <textarea id="comment" required></textarea>
-              </div>
-              <input type="submit" value="Post comment!" />
+            <div id="form-reporting-container"></div>
+            <label for="fullname">Name*</label>
+            <input id="fullname" type="text" required />
+            <div class="error" id="error-name"></div>
+            <label for="email">Email*</label>
+            <input id="email" type="email" required />
+            <div class="error" id="error-email"></div>
+            <label for="message">Comment*</label>
+            <textarea id="message" required></textarea>
+            <div class="error" id="error-message"></div>
+            <input type="submit" value="Post A Comment" class="cta"/>
           </form>
         </div>
         <div class="comments-container"></div>

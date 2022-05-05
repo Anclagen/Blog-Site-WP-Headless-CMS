@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch} from "./components/components.js"
+import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl, postComment} from "./components/api_utilities.js"
+import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
+import {createPost, createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
@@ -30,11 +30,12 @@ async function createPageContent(){
   try{
     let postData = await callAPI(url);
     console.log(postData);
-    createPageHTML(postData);
-
+    await createPageHTML(postData);
+    addImageModals()
     //fill sponsor content
     const sponsorData = await callAPI(sponsorUrl);
     createSponsoredContent(sponsorData, sponsorsContainer);
+    
   } catch(error){
     console.log(error);
   }
@@ -50,7 +51,7 @@ const postDateContainer = document.querySelector(".post-date");
 const commentsContainer = document.querySelector(".comments-container");
 const postCommentForm = document.querySelector("#comments-form");
 
-function createPageHTML(data){
+async function createPageHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
   //using file name for alt probably a better way to do it
   let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
@@ -67,29 +68,48 @@ function createPageHTML(data){
                                 </div>`
   mainContentContainer.innerHTML = data.content.rendered;
   
+  
 }
 
-//comments 
+function addImageModals(){
+  const imagesModals = document.querySelectorAll(".image-modal-container");
+  console.log(imagesModals);
+  imagesModals.forEach(function(imagesModal) {
+    //assign event listener to all checkboxes
+    imagesModal.addEventListener('click', function() {
+      this.classList.toggle("expanded-image-modal");
+    })  
+  });
+}
+
+
+/*-------------- Comment Posting --------------*/
 
 const commentsForm = document.querySelector("#comment-form");
-commentsForm.addEventListener("submit", submitComment);
+commentsForm.addEventListener("submit", validateSubmitComment);
 
-//using a subscriber user, only permissions to comment so not too must of a security risk
-function postComment(data){
-  try{
-    fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
-          {method: "POST",
-          headers:{"Content-Type": "application/json",
-                     "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
-                     body: data})
-  } catch(error){
-    console.log(error)
+//validates inputs and when passed, posts form to server.
+function validateSubmitComment(submission) {
+  submission.preventDefault();
+
+  //clear success/error container.
+  formReporting.innerHTML = "";
+
+  //variables assigned true if they pass, and errors generated on fail.
+  const a = validatedInputLength(fullname, 5, errorName);
+  const b = validatedInputLength(message, 0, errorMessage);
+  const c = validateEmailInput(email, errorEmail);
+
+  if(a && b && c) {
+  //create data for post with id corresponding to page or post
+  const data = JSON.stringify({post: Number(id), author_name: fullname.value, author_email:email.value, content:message.value});
+  
+  postComment(data, formReporting);
+
+  commentsForm.reset();
+  resetBorders(fullname);
+  resetBorders(message);
+  resetBorders(email);
   }
 }
 
-function submitComment(submission) {
-  submission.preventDefault();
-  const [name, email, comment] = submission.target.elements;
-  const data = JSON.stringify({post: Number(id), author_name: name.value, author_email:email.value, content:comment.value})
-  postComment(data);
-}

@@ -74,7 +74,7 @@ main{
 /*-------------- Navigation -------------*/
 /*logo*/
 .logo-header{
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   height: fit-content;
   max-height: 100px;
@@ -450,6 +450,9 @@ footer div {
   margin: 0 auto;
 }
 
+#contact-form,
+#comment-form,
+.extra-contact-info,
 .contact-content-container,
 .about-content-container,
 .post-content-container{
@@ -478,6 +481,7 @@ footer div {
   background-color: var(--light-brown);
 }
 
+.contact-image img,
 .modal-image{
   width: 100%;
 }
@@ -492,6 +496,58 @@ footer div {
 .right,
 .centre {
     max-width: 700px;
+}
+
+/*form styles*/
+
+#contact-form,
+#comment-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  
+}
+
+#contact-form input,
+#comment-form input {
+  font: var(--body);
+  padding: 10px;
+}
+
+#fullname {
+  max-width: 15rem;
+}
+
+#email {
+  max-width: 25rem;
+}
+
+#subject {
+  max-width: 25rem;
+}
+
+textarea {
+  height: 85%;
+  min-height: 100px;
+  resize: none;
+  font: var(--body);
+}
+
+#contact-form textarea{
+  min-height: 200px;
+}
+
+.error{
+  color: red;
+}
+
+.success{
+  color: green;
+}
+
+.contact-content-container .image-modal-container{
+  margin: 10px auto;
 }
 
 @media only screen and (min-width: 600px) {
@@ -512,6 +568,7 @@ footer div {
 
 @media only screen and (min-width: 680px) {
    /*------post items-------*/
+   .contact-content-container,
    .post-results-container,
    .social-container, 
    .latest-slider-content{
@@ -522,6 +579,7 @@ footer div {
     gap: 20px 10px;
   }
 
+  .contact-content-container,
   .post-results-container,
   .social-container{
     grid-template-rows: 1fr;

@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch} from "./components/components.js"
+import {baseUrl, routes, callAPI, parameters, sponsorUrl, postComment} from "./components/api_utilities.js"
+import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
+import {createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
@@ -18,37 +18,59 @@ function openCloseSearch(){
 }
 searchForm.addEventListener("submit", productSearch);
 
+//contact forms id for posting info to.
+const id = 106;
+const url = baseUrl + routes.page + "/" + id;
 
+/*-------------- Api Call and Page Creation --------------*/
+const additionalDetailsContainer = document.querySelector(".extra-contact-info")
 
-
-
-
-
-
-
-//comments 
-const commentsForm = document.querySelector("#contact-form");
-console.log(commentsForm)
-commentsForm.addEventListener("submit", submitComment);
-const key = "Eukx 4nvk mFvr Leod G1ld afv1";
-const testUrl = "https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments/?author_name=Bob&author_email=bobs@bobsworld.com&author_name=bobe&content=jstest222&post=78";
-
-//using a subscriber user, only permissions to comment so not too must of a security risk
-function postComment(data){
+async function createPageContent(){
   try{
-    fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
-          {method: "POST",
-          headers:{"Content-Type": "application/json",
-                     "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
-                     body: data})
+    let contactDetails = await callAPI(url);
+    console.log(contactDetails);
+    additionalDetailsContainer.innerHTML = contactDetails.content.rendered
+
+    //fill sponsor content
+    const sponsorData = await callAPI(sponsorUrl);
+    createSponsoredContent(sponsorData, sponsorsContainer);
   } catch(error){
-    console.log(error)
+    console.log(error);
   }
 }
 
-function submitComment(submission) {
+createPageContent();
+
+/*-------------- Contact Form Posting --------------*/
+
+const commentsForm = document.querySelector("#contact-form");
+commentsForm.addEventListener("submit", validateSubmitComment);
+
+//validates inputs and when passed, posts form to server.
+function validateSubmitComment(submission) {
   submission.preventDefault();
-  const [name, email, subject, comment] = submission.target.elements;
-  const data = JSON.stringify({post: 106, author_name: name.value, author_email:email.value, content:`<b>${subject.value}:</b  style="font-size:2rem" >\n ${comment.value}`})
-  postComment(data);
+
+  //clear success/error container .
+  formReporting.innerHTML = "";
+
+  //variables assigned true if they pass, and errors generated on fail.
+  const a = validatedInputLength(fullname, 5, errorName);
+  const b = validatedInputLength(message, 25, errorMessage);
+  const c = validateEmailInput(email, errorEmail);
+  const d = validatedInputLength(subject, 15, errorSubject);
+
+  
+  if(a && b && c && d) {
+  //create data for post with id corresponding to page or post
+  const data = JSON.stringify({post:Number(id), author_name: fullname.value, author_email:email.value, content:`<b>${subject.value}:</b>\n ${message.value}`});
+  
+  postComment(data, formReporting);
+
+  commentsForm.reset();
+  resetBorders(fullname);
+  resetBorders(message);
+  resetBorders(email);
+  resetBorders(subject);
+  }
 }
+

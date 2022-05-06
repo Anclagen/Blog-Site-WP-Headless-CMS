@@ -43,38 +43,6 @@ createPageContent();
 
 /*-------------- Contact Form Posting --------------*/
 
-// const commentsForm = document.querySelector("#contact-form");
-// commentsForm.addEventListener("submit", validateSubmitComment);
-
-// //validates inputs and when passed, posts form to server.
-// function validateSubmitComment(submission) {
-//   submission.preventDefault();
-
-//   //clear success/error container .
-//   formReporting.innerHTML = "";
-
-//   //variables assigned true if they pass, and errors generated on fail.
-//   const a = validatedInputLength(fullname, 5, errorName);
-//   const b = validatedInputLength(message, 25, errorMessage);
-//   const c = validateEmailInput(email, errorEmail);
-//   const d = validatedInputLength(subject, 15, errorSubject);
-
-  
-//   if(a && b && c && d) {
-//   //create data for post with id corresponding to page or post
-//   const data = JSON.stringify({post:Number(id), author_name: fullname.value, author_email:email.value, content:`<b>${subject.value}:</b>\n ${message.value}`});
-  
-//   postComment(data, formReporting);
-
-//   commentsForm.reset();
-//   resetBorders(fullname);
-//   resetBorders(message);
-//   resetBorders(email);
-//   resetBorders(subject);
-//   }
-// }
-
-
 const commentsForm = document.querySelector("#contact-form");
 commentsForm.addEventListener("submit", validateSubmitComment);
 
@@ -121,3 +89,34 @@ function postQuery(data, formReportingContainer){
 
 }
 
+/*
+const commentsForm = document.querySelector("#contact-form");
+commentsForm.addEventListener("submit", validateSubmitComment);
+
+//validates inputs and when passed, posts form to server.
+function validateSubmitComment(submission) {
+  submission.preventDefault();
+
+  //clear success/error container .
+  formReporting.innerHTML = "";
+
+  //variables assigned true if they pass, and errors generated on fail.
+  const a = validatedInputLength(fullname, 5, errorName);
+  const b = validatedInputLength(message, 25, errorMessage);
+  const c = validateEmailInput(email, errorEmail);
+  const d = validatedInputLength(subject, 15, errorSubject);
+
+  
+  if(a && b && c && d) {
+  //create data for post with id corresponding to page or post
+  const data = JSON.stringify({post:Number(id), author_name: fullname.value, author_email:email.value, content:`<b>${subject.value}:</b>\n ${message.value}`});
+  
+  postComment(data, formReporting);
+
+  commentsForm.reset();
+  resetBorders(fullname);
+  resetBorders(message);
+  resetBorders(email);
+  resetBorders(subject);
+  }
+}*/

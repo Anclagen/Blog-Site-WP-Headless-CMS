@@ -61,11 +61,12 @@ export const commentKey = "Eukx 4nvk mFvr Leod G1ld afv1";
 
 export async function postComment(data, formReportingContainer){
   try{
-    await fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
+    const response = await fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
           {method: "POST",
           headers:{"Content-Type": "application/json",
                      "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
                      body: data});
+    console.log(response.json)
     formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`
   } catch(error){
     console.log(error)

@@ -78,12 +78,12 @@ function postQuery(data, formReportingContainer){
   
     fetch("https://fluffypiranha.one/exam_project_1/wp-json/contact-form-7/v1/contact-forms/113/feedback", 
           {method: "POST",
-          'Content-Type':'form-data',
+          'Content-Type':' multipart/form-data',
           'your-name': data.your_name, 
           'your-email': data.your_email, 
           'your-subject': data.subject, 
           'your-message':data.message}).then((data) => {
-            console.log(data.message)
+            console.log(data.status)
           })
     formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`
 

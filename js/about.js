@@ -1,22 +1,12 @@
 import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch} from "./components/components.js"
+import {menuBtn, searchBtn, searchContainer, searchForm, sponsorsContainer} from "./constants/constants.js"
+import {createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
-function openCloseMenu(){
-  menuLinks.classList.toggle("hide-menu");
-  hamTopLine.classList.toggle("menu-open-rotate1");
-  hamBotLine.classList.toggle("menu-open-rotate3");
-  hamMidLine.classList.toggle("menu-open-transparent");
-}
-
 //search
 searchBtn.addEventListener("click", openCloseSearch);
-function openCloseSearch(){
-  searchContainer.classList.toggle("hidden-search"); 
-}
 searchForm.addEventListener("submit", productSearch);
 
 

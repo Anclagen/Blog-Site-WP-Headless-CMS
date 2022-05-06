@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl, postComment} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength} from "./components/components.js"
+import {baseUrl, routes, callAPI,parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl, postComment} from "./components/api_utilities.js"
+import { menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, email, errorEmail, message, errorMessage, formReporting} from "./constants/constants.js"
+import {createPost, createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
@@ -11,18 +11,8 @@ const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf;
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
-function openCloseMenu(){
-  menuLinks.classList.toggle("hide-menu");
-  hamTopLine.classList.toggle("menu-open-rotate1");
-  hamBotLine.classList.toggle("menu-open-rotate3");
-  hamMidLine.classList.toggle("menu-open-transparent");
-}
-
 //search
 searchBtn.addEventListener("click", openCloseSearch);
-function openCloseSearch(){
-  searchContainer.classList.toggle("hidden-search"); 
-}
 searchForm.addEventListener("submit", productSearch);
 
 /*-------------- Api Call and Page Creation --------------*/
@@ -113,11 +103,11 @@ function validateSubmitComment(submission) {
   //variables assigned true if they pass, and errors generated on fail.
   const a = validatedInputLength(fullname, 5, errorName);
   const b = validatedInputLength(message, 0, errorMessage);
-  const c = validateEmailInput(email, errorEmail);
+  // const c = validateEmailInput(email, errorEmail);
 
-  if(a && b && c) {
+  if(a && b) {
   //create data for post with id corresponding to page or post
-  const data = JSON.stringify({post: Number(id), author_name: fullname.value, author_email:email.value, content:message.value});
+  const data = JSON.stringify({post: Number(id), author_name: fullname.value, author_email:"anonymous@anonymous.com", content:message.value});
   
   postComment(data, formReporting);
 

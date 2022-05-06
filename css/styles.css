@@ -69,6 +69,7 @@ figure.wp-block-gallery {
 main{
   max-width: 1300px;
   margin: 0 auto;
+  width: 96%;
 }
 
 /*-------------- Navigation -------------*/
@@ -311,7 +312,7 @@ footer div {
 .latest-post-slider-container{
   overflow: hidden;
   width: 100%;
-  max-width: 100vw;
+  max-width: 96vw;
 }
 
 .latest-post-slider{
@@ -516,7 +517,7 @@ footer div {
 }
 
 #fullname {
-  max-width: 15rem;
+  max-width: 25rem;
 }
 
 #email {
@@ -566,28 +567,9 @@ textarea {
   }
 }
 
-@media only screen and (min-width: 680px) {
-   /*------post items-------*/
-   .contact-content-container,
-   .post-results-container,
-   .social-container, 
-   .latest-slider-content{
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-flow: row;
-    gap: 20px 10px;
-  }
 
-  .contact-content-container,
-  .post-results-container,
-  .social-container{
-    grid-template-rows: 1fr;
-    margin-bottom: 50px;
-  }
-}
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 720px) {
   nav button {
     display: none;
   }
@@ -619,7 +601,24 @@ textarea {
     display: flex;  
   }
 
+   /*------post items-------*/
+   .contact-content-container,
+   .post-results-container,
+   .social-container, 
+   .latest-slider-content{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-flow: row;
+    gap: 20px 10px;
+  }
 
+  .contact-content-container,
+  .post-results-container,
+  .social-container{
+    grid-template-rows: 1fr;
+    margin-bottom: 50px;
+  }
 }
 
 @media only screen and (min-width: 850px) {

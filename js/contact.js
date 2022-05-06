@@ -1,22 +1,14 @@
-import {baseUrl, routes, callAPI, parameters, sponsorUrl, postComment} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
-import {createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength} from "./components/components.js"
+import {baseUrl, routes, callAPI, parameters, sponsorUrl} from "./components/api_utilities.js"
+import {menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
+import {createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
-function openCloseMenu(){
-  menuLinks.classList.toggle("hide-menu");
-  hamTopLine.classList.toggle("menu-open-rotate1");
-  hamBotLine.classList.toggle("menu-open-rotate3");
-  hamMidLine.classList.toggle("menu-open-transparent");
-}
 
 //search
 searchBtn.addEventListener("click", openCloseSearch);
-function openCloseSearch(){
-  searchContainer.classList.toggle("hidden-search"); 
-}
 searchForm.addEventListener("submit", productSearch);
+
 
 //contact forms id for posting info to.
 const id = 106;

@@ -37,12 +37,11 @@ export async function callAPI (url){
 //callApi and returns data and updates a pages variable
 export async function callApiGetPages (url){
   const response = await fetch(url);
+  const data = await response.json();
   //might be needed for blog posts in the long run
   const pages = response.headers.get("X-WP-TotalPages");
-  console.log(pages)
   const numberPosts = response.headers.get("X-WP-Total");
-  console.log(numberPosts)
-  return [pages, numberPosts]
+  return [data, pages, numberPosts]
 }
 
 export function addLoader(container){

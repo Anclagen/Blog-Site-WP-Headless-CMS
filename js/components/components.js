@@ -50,6 +50,25 @@ export function createSponsoredContent(sponsorData, sponsorsContainer){
   }
 }
 
+/*-----------------  Menu Open/Close -----------------*/
+//menu on phone
+export function openCloseMenu(){
+  const menuLinks = document.querySelector(".navigation-menu");
+  const hamTopLine = document.querySelector(".line1");
+  const hamMidLine = document.querySelector(".line2");
+  const hamBotLine = document.querySelector(".line3");
+  menuLinks.classList.toggle("hide-menu");
+  hamTopLine.classList.toggle("menu-open-rotate1");
+  hamBotLine.classList.toggle("menu-open-rotate3");
+  hamMidLine.classList.toggle("menu-open-transparent");
+}
+
+//displays search input
+export function openCloseSearch(){
+  const searchContainer = document.querySelector(".search-container");
+  searchContainer.classList.toggle("hidden-search"); 
+}
+
 /*----------------- search function -----------------*/
 export function productSearch(submit) {
   submit.preventDefault();

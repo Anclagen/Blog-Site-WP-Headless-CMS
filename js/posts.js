@@ -1,21 +1,13 @@
 import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
-import {menuLinks, menuBtn, searchBtn, searchContainer, searchForm, hamBotLine, hamMidLine, hamTopLine, sponsorsContainer} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch} from "./components/components.js"
+import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
+import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
-function openCloseMenu(){
-  menuLinks.classList.toggle("hide-menu");
-  hamTopLine.classList.toggle("menu-open-rotate1");
-  hamBotLine.classList.toggle("menu-open-rotate3");
-  hamMidLine.classList.toggle("menu-open-transparent");
-}
 
 //search
 searchBtn.addEventListener("click", openCloseSearch);
-function openCloseSearch(){
-  searchContainer.classList.toggle("hidden-search"); 
-}
+
 searchForm.addEventListener("submit", productSearch);
 
 /*-------------- API and Page Creation --------------*/
@@ -30,12 +22,9 @@ async function createPageContent(){
   const categoriesData = await callAPI(categoriesUrl);
   //creates options for tags filter
   createFilterOptions(categoriesData);
-  postData = await callAPI(blogPostUrl);
-  pagesAndPosts = await callApiGetPages(blogPostUrl);
-
-  console.log(pagesAndPosts)
-  //postData = postData.concat(postData.reverse());
-  //postData = postData.concat(postData);
+  const data = await callApiGetPages(blogPostUrl);
+  postData = data[0]
+  pagesAndPosts = [data[1], data[2]];
 
   //get number of results
   if(postData.length < 10){

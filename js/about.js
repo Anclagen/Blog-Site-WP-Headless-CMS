@@ -1,5 +1,5 @@
 import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
-import {menuBtn, searchBtn, searchContainer, searchForm, sponsorsContainer} from "./constants/constants.js"
+import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 

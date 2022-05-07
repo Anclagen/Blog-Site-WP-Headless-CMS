@@ -1,5 +1,5 @@
 // ------- imports --------
-import {baseUrl, routes, callAPI, parameters, blogPostUrl, sponsorUrl, addLoader} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, blogPostUrl, sponsorUrl, addLoader, sortOldestUrl} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 //const corsUrl = "https://noroffcors.herokuapp.com/";
@@ -23,16 +23,9 @@ async function createPageContent(){
   const sortNewPostData = await callAPI(blogPostUrl);
   //set page max for latest
   latestPageMax = Math.ceil(sortNewPostData.length/4);
-
-  //just duplicating results for testing
-  let doubletime = sortNewPostData.concat(sortNewPostData.reverse());
-  doubletime = doubletime.concat(doubletime);
-  latestPageMax = Math.ceil(doubletime.length/4);
-
-  createPostImageSlider(doubletime, latestContainer);
+  createPostImageSlider(sortNewPostData, latestContainer);
 
   const sponsorData = await callAPI(sponsorUrl);
-  console.log(sponsorData);
   createSponsoredContent(sponsorData, sponsorsContainer);
   }
 

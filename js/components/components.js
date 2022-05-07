@@ -6,7 +6,7 @@ export function createPost(data){
     if(i !== 0){
       tags += ", ";
     }
-    tags += tag.name;
+    tags += `<a href="posts.html?tags=${tag.id}" class="post-tags">${tag.name}</a>`;
   });
 
   let post = `

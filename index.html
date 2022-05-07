@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Blog Of Fluffy Piranha</title>
+    <title>The Fluffy Piranha, The Day And Life Of Leopold</title>
+    <meta name="description" content="The Fluffy Piranha, is a blog devoted to Leopold, a Border Collie, Shetland Sheep Dog mix, told from the perspective of Leo himself." />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/tester.css" rel="stylesheet" />
     <link href="css/pages/index.css" rel="stylesheet" />
     <script src="/js/index.js" type="module" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header>
@@ -40,14 +41,14 @@
     </header>
     <main>
       <div class="index-heading">
-        <div class="heading-text">
-          <h1>Welcome To Fluffy Piranha</h1>
+        <!-- <div class="heading-text">
+          <h1>Fluffy Piranha</h1>
           <span>Following the day and life of Leo.</span>
-        </div>
+        </div> -->
       </div>
       <div class="main-content">
         <section>
-          <h2>Latest Posts</h2>
+          <h2 class="latest-post-heading">Latest Posts</h2>
           <div class="latest-post-slider-container">
             <div class="latest-post-slider">
               <div class="loader">
@@ -65,19 +66,24 @@
       </div>
       <div class="social-container">
         <section>
-          <h2>Connect With Us</h2>
-          <div class="social-media">
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
+          <!-- class="social-grid-container" -->
+          <div>
+            <h2>Connect With Us</h2>
+            <div class="social-media">
+              <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
+              <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
+              <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
+              <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
+            </div>
           </div>
-          <h2>Sign Up</h2>
-          <p>Signup to are weekly newsletter to get updates on what is going on with Leo.</p>
-          <form action="POST" class="signup-form">
-            <input type="text" name="signup" id="" class="signup-input" />
-            <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
-          </form>
+          <div class="sign-up">
+            <h2>Sign Up</h2>
+            <p>Signup to are weekly newsletter to get updates on what is going on with Leo.</p>
+            <form action="POST" class="signup-form">
+              <input type="text" name="signup" id="" class="signup-input" />
+              <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
+            </form>
+          </div>
         </section>
         <section>
           <h2>Our Sponsors</h2>

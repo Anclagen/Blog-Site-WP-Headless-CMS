@@ -1,14 +1,24 @@
 .expanded-image-modal{
   position: fixed;
   display: block;
-  width: 100%;
   max-width: 80vw;
-  max-height: 80vw;
+  max-height: 80vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
 }
+
+/* doesn't work on images
+.expanded-image-modal::after{
+  font: var(--body);
+  display: inline-block;
+  content: "";
+  color: black;
+  position: fixed;
+  top: 0;
+
+} */
 
 .modal-background-container{
   display: none;
@@ -19,4 +29,17 @@
   z-index: 1;
   top: 0;
   left: 0;
+}
+
+.post-comment-section{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 700px;
+  margin: 15px auto;
+  gap: 10px;
+}
+
+.post-specific-wrapper{
+  max-width: 900px;
+  margin: 0px auto;
 }

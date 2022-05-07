@@ -24,7 +24,8 @@ export const parameters = {
 export const blogPostUrl = baseUrl + routes.blogPosts + "?" + parameters.acf + "&" + parameters.results50;
 export const sponsorUrl = baseUrl + routes.sponsors + "?" + parameters.acf;
 export const categoriesUrl = baseUrl + routes.categories + "?" + parameters.acf + "&" + parameters.results50;
-
+export const sortOldestUrl = baseUrl + routes.blogPosts + "?" + "filter[orderby]=date&order=asc" + parameters.acf + "&" + parameters.results50;
+export const searchBlogPostsUrl = baseUrl + "/search?"+ parameters.acf + "&" + parameters.results50 +"&type=post&subtype=blog_posts&search=";
 
 // callAPI (url) and return data
 export async function callAPI (url){

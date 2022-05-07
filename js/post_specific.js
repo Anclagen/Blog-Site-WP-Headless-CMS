@@ -54,7 +54,7 @@ async function createPageHTML(data){
   postDateContainer.innerHTML = `<span>${data.acf.published}</span>
                                  <span class="author-text">Author: ${data.acf.author}</span>
                                  <div class="author-image">
-                                  <img src="images/leo_bow_tie_square.jpg" alt="Leo">
+                                  <img src="${data.acf.author_image}" alt="${data.acf.author}">
                                 </div>`
   mainContentContainer.innerHTML = data.content.rendered;
   
@@ -67,9 +67,8 @@ const imageModal = document.querySelector(".image-modal");
 
 
 function addImageModals(){
-  const imagesModals = document.querySelectorAll(".modal-image");
+  const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
   
-  console.log(imagesModals);
   imagesModals.forEach(function(image) {
     //assign event listener to all checkboxes
     image.addEventListener('click', function() {

@@ -1,34 +1,62 @@
-import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl} from "./components/api_utilities.js"
+import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
-
 //search
 searchBtn.addEventListener("click", openCloseSearch);
-
 searchForm.addEventListener("submit", productSearch);
+
+
+
+/*-------------- query string grabs --------------*/
+
+const queryString = document.location.search;
+const params = new URLSearchParams(queryString);
+const tags = params.get("tags");
+const searchTerms = params.get("search");
+
+console.log(searchTerms)
+console.log(tags)
+
+
+
+/*-------------- defining the initial url --------------*/
+let initialUrl = blogPostUrl;
+if(tags !== null){
+  initialUrl = blogPostUrl + "&categories=" + tags
+} else if(searchTerms !== null){
+  console.log("yes")
+  initialUrl = searchBlogPostsUrl + searchTerms;
+}
 
 /*-------------- API and Page Creation --------------*/
 
-
+const postResultsContainer = document.querySelector(".post-results-container");
 let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
 
 async function createPageContent(){
-  //getting additional header info for total posts and if results are paginated.
-  const categoriesData = await callAPI(categoriesUrl);
   //creates options for tags filter
+  const categoriesData = await callAPI(categoriesUrl);
   createFilterOptions(categoriesData);
-  const data = await callApiGetPages(blogPostUrl);
+
+  //initial api call, also grabbing headers for pages and results
+  let data = await callApiGetPages(initialUrl);
+  //search data lacking so additional call done with post ids for more data
+  if(searchTerms !== null && data[0].length > 0){
+    data = await getSearchData(data)
+  }
+
   postData = data[0]
   pagesAndPosts = [data[1], data[2]];
 
   //get number of results
   if(postData.length < 10){
     currentPostCreated = postData.length
+    showMoreBtn.disabled = true;
   } else {
     currentPostCreated = 10;
   }
@@ -44,7 +72,7 @@ async function createPageContent(){
 createPageContent();
 
 //create page html
-const postResultsContainer = document.querySelector(".post-results-container");
+
 
 function createPageHTML(data){
   postResultsContainer.innerHTML = "";
@@ -92,6 +120,7 @@ const pageHeading = document.querySelector("h1");
 let filterSelectContainer = document.querySelector("#filter");
 
 function createFilterOptions(data){
+  filterSelectContainer.innerHTML =`<option value="All Posts" selected> All Posts</option>`;
   data.forEach(element => {
     const option = `<option value="${element.id}" name="${element.name}"> ${element.name}</option>`;
     filterSelectContainer.innerHTML += option;
@@ -116,7 +145,17 @@ async function filterDataCreateHTML(){
   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
 }
 
+//do extra api call with search ids
 
+async function getSearchData(data){
+  let searchIds = "";
+  data[0].forEach(element => {
+    searchIds += element.id + ",";
+  })
+  const searchResultsUrl = blogPostUrl + "&include=" + searchIds;
+  data = await callApiGetPages(searchResultsUrl)
+  return data
+  }
 
 
 

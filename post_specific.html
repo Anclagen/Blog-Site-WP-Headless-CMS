@@ -8,9 +8,9 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/pages/post_specific.css" rel="stylesheet" />
     <script src="/js/post_specific.js" type="module" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
   </head>
   <body>
     <header>
@@ -40,9 +40,9 @@
     <main>
       <div>
       <div class="modal-background-container"></div>
-      <img class="image-modal"/>
+      <img class="image-modal" data-tool-tip="" />
       </div>
-      <section class="page-wrapper">
+      <section class="post-specific-wrapper">
         <h1></h1>
         <div class="featured-image-container"></div>
         <div class="post-details-container">
@@ -50,7 +50,9 @@
         </div>
         <div class="post-content-container"></div>
       </section>
-      <section>
+      <section class="post-specific-wrapper">
+        <h2>Comments</h2>
+        <div class="post-comment-section">
         <div class="post-comment-container">
           <form id="comment-form" novalidate>
             <div id="form-reporting-container"></div>
@@ -66,6 +68,12 @@
             <input type="submit" value="Post A Comment" class="cta"/>
           </form>
         </div>
+        <div class="image-modal-container">
+          <div class="image-background-container">
+              <img src="images/1_1_ratio/leo_bow_tie_square.jpg" alt="leo in bow tie" class="modal-image" loading="lazy">
+          </div>
+      </div>
+    </div>
         <div class="comments-container"></div>
       </section>
     <div class="social-container">

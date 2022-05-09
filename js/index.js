@@ -1,5 +1,5 @@
 // ------- imports --------
-import {baseUrl, routes, callAPI, parameters, blogPostUrl, sponsorUrl, addLoader, sortOldestUrl} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, blogPostUrl, sponsorUrl, addLoader, sortOldestUrl, createErrorMessage} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 //const corsUrl = "https://noroffcors.herokuapp.com/";
@@ -12,6 +12,19 @@ menuBtn.addEventListener("click", openCloseMenu);
 searchBtn.addEventListener("click", openCloseSearch);
 searchForm.addEventListener("submit", productSearch);
 
+/*-------------- get sponsors data --------------*/
+
+async function createSponsors(){
+  try{
+  //fill sponsor content
+  const sponsorData = await callAPI(sponsorUrl);
+  createSponsoredContent(sponsorData, sponsorsContainer);
+  } catch(error){
+    console.log(error);
+    createErrorMessage(sponsorsContainer);
+  }
+}
+createSponsors()
 
 
 // variables for next and previous button functions of latest images slider.
@@ -24,9 +37,6 @@ async function createPageContent(){
   //set page max for latest
   latestPageMax = Math.ceil(sortNewPostData.length/4);
   createPostImageSlider(sortNewPostData, latestContainer);
-
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
   }
 
 createPageContent()

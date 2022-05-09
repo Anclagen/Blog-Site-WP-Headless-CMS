@@ -53,6 +53,14 @@ export function addLoader(container){
                         </div>`;
 }
 
+// catch error message generator
+export function createErrorMessage(container){
+  container.innerHTML = `<div class="error message">
+                          <p> An error occurred while fetching the data </p>
+                          <p> Please try reloading the page, if this error persists please contact us using a query form </p>
+                        </div>`;
+}
+
 /*---------- Posts --------------*/
 
 // Subscriber key can only post comments.

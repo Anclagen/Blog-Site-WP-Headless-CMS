@@ -123,3 +123,30 @@ export function validateEmailInput(email, errorContainer) {
 export function resetBorders(input){
   input.style.border = "2px solid grey";
 }
+
+
+/*---------- image modal ----------*/
+
+export function addImageModals(){
+  const imageModalBackground = document.querySelector(".modal-background-container");
+  const imageModal = document.querySelector(".image-modal");
+  const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
+  
+  imagesModals.forEach(function(image) {
+    //assign event listener to all checkboxes
+    image.addEventListener('click', function() {
+      imageModal.src = this.src;
+      imageModal.alt = this.alt;
+      imageModal.classList.add("expanded-image-modal");
+      imageModalBackground.style.display = "block";
+    })  
+  });
+
+  //assign event listener to background for closing modal
+  imageModalBackground.addEventListener("click", function(){
+  imageModal.src = "";
+  imageModal.alt = "";
+  imageModal.classList.remove("expanded-image-modal");
+  imageModalBackground.style.display = "none";
+})
+}

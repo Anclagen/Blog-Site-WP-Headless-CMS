@@ -1,4 +1,4 @@
-import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl} from "./components/api_utilities.js"
+import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
@@ -8,8 +8,6 @@ menuBtn.addEventListener("click", openCloseMenu);
 searchBtn.addEventListener("click", openCloseSearch);
 searchForm.addEventListener("submit", productSearch);
 
-
-
 /*-------------- query string grabs --------------*/
 
 const queryString = document.location.search;
@@ -17,12 +15,8 @@ const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
 const searchTerms = params.get("search");
 
-console.log(searchTerms)
-console.log(tags)
-
-
-
 /*-------------- defining the initial url --------------*/
+
 let initialUrl = blogPostUrl;
 if(tags !== null){
   initialUrl = blogPostUrl + "&categories=" + tags
@@ -31,17 +25,38 @@ if(tags !== null){
   initialUrl = searchBlogPostsUrl + searchTerms;
 }
 
-/*-------------- API and Page Creation --------------*/
+/*-------------- get sponsors data --------------*/
+
+async function createSponsors(){
+  try{
+  //fill sponsor content
+  const sponsorData = await callAPI(sponsorUrl);
+  createSponsoredContent(sponsorData, sponsorsContainer);
+  } catch(error){
+    console.log(error);
+    createErrorMessage(sponsorsContainer);
+  }
+}
+createSponsors()
+
+/*-------------- add filter options --------------*/
+async function addFilterOptions(){
+  const categoriesData = await callAPI(categoriesUrl);
+  createFilterOptions(categoriesData);
+}
+addFilterOptions()
+
+/*-------------- Main Page Content Creation --------------*/
 
 const postResultsContainer = document.querySelector(".post-results-container");
 let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
 
+
+
 async function createPageContent(){
-  //creates options for tags filter
-  const categoriesData = await callAPI(categoriesUrl);
-  createFilterOptions(categoriesData);
+  
 
   //initial api call, also grabbing headers for pages and results
   let data = await callApiGetPages(initialUrl);
@@ -54,7 +69,7 @@ async function createPageContent(){
   pagesAndPosts = [data[1], data[2]];
 
   //get number of results
-  if(postData.length < 10){
+  if(postData.length <= 10){
     currentPostCreated = postData.length
     showMoreBtn.disabled = true;
   } else {
@@ -64,9 +79,7 @@ async function createPageContent(){
   fillResultsDetails(postData);
   createPageHTML(postData);
 
-  //fill sponsor content
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
+
 }
 
 createPageContent();
@@ -127,7 +140,7 @@ function createFilterOptions(data){
   });
 }
 
-//add filter sort to data
+//add filter for categories to data
 filterSelectContainer.addEventListener("change", filterDataCreateHTML)
 
 async function filterDataCreateHTML(){
@@ -137,6 +150,7 @@ async function filterDataCreateHTML(){
     postResultsContainer.innerHTML = "";
     let filteredPostData = postData.filter(data => {
       return data.categories.includes(Number(filterSelectContainer.value))});
+
     fillResultsDetails(filteredPostData);
     totalNumberPostsContainer.innerText = filteredPostData.length;
     createPageHTML(filteredPostData);
@@ -144,6 +158,10 @@ async function filterDataCreateHTML(){
   
   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
 }
+
+//sort data by data
+
+
 
 //do extra api call with search ids
 

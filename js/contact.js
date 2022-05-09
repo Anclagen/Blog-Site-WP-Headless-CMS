@@ -1,4 +1,4 @@
-import {baseUrl, routes, callAPI, parameters, sponsorUrl} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, sponsorUrl, createErrorMessage} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
 import {createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
 
@@ -9,25 +9,35 @@ menuBtn.addEventListener("click", openCloseMenu);
 searchBtn.addEventListener("click", openCloseSearch);
 searchForm.addEventListener("submit", productSearch);
 
+/*-------------- get sponsors data --------------*/
+
+async function createSponsors(){
+  try{
+  //fill sponsor content
+  const sponsorData = await callAPI(sponsorUrl);
+  createSponsoredContent(sponsorData, sponsorsContainer);
+  } catch(error){
+    console.log(error);
+    createErrorMessage(sponsorsContainer);
+  }
+}
+createSponsors()
+
+/*-------------- Api Call and Page Creation --------------*/
+const additionalDetailsContainer = document.querySelector(".extra-contact-info")
 
 //contact forms id for posting info to.
 const id = 106;
 const url = baseUrl + routes.page + "/" + id;
-
-/*-------------- Api Call and Page Creation --------------*/
-const additionalDetailsContainer = document.querySelector(".extra-contact-info")
 
 async function createPageContent(){
   try{
     let contactDetails = await callAPI(url);
     console.log(contactDetails);
     additionalDetailsContainer.innerHTML = contactDetails.content.rendered
-
-    //fill sponsor content
-    const sponsorData = await callAPI(sponsorUrl);
-    createSponsoredContent(sponsorData, sponsorsContainer);
   } catch(error){
     console.log(error);
+    createErrorMessage(additionalDetailsContainer);
   }
 }
 
@@ -60,7 +70,6 @@ function validateSubmitComment(submission) {
   formData.append("your-message", message.value);
   formData.append("your-email", email.value);
 
-  console.log(formData)
   postQuery(formData, formReporting);
 
   commentsForm.reset();
@@ -79,7 +88,9 @@ function postQuery(data, formReportingContainer){
           redirect: 'follow'
            }).then((response) => {
             console.log(response)
-          }).catch(error => console.log('error', error));
+          }).catch(error => 
+            console.log('error', error),
+            createErrorMessage(formReporting));
 
     formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`
 }

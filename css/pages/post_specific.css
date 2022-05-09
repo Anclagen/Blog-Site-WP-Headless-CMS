@@ -43,3 +43,50 @@
   max-width: 900px;
   margin: 0px auto;
 }
+
+.comments-container{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.comments-container div{
+
+  margin-top: 15px;
+}
+
+.comment-left,
+.comment-right {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+}
+
+.comment-left {
+  grid-template-columns: 1fr auto;
+}
+
+.comment-img{
+  width: 100%;
+  max-width: 100px;
+}
+
+.comment-right div,
+.comment-left div {
+  margin-left: auto;
+  margin-bottom: auto;
+  width: 80%;
+  height: fit-content;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.comment-right div{
+margin-left: 0;
+}
+
+.comment-right p,
+.comment-left p {
+  padding: 10px;
+  margin: 0;
+  word-break: break-all;
+  white-space: normal;
+}

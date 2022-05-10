@@ -169,7 +169,6 @@ nav a {
   position: absolute;
   font-size: 1.5rem;
   font-weight: 700;
-  padding: 15px;
   top: 0;
   right: -6px;
 }
@@ -180,6 +179,22 @@ nav a {
   height: 43px;
   border: 2px solid var(--dark-brown);
 }
+
+#skip a {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+#skip a:focus {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
 /*hamburger menu icon and animation*/
 
 nav button {
@@ -459,9 +474,6 @@ footer div {
   padding: 15px;
   border-radius: 20px
 }
-
-
-
 
 /*------ Post content styling for post specific/about/contacts ------*/
 

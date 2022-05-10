@@ -32,23 +32,6 @@ export function createPost(data){
   return post
 }
 
-/*-------------- sponsor content creator -----------------*/
-export function createSponsoredContent(sponsorData, sponsorsContainer){
-  sponsorsContainer.innerHTML="";
-  let sponsorPost = "<p>No Sponsors, No Money!</p>";
-  for(let i = 0; i < sponsorData.length; i++){
-    sponsorPost = `<div>
-                    <a href="${sponsorData[i].acf.sponsor_url}">
-                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
-                    <a>
-                  </div>
-                  <div class="leo-sponsor-comment">
-                    <p>${sponsorData[i].acf.our_quote}</p>
-                    <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
-                  </div>`
-    sponsorsContainer.innerHTML += sponsorPost
-  }
-}
 
 /*-----------------  Menu Open/Close -----------------*/
 //menu on phone

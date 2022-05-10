@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, parameters, sponsorUrl, createErrorMessage} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, sponsorUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
-import {createSponsoredContent, productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
+import {productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
@@ -10,18 +10,7 @@ searchBtn.addEventListener("click", openCloseSearch);
 searchForm.addEventListener("submit", productSearch);
 
 /*-------------- get sponsors data --------------*/
-
-async function createSponsors(){
-  try{
-  //fill sponsor content
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
-  } catch(error){
-    console.log(error);
-    createErrorMessage(sponsorsContainer);
-  }
-}
-createSponsors()
+createSponsors(sponsorUrl, sponsorsContainer)
 
 /*-------------- Api Call and Page Creation --------------*/
 const additionalDetailsContainer = document.querySelector(".extra-contact-info")

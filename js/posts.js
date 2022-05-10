@@ -1,6 +1,6 @@
-import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage} from "./components/api_utilities.js"
+import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
-import {createPost, createSponsoredContent, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
+import {createPost, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
@@ -27,17 +27,8 @@ if(tags !== null){
 
 /*-------------- get sponsors data --------------*/
 
-async function createSponsors(){
-  try{
-  //fill sponsor content
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
-  } catch(error){
-    console.log(error);
-    createErrorMessage(sponsorsContainer);
-  }
-}
-createSponsors()
+createSponsors(sponsorUrl, sponsorsContainer)
+
 
 /*-------------- add filter options --------------*/
 async function addFilterOptions(){

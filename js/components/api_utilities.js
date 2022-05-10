@@ -81,3 +81,34 @@ export async function postComment(data, formReportingContainer){
     formReportingContainer.innerHTML = `<p class="error">An error occurred when posting your message</p>`
   }
 }
+
+/*---------- Sponsored ------------*/
+
+export async function createSponsors(sponsorUrl, sponsorsContainer){
+  try{
+  //fill sponsor content
+  const sponsorData = await callAPI(sponsorUrl);
+  createSponsoredContent(sponsorData, sponsorsContainer);
+  } catch(error){
+    console.log(error);
+    createErrorMessage(sponsorsContainer);
+  }
+}
+
+/*-------------- sponsor content creator -----------------*/
+export function createSponsoredContent(sponsorData, sponsorsContainer){
+  sponsorsContainer.innerHTML="";
+  let sponsorPost = "<p>No Sponsors, No Money!</p>";
+  for(let i = 0; i < sponsorData.length; i++){
+    sponsorPost = `<div>
+                    <a href="${sponsorData[i].acf.sponsor_url}">
+                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
+                    <a>
+                  </div>
+                  <div class="leo-sponsor-comment">
+                    <p>${sponsorData[i].acf.our_quote}</p>
+                    <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
+                  </div>`
+    sponsorsContainer.innerHTML += sponsorPost
+  }
+}

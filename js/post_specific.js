@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, parameters, addLoader, blogPostUrl, sponsorUrl, postComment, createErrorMessage} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, addLoader, blogPostUrl, sponsorUrl, postComment, createErrorMessage, createSponsors} from "./components/api_utilities.js"
 import { menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
-import {createSponsoredContent, productSearch, resetBorders, validatedInputLength, openCloseMenu, openCloseSearch, addImageModals} from "./components/components.js"
+import {productSearch, resetBorders, validatedInputLength, openCloseMenu, openCloseSearch, addImageModals} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
@@ -18,17 +18,7 @@ searchForm.addEventListener("submit", productSearch);
 
 /*-------------- get sponsors data --------------*/
 
-async function createSponsors(){
-  try{
-  //fill sponsor content
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
-  } catch(error){
-    console.log(error);
-    createErrorMessage(sponsorsContainer);
-  }
-}
-createSponsors()
+createSponsors(sponsorUrl, sponsorsContainer)
 
 /*-------------- Api Call and Page Creation --------------*/
 

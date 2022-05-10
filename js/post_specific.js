@@ -84,10 +84,6 @@ async function getComments(){
 }
 getComments()
 
-console.log(1%2)
-console.log(2%2)
-console.log(3%2)
-
 function createComments(data){
   commentsContainer.innerHTML ="";
   let countLeft = 1;
@@ -124,24 +120,6 @@ function createComments(data){
     }
   }
 }
-
-
-let postedComments = `<div class="comment-right">
-                      <img src="/images/head_of_leo.png" class="comment-img">
-                      <div><p>Woohoo</p></div>
-                      </div>
-                      <div class="comment-left">
-                      <div><p>Woohoo</p></div>
-                      <img src="/images/head_of_beagle.png" class="comment-img">
-                      </div>
-                      <div class="comment-right">
-                      <img src="/images/head_of_dog_2.png" class="comment-img">
-                      <div><p>dsfgfds</p></div>
-                      </div>
-                      <div class="comment-left">
-                      <div><p>Woohoo</p></div>
-                      <img src="/images/head_of_dog.png" class="comment-img">
-                      </div>`
 
 /*-------------- Comment Posting --------------*/
 const commentsForm = document.querySelector("#comment-form");

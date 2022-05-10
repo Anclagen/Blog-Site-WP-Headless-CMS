@@ -78,6 +78,7 @@ function createPostImageSlider(data, container){
 //change page function for latest posts
 const latestNext = document.querySelector(".latest-next");
 const latestPrevious = document.querySelector(".latest-previous");
+const latestPosts = document.getElementById('latest-posts');
 
 latestPrevious.addEventListener("click", previousPage);
 latestNext.addEventListener("click", nextPage);
@@ -94,14 +95,17 @@ function previousPage(){
     console.log(latestPageCurrent)
     latestPrevious.setAttribute('disabled', 'disabled');
   }
+  latestPosts.scrollIntoView()
 }
 
 function nextPage(){
   latestPageCurrent += 1;
-  latestContainer.style.transform = `translateX(-${(latestPageCurrent - 1) * slidePercentage}%)`
+  let transform = (latestPageCurrent - 1) * slidePercentage;
+  latestContainer.style.transform = `translateX(-${transform}%)`
   latestPrevious.disabled = false;
   if(latestPageCurrent === latestPageMax){
     latestNext.setAttribute('disabled', 'disabled');
   }
+  latestPosts.scrollIntoView()
 }
 

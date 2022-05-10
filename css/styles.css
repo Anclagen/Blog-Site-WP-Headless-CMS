@@ -28,6 +28,9 @@ Font Sizes:
 32px = 2rem         regular (400) - picture headers
 
 */
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: auto;
@@ -115,7 +118,7 @@ nav li{
   font-weight: 700;
 }
 
-
+#current-page,
 nav li a:hover{
   background-color: var(--dark-brown);
   color: var(--off-white);

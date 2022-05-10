@@ -15,8 +15,8 @@ export const routes = {
 // parameters
 export const parameters = {
   acf: "acf_format=standard",
-  results25: "posts_per_page=25",
-  results50: "posts_per_page=50",
+  results25: "per_page=25",
+  results50: "per_page=50",
   search: "search=", //add search terms
 }
 

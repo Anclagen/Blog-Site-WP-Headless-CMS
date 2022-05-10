@@ -39,18 +39,7 @@
   gap: 10px;
 }
 
-.post-specific-wrapper{
-  max-width: 900px;
-  margin: 0px auto;
-}
-
-.comments-container{
-  max-width: 700px;
-  margin: 0 auto;
-}
-
 .comments-container div{
-
   margin-top: 15px;
 }
 

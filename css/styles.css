@@ -11,6 +11,8 @@
   --h3: normal 700 1.5rem "Raleway", sans-serif;
   --body: normal 500 1.125rem "Raleway", sans-serif;
   --cta: normal 600 1.125rem "Raleway", sans-serif;
+
+
 }
 
 
@@ -67,19 +69,37 @@ figure.wp-block-gallery {
   flex-wrap: nowrap;
   overflow: hidden;
 }
+/*-------------- content wrappers -------------*/
 
-.search-form,
-main{
+
+nav ul,
+.page-wrapper-large{
   max-width: 1300px;
   margin: 0 auto;
   width: 96%;
 }
 
+.post-specific-wrapper{
+  max-width: 900px;
+  width: 96%;
+  margin: 0px auto;
+}
+
+.comments-container,
+#contact-form,
+#comment-form,
+.extra-contact-info,
+.contact-content-container,
+.about-content-container,
+.post-content-container{
+  max-width: 700px;
+  width: 96%;
+  margin: 0 auto;
+}
+
 /*-------------- Navigation -------------*/
 /*logo*/
 .logo-header{
-  max-width: 1300px;
-  margin: 0 auto;
   height: fit-content;
   max-height: 100px;
 }
@@ -101,8 +121,6 @@ nav{
 
 nav ul{
   line-height: 70px;
-  margin: 0 auto;
-  max-width: 1200px;
   padding: 0;
 }
 
@@ -157,9 +175,9 @@ nav a {
 }
 
 .search-input{
-  width: 100%;
+  width: 98%;
   font: var(--body);
-  height: 53px;
+  height: 43px;
   border: 2px solid var(--dark-brown);
 }
 /*hamburger menu icon and animation*/
@@ -364,6 +382,7 @@ footer div {
   justify-content: space-between;
   margin: 20px;
 }
+
 .cta{
   background-color: var(--dark-brown);
   color: var(--off-white);
@@ -404,15 +423,21 @@ footer div {
 }
 
 .signup-input {
+  margin-top: 10px;
   height: 39px;
   border: 1px solid var(--dark-brown);
   padding: 0px;
-  width: 90%;
+  width: 60%;
+}
+
+.sign-up{
+  text-align: center;
 }
 
 .signup-submit{
   position: absolute;
-  right: 5%;
+  right: 19%;
+  bottom: 0;
 }
 
 .sponsor-logo-image{
@@ -435,27 +460,10 @@ footer div {
   border-radius: 20px
 }
 
-.sign-up{
-  text-align: center;
-}
+
+
 
 /*------ Post content styling for post specific/about/contacts ------*/
-
-.page-wrapper{
-  max-width: 1300px;
-  margin: 0 auto;
-}
-
-#contact-form,
-#comment-form,
-.extra-contact-info,
-.contact-content-container,
-.about-content-container,
-.post-content-container{
-  max-width: 700px;
-  width: 90%;
-  margin: 0 auto;
-}
 
 .post-details-container,
 .featured-image{
@@ -578,9 +586,6 @@ textarea {
   nav ul{
     vertical-align: middle;
     line-height: 70px;
-    margin: 0 auto;
-    max-width: 1300px;
-    width: 99%;
     display: flex;
     justify-content: flex-start;
     padding: 0;

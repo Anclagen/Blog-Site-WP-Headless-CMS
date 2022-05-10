@@ -19,7 +19,7 @@ const searchTerms = params.get("search");
 
 let initialUrl = blogPostUrl;
 if(tags !== null){
-  initialUrl = blogPostUrl + "&categories=" + tags
+  initialUrl = blogPostUrl + "&categories=" + tags;
 } else if(searchTerms !== null){
   console.log("yes")
   initialUrl = searchBlogPostsUrl + searchTerms;
@@ -57,7 +57,7 @@ let pagesAndPosts = [];
 
 async function createPageContent(){
   
-
+  console.log(initialUrl)
   //initial api call, also grabbing headers for pages and results
   let data = await callApiGetPages(initialUrl);
   //search data lacking so additional call done with post ids for more data
@@ -67,7 +67,8 @@ async function createPageContent(){
 
   postData = data[0]
   pagesAndPosts = [data[1], data[2]];
-
+  console.log(postData)
+  console.log(pagesAndPosts)
   //get number of results
   if(postData.length <= 10){
     currentPostCreated = postData.length
@@ -75,11 +76,9 @@ async function createPageContent(){
   } else {
     currentPostCreated = 10;
   }
-  
-  fillResultsDetails(postData);
+
   createPageHTML(postData);
-
-
+  fillResultsDetails(postData);
 }
 
 createPageContent();
@@ -106,7 +105,7 @@ const totalNumberPostsContainer = document.querySelector(".total-results");
 
 function fillResultsDetails(data){
   if(data.length >=10){
-    numberShownPostsContainer.innerText = 10;
+    numberShownPostsContainer.innerText = currentPostCreated;
   } else {
     numberShownPostsContainer.innerText = data.length;
   }

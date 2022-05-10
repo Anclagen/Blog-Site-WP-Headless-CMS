@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Fluffy Piranha, The Day And Life Of Leopold</title>
     <meta name="description" content="The Fluffy Piranha, is a blog devoted to Leopold, a Border Collie, Shetland Sheep Dog mix, told from the perspective of Leo himself." />
+    <link rel="icon" href="images/logo_leo_small_head.png" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/tester.css" rel="stylesheet" />
     <link href="css/pages/index.css" rel="stylesheet" />
@@ -32,7 +33,7 @@
   </head>
   <body>
     <header>
-      <div class="logo-header"><img src="images/leo_page_logo.png" /></div>
+      <div class="logo-header page-wrapper-large"><img src="images/leo_page_logo.png" /></div>
       <nav>
         <ul class="navigation-menu hide-menu">
           <li><a href="index.html" id="current-page">Home</a></li>
@@ -49,22 +50,17 @@
         </button>
       </nav>
       <div class="hidden-search search-container">
-        <form class="search-form">
+        <form class="search-form page-wrapper-large">
           <input type="text" class="search-input" />
           <input type="submit" value="Search" class="search-btn cta" />
         </form>
       </div>
     </header>
-    <main>
-      <div class="index-heading">
-        <!-- <div class="heading-text">
-          <h1>Fluffy Piranha</h1>
-          <span>Following the day and life of Leo.</span>
-        </div> -->
-      </div>
+    <main class="page-wrapper-large">
+      <div class="index-heading"></div>
       <div class="main-content">
         <section>
-          <h2 class="latest-post-heading" id="latest-posts">Latest Posts</h2>
+          <h1 class="latest-post-heading" id="latest-posts">Latest Posts</h1>
           <div class="latest-post-slider-container">
             <div class="latest-post-slider">
               <div class="loader">
@@ -94,10 +90,10 @@
           </div>
           <div class="sign-up">
             <h2>Sign Up</h2>
-            <p>Signup to are weekly newsletter to get updates on what is going on with Leo.</p>
+            <label for="signup">Signup to are weekly newsletter to get updates on what is going on with Leo.</label>
             <form action="POST" class="signup-form">
-              <input type="text" name="signup" id="" class="signup-input" />
-              <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
+              <input type="text" name="signup" id="signup" class="signup-input" />
+              <input type="submit" value="Signup" class="signup-submit cta" />
             </form>
           </div>
         </section>

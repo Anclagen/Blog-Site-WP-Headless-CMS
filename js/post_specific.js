@@ -1,6 +1,6 @@
 import {baseUrl, routes, callAPI, parameters, addLoader, blogPostUrl, sponsorUrl, postComment, createErrorMessage, createSponsors} from "./components/api_utilities.js"
 import { menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
-import {productSearch, resetBorders, validatedInputLength, openCloseMenu, openCloseSearch, addImageModals} from "./components/components.js"
+import {productSearch, resetBorders, validatedInputLength, openCloseMenu, openCloseSearch, addImageModals, createComments} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
@@ -26,7 +26,8 @@ async function createPageContent(){
   try{
     let postData = await callAPI(url);
     await createPageHTML(postData);
-    console.log(postData._embedded)
+    createHeadInformation(postData);
+    console.log(postData)
     addImageModals()
   } catch(error){
     console.log(error);
@@ -35,6 +36,14 @@ async function createPageContent(){
 }
 
 createPageContent();
+
+/*-------------- Page Information --------------*/
+const title = document.querySelector("title");
+
+function createHeadInformation(data){
+  console.log(data.title.rendered)
+  title.innerText = `The Fluffy Piranha | ${data.title.rendered} `;
+}
 
 /*-------------- Page Creation --------------*/
 /* sorting data onto page */
@@ -63,53 +72,24 @@ async function createPageHTML(data){
 /*-------------- Get Comments  --------------*/
 const commentsContainer = document.querySelector(".comments-container");
 const commentUrl = baseUrl + "/comments?post=" + id
+
 async function getComments(){
   try{
     let commentData = await callAPI(commentUrl);
-    createComments(commentData);
+    if(commentData.length === 0){
+      commentsContainer.innerHTML=`<p>No comments yet be the first!</p>`
+    } else{
+      createComments(commentData, commentsContainer);
+    }
+    
   } catch(error){
     console.log(error);
     createErrorMessage(commentsContainer)
   }
 }
+
 getComments()
 
-function createComments(data){
-  commentsContainer.innerHTML ="";
-  let countLeft = 1;
-  let countRight = 1;
-  for(let i = 0; i < data.length; i++){
-    if((i+1)%2 !== 0){
-      if(countRight%2 !== 0){
-        commentsContainer.innerHTML +=`<div class="comment-right">
-                                        <img src="/images/head_of_leo.png" alt="image of dog head" class="comment-img" />
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        </div>`;
-        countRight++;
-      } else{ 
-        commentsContainer.innerHTML += `<div class="comment-right">
-                                      <img src="/images/head_of_dog_2.png" alt="image of dog head" class="comment-img">
-                                      <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                      </div>`;
-        countRight++;
-      }
-    } else{
-      if(countLeft%2 !== 0){
-        commentsContainer.innerHTML +=`<div class="comment-left">
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        <img src="/images/head_of_beagle.png" alt="image of dog head" class="comment-img" />
-                                        </div>`;
-        countLeft++;
-      } else{ 
-        commentsContainer.innerHTML += `<div class="comment-left">
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        <img src="/images/head_of_dog.png" alt="image of dog head" class="comment-img" />
-                                        </div>`;
-        countLeft++;
-      }
-    }
-  }
-}
 
 /*-------------- Comment Posting --------------*/
 const commentsForm = document.querySelector("#comment-form");

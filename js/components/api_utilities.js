@@ -30,6 +30,7 @@ export const searchBlogPostsUrl = baseUrl + "/search?"+ parameters.acf + "&" + p
 // callAPI (url) and return data
 export async function callAPI (url){
   const response = await fetch(url);
+  console.log(response)
   const data = await response.json();
   
  return data

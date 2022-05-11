@@ -113,6 +113,8 @@ export function resetBorders(input){
 export function addImageModals(){
   const imageModalBackground = document.querySelector(".modal-background-container");
   const imageModal = document.querySelector(".image-modal");
+  const imageModalCaption = document.querySelector(".image-modal-caption");
+  const imageModalContent = document.querySelector(".image-modal-content")
   const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
   
   imagesModals.forEach(function(image) {
@@ -120,7 +122,8 @@ export function addImageModals(){
     image.addEventListener('click', function() {
       imageModal.src = this.src;
       imageModal.alt = this.alt;
-      imageModal.classList.add("expanded-image-modal");
+      imageModalCaption.innerText = this.alt
+      imageModalContent.classList.add("image-modal-content-expanded");
       imageModalBackground.style.display = "block";
     })  
   });
@@ -129,7 +132,47 @@ export function addImageModals(){
   imageModalBackground.addEventListener("click", function(){
   imageModal.src = "";
   imageModal.alt = "";
-  imageModal.classList.remove("expanded-image-modal");
+  imageModalCaption.innerText = "";
+  imageModalContent.classList.remove("image-modal-content-expanded");
   imageModalBackground.style.display = "none";
 })
 }
+
+/*---------- create comments ----------*/
+export function createComments(data, commentsContainer){
+  commentsContainer.innerHTML ="";
+  let countLeft = 1;
+  let countRight = 1;
+  for(let i = 0; i < data.length; i++){
+    if((i+1)%2 !== 0){
+      if(countRight%2 !== 0){
+        commentsContainer.innerHTML +=`<div class="comment-right">
+                                        <img src="/images/head_of_leo.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        </div>`;
+        countRight++;
+      } else{ 
+        commentsContainer.innerHTML += `<div class="comment-right">
+                                      <img src="/images/head_of_dog_2.png" alt="image of dog head" class="comment-img hidden-on-mobile">
+                                      <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                      </div>`;
+        countRight++;
+      }
+    } else{
+      if(countLeft%2 !== 0){
+        commentsContainer.innerHTML +=`<div class="comment-left">
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        <img src="/images/head_of_beagle.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        </div>`;
+        countLeft++;
+      } else{ 
+        commentsContainer.innerHTML += `<div class="comment-left">
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        <img src="/images/head_of_dog.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        </div>`;
+        countLeft++;
+      }
+    }
+  }
+}
+

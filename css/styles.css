@@ -79,6 +79,7 @@ nav ul,
   width: 96%;
 }
 
+.page-wrapper-medium,
 .post-specific-wrapper{
   max-width: 900px;
   width: 96%;
@@ -163,13 +164,14 @@ nav a {
   position: relative;
   width: 40%;
   min-width: 300px;
+  padding-top: 10px;
 }
 
 .search-container .search-btn{
   position: absolute;
   font-size: 1.5rem;
   font-weight: 700;
-  top: 0;
+  top: 10px;
   right: -6px;
 }
 
@@ -177,9 +179,9 @@ nav a {
   width: 98%;
   font: var(--body);
   height: 43px;
-  border: 2px solid var(--dark-brown);
 }
 
+/*skip to main content for keyboard users*/
 #skip a {
   position: absolute;
   left: -10000px;
@@ -187,7 +189,7 @@ nav a {
   width: 1px;
   height: 1px;
   overflow: hidden;
-}
+} 
 
 #skip a:focus {
   position: static;
@@ -258,6 +260,8 @@ h1, h2{
   padding: 10px 0px;
   margin-top: 15px;
   text-align: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px var(--dark-brown);
 }
 
 
@@ -328,8 +332,7 @@ footer div {
 }
 
 /*------post items and slider css---------*/
-.post-results-container,
-.main-content{
+.post-results-container{
   overflow: hidden;
 }
 
@@ -392,6 +395,12 @@ footer div {
 }
 
 /*----Buttons plus slider buttons-----*/
+.signup-submit,
+.search-container .search-btn{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .slider-buttons {
   display: flex;
   justify-content: space-between;
@@ -442,7 +451,9 @@ footer div {
   height: 39px;
   border: 1px solid var(--dark-brown);
   padding: 0px;
+  padding-left: 5px;
   width: 60%;
+  border-radius: 5px;
 }
 
 .sign-up{
@@ -495,6 +506,8 @@ footer div {
 .image-background-container{
   padding:10px;
   background-color: var(--light-brown);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px var(--dark-brown);
 }
 
 .contact-image img,
@@ -554,6 +567,17 @@ textarea {
   min-height: 100px;
   resize: none;
   font: var(--body);
+}
+
+.search-input,
+#contact-form input,
+#comment-form input,
+textarea {
+border-top: 3px solid var(--dark-brown);
+border-right: 3px solid var(--light-brown);
+border-left: 3px solid var(--dark-brown);
+border-bottom: 3px solid var(--light-brown);
+border-radius: 5px;
 }
 
 #contact-form textarea{

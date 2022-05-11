@@ -34,8 +34,8 @@ createPageContent();
 
 /*-------------- Contact Form Posting --------------*/
 
-const commentsForm = document.querySelector("#contact-form");
-commentsForm.addEventListener("submit", validateSubmitComment);
+const contactForm = document.querySelector("#contact-form");
+contactForm.addEventListener("submit", validateSubmitComment);
 
 //validates inputs and when passed, posts form to server.
 function validateSubmitComment(submission) {
@@ -53,15 +53,11 @@ function validateSubmitComment(submission) {
   
   if(a && b && c && d) {
   //create data for post with id corresponding to page or post
-  let formData = new FormData();
-  formData.append("your-name", fullname.value);
-  formData.append("your-subject", subject.value);
-  formData.append("your-message", message.value);
-  formData.append("your-email", email.value);
+  let formData = new FormData(contactForm);
 
   postQuery(formData, formReporting);
 
-  commentsForm.reset();
+  contactForm.reset();
   resetBorders(fullname);
   resetBorders(message);
   resetBorders(email);
@@ -74,7 +70,6 @@ function postQuery(data, formReportingContainer){
     fetch("https://fluffypiranha.one/exam_project_1/wp-json/contact-form-7/v1/contact-forms/113/feedback", 
           {method: "POST",
           body: data, 
-          redirect: 'follow'
            }).then((response) => {
             console.log(response)
           }).catch(error => 

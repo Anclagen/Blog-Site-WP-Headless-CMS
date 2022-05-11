@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Blog Posts</title>
+    <title>The Blog Post</title>
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/pages/post_specific.css" rel="stylesheet" />
     <script src="/js/post_specific.js" type="module" defer></script>
@@ -50,9 +50,10 @@
       </div>
     </header>
     <main>
-      <div>
-      <div class="modal-background-container"></div>
-      <img class="image-modal" data-tool-tip="" />
+      <div class="modal-background-container"> </div>
+      <div class="image-modal-content">
+        <img class="image-modal"/>
+        <figcaption class="image-modal-caption">hello</figcaption>
       </div>
       <section class="post-specific-wrapper">
         <h1 id="main-content"></h1>
@@ -63,51 +64,35 @@
         <div class="post-content-container"></div>
       </section>
       <section class="post-specific-wrapper">
-        <h2>Comments</h2>
+        <h2>Post A Comment</h2>
         <div class="post-comment-section">
         <div class="post-comment-container">
           <form id="comment-form" novalidate>
             <div id="form-reporting-container"></div>
-            <label for="fullname">Name*</label>
-            <input id="fullname" type="text" required />
+            <label for="your-name">Name*</label>
+            <input id="your-name" type="text" required />
             <div class="error" id="error-name"></div>
             <!-- <label for="email">Email*</label>
             <input id="email" type="email" required />
             <div class="error" id="error-email"></div> -->
-            <label for="message">Comment*</label>
-            <textarea id="message" required></textarea>
+            <label for="your-message">Comment*</label>
+            <textarea id="your-message" required></textarea>
             <div class="error" id="error-message"></div>
             <input type="submit" value="Post A Comment" class="cta"/>
           </form>
         </div>
         <div class="image-modal-container">
-          <div class="image-background-container">
-              <img src="images/1_1_ratio/leo_bow_tie_square.jpg" alt="leo in bow tie" class="modal-image" loading="lazy">
+          <div class="image-background-container hidden-on-mobile">
+              <img src="images/1_1_ratio/leo_sitting_at_a_pc.jpg" alt="leo sitting at a pc" class="modal-image" loading="lazy">
           </div>
       </div>
     </div>
+    <h2>Latest Comments</h2>
         <div class="comments-container">
-
-          <!-- <div class="comment-right">
-            <img src="/images/head_of_leo.png" class="comment-img">
-            <div><p>Woohoo</p></div>
-          </div>
-          <div class="comment-left">
-            <div><p>Woohoo</p></div>
-            <img src="/images/head_of_beagle.png" class="comment-img">
-          </div>
-          <div class="comment-right">
-            <img src="/images/head_of_dog_2.png" class="comment-img">
-            <div><p>dsfgfds</p></div>
-          </div>
-          <div class="comment-left">
-            <div><p>Woohoo</p></div>
-            <img src="/images/head_of_dog.png" class="comment-img">
-            
-          </div> -->
+          
         </div>
       </section>
-    <div class="social-container">
+    <div class="social-container page-wrapper-medium">
       <section>
         <h2>Connect With Us</h2>
         <div class="social-media">

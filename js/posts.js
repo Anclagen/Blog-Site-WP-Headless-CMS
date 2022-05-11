@@ -44,11 +44,7 @@ let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
 
-
-
 async function createPageContent(){
-  
-  console.log(initialUrl)
   //initial api call, also grabbing headers for pages and results
   let data = await callApiGetPages(initialUrl);
   //search data lacking so additional call done with post ids for more data
@@ -58,8 +54,7 @@ async function createPageContent(){
 
   postData = data[0]
   pagesAndPosts = [data[1], data[2]];
-  console.log(postData)
-  console.log(pagesAndPosts)
+
   //get number of results
   if(postData.length <= 10){
     currentPostCreated = postData.length

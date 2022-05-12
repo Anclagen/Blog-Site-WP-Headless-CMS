@@ -70,10 +70,16 @@ function createPostImageSlider(data, container){
 const latestNext = document.querySelector(".latest-next");
 const latestPrevious = document.querySelector(".latest-previous");
 const latestPosts = document.getElementById('latest-posts');
+const lastedPreviousArrow = document.querySelector(".previous-arrow");
+const lastedNextArrow = document.querySelector(".next-arrow");
+
 
 //event listeners for next and previous buttons
 latestPrevious.addEventListener("click", previousPage);
+lastedPreviousArrow.addEventListener("click", previousPage);
 latestNext.addEventListener("click", nextPage);
+lastedNextArrow.addEventListener("click", nextPage);
+lastedPreviousArrow.style.display = "none";
 
 //change page functions for latest posts
 function previousPage(){
@@ -81,9 +87,11 @@ function previousPage(){
   let transform = (latestPageCurrent - 1) * slidePercentage;
   latestContainer.style.transform = `translateX(-${transform}%)`
   latestNext.disabled = false;
+  lastedNextArrow.style.display = "block"
   //disables button on first page
   if(latestPageCurrent === 1){
     latestPrevious.setAttribute('disabled', 'disabled');
+    lastedPreviousArrow.style.display = "none";
   }
   //added to move screen to top of slider on mobile
   latestPosts.scrollIntoView()
@@ -94,9 +102,11 @@ function nextPage(){
   let transform = (latestPageCurrent - 1) * slidePercentage;
   latestContainer.style.transform = `translateX(-${transform}%)`
   latestPrevious.disabled = false;
+  lastedPreviousArrow.style.display = "block";
   //disables button on last page
   if(latestPageCurrent === latestPageMax){
     latestNext.setAttribute('disabled', 'disabled');
+    lastedNextArrow.style.display = "none"
   }
   //added to move screen to top of slider on mobile
   latestPosts.scrollIntoView()

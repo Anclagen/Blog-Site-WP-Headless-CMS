@@ -77,7 +77,7 @@ async function getComments(){
   try{
     let commentData = await callAPI(commentUrl);
     if(commentData.length === 0){
-      commentsContainer.innerHTML=`<p>No comments yet be the first!</p>`
+      commentsContainer.innerHTML=`<p>No comments yet be the first!</p>`;
     } else{
       createComments(commentData, commentsContainer);
     }

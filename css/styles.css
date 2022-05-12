@@ -332,14 +332,12 @@ footer div {
 }
 
 /*------post items and slider css---------*/
-.post-results-container{
-  overflow: hidden;
-}
 
 .latest-post-slider-container{
   overflow: hidden;
-  width: 100%;
-  max-width: 96vw;
+  width: 94%;
+  max-width: 94vw;
+  margin: 0 auto;
 }
 
 .latest-post-slider{
@@ -360,11 +358,10 @@ footer div {
 
 .post-container {
   padding: 10px;
-  overflow: hidden;
 }
 .post-image{
   object-fit: cover;
-  max-height: 250px;
+  max-height: 240px;
   width: 100%;
 }
 
@@ -669,11 +666,75 @@ border-radius: 5px;
   }
 }
 
-@media only screen and (min-width: 850px) {
+@media only screen and (min-width: 750px) {
+  /*latest post slider arrows*/
+  .latest-post-arrow-container{
+    position: relative;
+  }
+  
+  .previous-arrow,
+  .next-arrow {
+    position: absolute;
+    height: 100%;
+    width: 3.5%;
+    top: 0;
+    background-color: rgb(115, 68, 41, 0.1);
+    z-index: 1;
+    cursor: pointer;
+  }
+  
+  .next-arrow {
+    right: -0%;
+  }
+  
+  .previous-arrow:hover,
+  .next-arrow:hover {
+    background-color: rgb(115, 68, 41, 0.3);
+  }
+  
+  .next-arrow::after,
+  .previous-arrow::after{
+    content: "";
+    position: absolute;
+    width: 3%;
+    height: 0px;
+    top: 50%;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+  }
+  
+  .previous-arrow::after{
+    left: 20%;
+    border-right: 15px solid rgb(0, 0, 0, 0.4);
+  }
+  
+  .next-arrow::after{
+    right: 20%;
+    border-left: 15px solid rgb(0, 0, 0, 0.4);
+  }
 
 }
 
 @media only screen and (min-width: 1100px){
+  .next-arrow::after,
+  .previous-arrow::after{
 
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
+
+  }
+  
+  .previous-arrow::after{
+    left: 20%;
+    border-right: 25px solid rgb(0, 0, 0, 0.4);
+  }
+  
+  .next-arrow::after{
+    right: 20%;
+    border-left: 25px solid rgb(0, 0, 0, 0.4);
+  }
 
 }

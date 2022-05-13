@@ -498,7 +498,6 @@ footer div {
 .image-modal-container{
   width: 100%;
   max-width: 300px;
-  
 }
 
 .image-background-container{
@@ -511,13 +510,25 @@ footer div {
 .contact-image img,
 .modal-image{
   width: 100%;
-  display: block;
 }
 
 .caption{
   background-color: var(--light-brown);
   width:100%;
   padding: 0 10px 10px 10px;
+}
+
+.text-box{
+  width:100%;
+  background-color: var(--light-brown);
+  padding:10px;
+  border-radius:5px;
+}
+
+.text-box h2{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  box-shadow: none;
 }
 
 .left,

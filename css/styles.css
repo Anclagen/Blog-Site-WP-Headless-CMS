@@ -321,13 +321,13 @@ footer{
   padding: 0px;
   padding-left: 5px;
   margin: 20px auto;
-  width: 90%;
+  width: 98%;
   border-radius: 5px;
 }
 
 .signup-submit{
   position: absolute;
-  right: 4%;
+  right: 0%;
   bottom: 20px;
 }
 
@@ -365,7 +365,7 @@ footer{
 }
 
 .leo-sponsor-comment img{
-  margin: auto 20px;
+  margin: auto 0 auto 10px;
   width: 100%;
 }
 
@@ -571,6 +571,11 @@ footer{
 .contact-image img,
 .modal-image{
   width: 100%;
+}
+
+.featured-image,
+.modal-image{
+  cursor:pointer;
 }
 
 .caption{

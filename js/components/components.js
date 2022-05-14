@@ -32,6 +32,24 @@ export function createPost(data){
   return post
 }
 
+export function createPostCompressed(data){
+
+  let post = `
+                <div class="post-container">
+                  <div class="post-image-container">
+                    <a href="post_specific.html?id=${data.id}"><img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image"></a>
+                    
+                      <span>${data.acf.published}</span>
+                    
+                  </div>
+                  <div class="post-heading">
+                    <a href="post_specific.html?id=${data.id}" ><h3>${data.title.rendered}</h3></a>
+                  </div>
+                </div>
+                `;
+  return post
+}
+
 
 /*-----------------  Menu Open/Close -----------------*/
 //menu on phone
@@ -49,7 +67,8 @@ export function openCloseMenu(){
 //displays search input
 export function openCloseSearch(){
   const searchContainer = document.querySelector(".search-container");
-  searchContainer.classList.toggle("hidden-search"); 
+  searchContainer.classList.toggle("hidden-search");
+  focus(document.querySelector(".search-input"))
 }
 
 /*----------------- search function -----------------*/

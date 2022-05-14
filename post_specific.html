@@ -8,31 +8,36 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/pages/post_specific.css" rel="stylesheet" />
     <script src="/js/post_specific.js" type="module" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <!-- Hotjar Tracking Code for https://deft-scone-ef0e91.netlify.app/index.html -->
     <script>
-      (function(h,o,t,j,a,r){
-          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-          h._hjSettings={hjid:2960772,hjsv:6};
-          a=o.getElementsByTagName('head')[0];
-          r=o.createElement('script');r.async=1;
-          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-          a.appendChild(r);
-      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 2960772, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     </script>
   </head>
   <body>
     <header>
-      <div id="skip"><a href="#main-content">Skip to Main Content</a></div>
+      <div id="skip"><a href="#latest-posts">Skip to Main Content</a></div>
       <div class="logo-header page-wrapper-large"><img src="images/leo_page_logo.png" /></div>
       <nav>
-        <ul class="navigation-menu hide-menu">
-          <li><a href="index.html">Home</a></li>
+        <ul class="navigation-menu hide-menu page-wrapper-large">
+          <li><a href="index.html" id="current-page">Home</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a class="search-button">Search</a></li>
+          <li><a href="#/search-input" class="search-button">Search</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -44,88 +49,108 @@
       </nav>
       <div class="hidden-search search-container">
         <form class="search-form page-wrapper-large">
-          <input type="text" class="search-input" />
+          <input type="text" class="search-input" id="search-input" />
           <input type="submit" value="Search" class="search-btn cta" />
         </form>
       </div>
     </header>
     <main>
-      <div class="modal-background-container"> </div>
+      <div class="modal-background-container"></div>
       <div class="image-modal-content">
-        <img class="image-modal"/>
-        <figcaption class="image-modal-caption">hello</figcaption>
+        <img class="image-modal" />
+        <figcaption class="image-modal-caption"></figcaption>
       </div>
-      <section class="post-specific-wrapper">
+      <section class="page-wrapper-medium">
         <h1 id="main-content"></h1>
         <div class="featured-image-container"></div>
         <div class="post-details-container">
           <div class="post-date"></div>
         </div>
-        <div class="post-content-container"></div>
+        <div class="post-content-container page-wrapper-small"></div>
       </section>
-      <section class="post-specific-wrapper">
+      <section class="page-wrapper-medium">
         <h2>Post A Comment</h2>
         <div class="post-comment-section">
-        <div class="post-comment-container">
-          <form id="comment-form" novalidate>
-            <div id="form-reporting-container"></div>
-            <label for="your-name">Name*</label>
-            <input id="your-name" type="text" required />
-            <div class="error" id="error-name"></div>
-            <!-- <label for="email">Email*</label>
+          <div class="post-comment-container">
+            <form id="comment-form" novalidate>
+              <div id="form-reporting-container"></div>
+              <label for="your-name">Name*</label>
+              <input id="your-name" type="text" required />
+              <div class="error" id="error-name"></div>
+              <!-- <label for="email">Email*</label>
             <input id="email" type="email" required />
             <div class="error" id="error-email"></div> -->
-            <label for="your-message">Comment*</label>
-            <textarea id="your-message" required></textarea>
-            <div class="error" id="error-message"></div>
-            <input type="submit" value="Post A Comment" class="cta"/>
+              <label for="your-message">Comment*</label>
+              <textarea id="your-message" required></textarea>
+              <div class="error" id="error-message"></div>
+              <input type="submit" value="Post A Comment" class="cta" />
+            </form>
+          </div>
+          <div class="image-modal-container">
+            <div class="image-background-container hidden-on-mobile">
+              <img src="images/1_1_ratio/leo_sitting_at_a_pc.jpg" alt="leo sitting at a pc" class="modal-image" loading="lazy" />
+            </div>
+          </div>
+        </div>
+        <h2>Latest Comments</h2>
+        <div class="comments-container page-wrapper-small"></div>
+      </section>
+    </main>
+    <footer>
+      <section class="page-wrapper-large footer-content-container">
+        <div>
+          <h3>Social Media</h3>
+          <div class="social-media">
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-youtube.png" class="social-normal" alt="Youtube icon" />
+              <img src="images/icons_and_interface/icon-awesome-youtube-red.png" class="social-hover" alt="Youtube icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-twitter.png" class="social-normal" alt="Twitter icon" />
+              <img src="images/icons_and_interface/icon-awesome-twitter-blue.png" class="social-hover" alt="Twitter icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-instagram.png" class="social-normal" alt="Instagram icon" />
+              <img src="images/icons_and_interface/icon-awesome-instagram-purple.png" class="social-hover" alt="Instagram icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-facebook.png" class="social-normal" alt="Facebook icon" />
+              <img src="images/icons_and_interface/icon-awesome-facebook-blue.png" class="social-hover" alt="Facebook icon" />
+            </a>
+          </div>
+        </div>
+        <div class="sign-up">
+          <h3>Newsletter</h3>
+          <label for="signup">Signup to are weekly newsletter</label>
+          <form action="POST" class="signup-form">
+            <input type="text" name="signup" id="signup" class="signup-input" />
+            <input type="submit" value="Signup" class="signup-submit cta" />
           </form>
         </div>
-        <div class="image-modal-container">
-          <div class="image-background-container hidden-on-mobile">
-              <img src="images/1_1_ratio/leo_sitting_at_a_pc.jpg" alt="leo sitting at a pc" class="modal-image" loading="lazy">
+        <div>
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="posts.html">Posts</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </section>
+      <div class="footer-bottom">
+        <section class="page-wrapper-large">
+          <h2>Our Sponsors</h2>
+          <div class="sponsors-post-container">
+            <div class="loader">
+              <div class="outer-loader"></div>
+              <div class="inner-loader"></div>
+              <p>Getting sponsors, please wait...</p>
+            </div>
           </div>
+        </section>
+        <p class="copyright">Copyright &copy; 2022 Fluffy Piranha</p>
       </div>
-    </div>
-    <h2>Latest Comments</h2>
-        <div class="comments-container">
-          
-        </div>
-      </section>
-    <div class="social-container page-wrapper-medium">
-      <section>
-        <h2>Connect With Us</h2>
-        <div class="social-media">
-          <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
-          <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
-          <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
-          <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
-        </div>
-        <h2>Sign Up</h2>
-        <label for="signup">Signup to are weekly newsletter to get updates on what is going on with Leo.</label>
-        <form action="POST" class="signup-form">
-          <input type="text" name="signup" id="" class="signup-input" />
-          <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
-        </form>
-      </section>
-      <section>
-        <h2>Our Sponsors</h2>
-        <div class="sponsors-post-container">
-          <div class="loader">
-            <div class="outer-loader"></div>
-            <div class="inner-loader"></div>
-            <p>Getting sponsors, please wait...</p>
-          </div>
-        </div>
-      </section>
-  </main>
-  <footer>
-    <div>
-      <p>Terms and conditions</p>
-      <p>Privacy</p>
-      <p>Sponsorships</p>
-      <p>Copyright 2022 Fluffy Piranha</p>
-    </div>
-  </footer>
-</body>
+    </footer>
+  </body>
 </html>

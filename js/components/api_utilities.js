@@ -15,13 +15,14 @@ export const routes = {
 // parameters
 export const parameters = {
   acf: "acf_format=standard",
-  results25: "per_page=25",
+  results20: "per_page=20",
   results50: "per_page=50",
   search: "search=", //add search terms
 }
 
 // reused urls
 export const blogPostUrl = baseUrl + routes.blogPosts + "?" + parameters.acf + "&" + parameters.results50;
+export const latestPostsUrl = baseUrl + routes.blogPosts + "?" + parameters.acf + "&" + parameters.results20;
 export const sponsorUrl = baseUrl + routes.sponsors + "?" + parameters.acf;
 export const categoriesUrl = baseUrl + routes.categories + "?" + parameters.acf + "&" + parameters.results50;
 export const sortOldestUrl = baseUrl + routes.blogPosts + "?" + "filter[orderby]=date&order=asc" + parameters.acf + "&" + parameters.results50;
@@ -100,14 +101,16 @@ export function createSponsoredContent(sponsorData, sponsorsContainer){
   sponsorsContainer.innerHTML="";
   let sponsorPost = "<p>No Sponsors, No Money!</p>";
   for(let i = 0; i < sponsorData.length; i++){
-    sponsorPost = `<div>
-                    <a href="${sponsorData[i].acf.sponsor_url}">
-                      <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
-                    <a>
-                  </div>
-                  <div class="leo-sponsor-comment">
-                    <p>${sponsorData[i].acf.our_quote}</p>
-                    <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
+    sponsorPost = `<div class="sponsor-container">
+                    <div>
+                      <a href="${sponsorData[i].acf.sponsor_url}">
+                        <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
+                      </a>
+                    </div>
+                    <div class="leo-sponsor-comment">
+                      <p>${sponsorData[i].acf.our_quote}</p>
+                      <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
+                    </div>
                   </div>`
     sponsorsContainer.innerHTML += sponsorPost
   }

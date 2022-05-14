@@ -32,14 +32,14 @@
   </head>
   <body>
     <header>
-      <div id="skip"><a href="#main-content">Skip to Main Content</a></div>
+      <div id="skip"><a href="#latest-posts">Skip to Main Content</a></div>
       <div class="logo-header page-wrapper-large"><img src="images/leo_page_logo.png" /></div>
       <nav>
-        <ul class="navigation-menu hide-menu">
-          <li><a href="index.html">Home</a></li>
+        <ul class="navigation-menu hide-menu page-wrapper-large">
+          <li><a href="index.html" id="current-page">Home</a></li>
           <li><a href="posts.html">Posts</a></li>
-          <li><a href="gallery.html" id="current-page">Gallery</a></li>
-          <li><a class="search-button">Search</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="#/search-input" class="search-button">Search</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -51,7 +51,7 @@
       </nav>
       <div class="hidden-search search-container">
         <form class="search-form page-wrapper-large">
-          <input type="text" class="search-input" />
+          <input type="text" class="search-input" id="search-input" />
           <input type="submit" value="Search" class="search-btn cta" />
         </form>
       </div>
@@ -63,23 +63,51 @@
         <img src="/images/1_1_ratio/leo_sitting_at_a_pc.jpg" alt="Leo sitting at a pc coding" />
         <span>I'm busy here human, come back later</span>
       </section>
-      <div class="social-container page-wrapper-medium">
-        <section>
-          <h2>Connect With Us</h2>
+    </main>
+    <footer>
+      <section class="page-wrapper-large footer-content-container">
+        <div>
+          <h3>Social Media</h3>
           <div class="social-media">
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-facebook.png" alt="facebook icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-instagram.png" alt="instagram icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-twitter.png" alt="twitter icon" />
-            <img class="social-media-icons" src="images/icons_and_interface/icon-awesome-youtube.png" alt="youtube icon" />
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-youtube.png" class="social-normal" alt="Youtube icon" />
+              <img src="images/icons_and_interface/icon-awesome-youtube-red.png" class="social-hover" alt="Youtube icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-twitter.png" class="social-normal" alt="Twitter icon" />
+              <img src="images/icons_and_interface/icon-awesome-twitter-blue.png" class="social-hover" alt="Twitter icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-instagram.png" class="social-normal" alt="Instagram icon" />
+              <img src="images/icons_and_interface/icon-awesome-instagram-purple.png" class="social-hover" alt="Instagram icon" />
+            </a>
+            <a href="#" class="social-media-icons">
+              <img src="images/icons_and_interface/icon-awesome-facebook.png" class="social-normal" alt="Facebook icon" />
+              <img src="images/icons_and_interface/icon-awesome-facebook-blue.png" class="social-hover" alt="Facebook icon" />
+            </a>
           </div>
-          <h2>Sign Up</h2>
-          <label for="signup">Signup to are weekly newsletter to get updates on what is going on with Leo.</label>
+        </div>
+        <div class="sign-up">
+          <h3>Newsletter</h3>
+          <label for="signup">Signup to are weekly newsletter</label>
           <form action="POST" class="signup-form">
-            <input type="text" name="signup" id="" class="signup-input" />
-            <input type="submit" value="Signup" name="signup" id="" class="signup-submit cta" />
+            <input type="text" name="signup" id="signup" class="signup-input" />
+            <input type="submit" value="Signup" class="signup-submit cta" />
           </form>
-        </section>
-        <section>
+        </div>
+        <div>
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="posts.html">Posts</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </section>
+      <div class="footer-bottom">
+        <section class="page-wrapper-large">
           <h2>Our Sponsors</h2>
           <div class="sponsors-post-container">
             <div class="loader">
@@ -89,14 +117,7 @@
             </div>
           </div>
         </section>
-      </div>
-    </main>
-    <footer>
-      <div>
-        <p>Terms and conditions</p>
-        <p>Privacy</p>
-        <p>Sponsorships</p>
-        <p>Copyright 2022 Fluffy Piranha</p>
+        <p class="copyright">Copyright &copy; 2022 Fluffy Piranha</p>
       </div>
     </footer>
   </body>

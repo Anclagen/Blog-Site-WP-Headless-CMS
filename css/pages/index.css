@@ -1,18 +1,4 @@
 
-.heading-text{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font: normal 800 2rem 'Courgette', cursive;
-  color: white;
-  text-align: center;
-}
-
-.latest-post-heading{
-  margin-top: 0;
-}
-
 .index-heading {
   height: 480px;
   background-image: url("/images/leo_banner_small.jpg");

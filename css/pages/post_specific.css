@@ -45,7 +45,6 @@ pointer-events: none; */
   margin-top: 15px;
 }
 
-
 .comment-right div,
 .comment-left div {
   width: 100%;
@@ -56,8 +55,6 @@ pointer-events: none; */
   border-radius: 5px;
   overflow: hidden;
 }
-
-
 
 .comment-right p,
 .comment-left p {

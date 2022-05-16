@@ -28,12 +28,12 @@
   z-index: 1;
   top: 0;
   left: 0;
+  cursor: pointer;
 }
 
 .image-modal{
   max-width: 85vw;
   max-height: 85vh;
-  
 }
 
 /* with pointer none you can click through the modal and have if visibly hidden to allow for animations

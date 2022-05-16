@@ -17,16 +17,18 @@ export const parameters = {
   acf: "acf_format=standard",
   results20: "per_page=20",
   results50: "per_page=50",
+  results100: "per_page=100",
   search: "search=", //add search terms
+  embed: "_embed", //add search terms
 }
 
 // reused urls
-export const blogPostUrl = baseUrl + routes.blogPosts + "?" + parameters.acf + "&" + parameters.results50;
-export const latestPostsUrl = baseUrl + routes.blogPosts + "?" + parameters.acf + "&" + parameters.results20;
-export const sponsorUrl = baseUrl + routes.sponsors + "?" + parameters.acf;
-export const categoriesUrl = baseUrl + routes.categories + "?" + parameters.acf + "&" + parameters.results50;
-export const sortOldestUrl = baseUrl + routes.blogPosts + "?" + "filter[orderby]=date&order=asc" + parameters.acf + "&" + parameters.results50;
-export const searchBlogPostsUrl = baseUrl + "/search?"+ parameters.acf + "&" + parameters.results50 +"&type=post&subtype=blog_posts&search=";
+export const blogPostUrl = baseUrl + routes.blogPosts + "?_embed&" + parameters.acf + "&" + parameters.results50;
+export const latestPostsUrl = baseUrl + routes.blogPosts + "?_embed&" + parameters.acf + "&" + parameters.results100;
+export const sponsorUrl = baseUrl + routes.sponsors + "?_embed&" + parameters.acf;
+export const categoriesUrl = baseUrl + routes.categories + "?_embed&" + parameters.acf + "&" + parameters.results50;
+export const sortOldestUrl = baseUrl + routes.blogPosts + "?_embed&" + "filter[orderby]=date&order=asc" + parameters.acf + "&" + parameters.results50;
+export const searchBlogPostsUrl = baseUrl + "/search?_embed&"+ parameters.acf + "&" + parameters.results50 +"&type=post&subtype=blog_posts&search=";
 
 // callAPI (url) and return data
 export async function callAPI (url){

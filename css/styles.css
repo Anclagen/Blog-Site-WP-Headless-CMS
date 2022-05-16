@@ -490,7 +490,6 @@ footer{
 
 .post-image-container span,
 .post-date{
-  height: 40px;
   display: flex;
   justify-content: flex-start;
   gap:0 20px;
@@ -807,7 +806,7 @@ border-radius: 5px;
   .social-grid-container{
     grid-template-columns: 1fr 2fr;
   }
-
+  .most-commented,
   .newest-posts,
   .latest-slider-content{
     display: grid;

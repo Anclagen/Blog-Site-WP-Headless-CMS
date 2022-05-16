@@ -103,7 +103,7 @@ function validateSubmitComment(submission) {
   formReporting.innerHTML = "";
 
   //variables assigned true if they pass, and errors generated on fail.
-  const a = validatedInputLength(fullname, 5, errorName);
+  const a = validatedInputLength(fullname, 1, errorName);
   const b = validatedInputLength(message, 0, errorMessage);
   // const c = validateEmailInput(email, errorEmail);
 

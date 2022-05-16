@@ -33,6 +33,7 @@ createSponsors(sponsorUrl, sponsorsContainer)
 /*-------------- add filter options --------------*/
 async function addFilterOptions(){
   const categoriesData = await callAPI(categoriesUrl);
+  
   createFilterOptions(categoriesData);
 }
 addFilterOptions()
@@ -51,7 +52,7 @@ async function createPageContent(){
   if(searchTerms !== null && data[0].length > 0){
     data = await getSearchData(data)
   }
-
+ 
   postData = data[0]
   pagesAndPosts = [data[1], data[2]];
 
@@ -62,7 +63,6 @@ async function createPageContent(){
   } else {
     currentPostCreated = 10;
   }
-
   createPageHTML(postData);
   fillResultsDetails(postData);
 }

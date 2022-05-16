@@ -6,6 +6,7 @@ import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/con
 //const corsUrl = "https://noroffcors.herokuapp.com/";
 const latestContainer = document.querySelector(".latest-post-slider");
 const newestContainer = document.querySelector(".newest-posts");
+const popularContainer = document.querySelector(".most-commented");
 
 
 /*-------------- navigation menu --------------*/
@@ -23,38 +24,60 @@ let latestPageCurrent = 1;
 let latestPageCurrentMobile = 1;
 let latestPageCurrentDesktop = 1;
 let latestPageMax = 1;
-let latestPageMaxMobile = 1;
-let latestPageMaxDesktop = 1;
-let sortNewPostData = [];
+let latestPageMaxMobile = 10;
+let latestPageMaxDesktop = 5;
+let latestPostsData = [];
 
 async function createPageContent(){
-  sortNewPostData = await callAPI(latestPostsUrl);
-  //set page max for latest
-  latestPageMaxMobile = Math.ceil(sortNewPostData.length/2);
-  latestPageMaxDesktop = Math.ceil(sortNewPostData.length/4);
-  
+  latestPostsData = await callAPI(latestPostsUrl);
+  //set adjusting max if I don't add more than 20 posts
+  if(latestPostsData.length < 20){
+  latestPageMaxMobile = Math.ceil(latestPostsData.length/2);
+  latestPageMaxDesktop = Math.ceil(latestPostsData.length/4);
+  }
   //adds page content
-  createPostImageSlider(sortNewPostData, latestContainer);
-  createNewestPosts(sortNewPostData , newestContainer);
-
+  createPostImageSlider(latestPostsData, latestContainer);
+  createPosts(latestPostsData , newestContainer, 2);
   // resize slider listener
   window.addEventListener("resize", adjustSliderWidths);
+ 
+  const commentedPosts = latestPostsData.filter(filterCommentedPosts);
+  const sortedCommentedPosts = sortMostCommented(commentedPosts);
+  createPosts(sortedCommentedPosts, popularContainer, 4);
+
   }
 
 createPageContent()
 
 /*-------------- Newest Posts -----------------*/
 
-function createNewestPosts(data, container){
+function createPosts(data, container, amount){
   container.innerHTML = "";
-  for(let i = 0; i < 2; i++){
+  for(let i = 0; i < amount; i++){
     container.innerHTML += createPost(data[i]);
   }
 }
 
+/*--------------- Popular/Most commented posts ----------------*/
+
+//filters out undefined
+function filterCommentedPosts(data){
+  if(data._embedded !== undefined){
+    if(data._embedded.replies !== undefined){
+      return true
+    }
+  }
+}
+
+function sortMostCommented(data){
+  return data.sort((a, b) => b._embedded.replies[0].length - a._embedded.replies[0].length);
+}
+
 /*-------------- Responsive Latest content slider -----------------*/
+
 /* designed to handle the 20 results the call was limited to (also makes
    the math easier) and shrink on mobile to 2 posts at a time from 4*/
+
 let slidePercentage = 10;
 
 //function for resize listener to update slider on window resize.
@@ -68,11 +91,11 @@ function adjustSliderWidths(){
 function getWidths(){
   if(window.innerWidth < 720){
     slidePercentage = 10
-    latestPageMax = Math.ceil(sortNewPostData.length/2);
+    latestPageMax = Math.ceil(latestPostsData.length/2);
   }
   else if(window.innerWidth >= 720){
     slidePercentage = 20
-    latestPageMax = Math.ceil(sortNewPostData.length/4);
+    latestPageMax = Math.ceil(latestPostsData.length/4);
   };
 }
 
@@ -88,7 +111,8 @@ function transformSlider(){
   };
 }
 
-//function to update the page number and disable buttons (little bit messy)
+/*function to update the page number and disable buttons (little bit messy)
+throw in 0 just for resize, 1 for next, -1 for previous page changes*/
 function changePageNumber(Num){
   if(window.innerWidth < 720){
     latestPageCurrentMobile = latestPageCurrentMobile + (Num * 1);
@@ -146,7 +170,7 @@ function createPostImageSlider(data, container){
   
 }
 
-//grabs for variables
+//grabs for arrows and button variables
 const latestNext = document.querySelector(".latest-next");
 const latestPrevious = document.querySelector(".latest-previous");
 const latestPreviousArrow = document.querySelector(".previous-arrow");

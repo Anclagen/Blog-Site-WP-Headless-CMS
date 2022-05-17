@@ -14,26 +14,26 @@ const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
 let searchTerms = params.get("search");
-const title = document.querySelector("title");
+
 
 /*-------------- defining the initial url --------------*/
-
-
-
+const title = document.querySelector("title");
 let initialUrl = blogPostUrl;
+
 if(tags !== null){
   initialUrl = blogPostUrl + "&categories=" + tags;
 } else if(searchTerms !== null){
   initialUrl = searchBlogPostsUrl + searchTerms;
+  title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
+
 }
 
 /*-------------- get sponsors data --------------*/
 
 createSponsors(sponsorUrl, sponsorsContainer)
 
-
-
 /*-------------- Main Page Content Creation --------------*/
+
 
 const postResultsContainer = document.querySelector(".post-results-container");
 let currentPostCreated = 0;
@@ -50,6 +50,7 @@ async function createPageContent(){
       data = await getSearchData(data);
     }
     pageHeading.innerText = `Search Results For; ${searchTerms}`
+    title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
   }
  
   postData = data[0]
@@ -61,16 +62,17 @@ async function createPageContent(){
     showMoreBtn.disabled = true;
   } else {
     currentPostCreated = 10;
+    showMoreBtn.disabled = false;
   }
+  
   createPageHTML(postData);
   fillResultsDetails(postData);
+  updateHeadings();
 }
 
 createPageContent();
 
 //create page html
-
-
 function createPageHTML(data){
   postResultsContainer.innerHTML = "";
   let count = 0;
@@ -130,18 +132,24 @@ let filterSelectContainer = document.querySelector("#filter");
 let sortSelector = document.querySelector("#sort");
 
 function createFilterOptions(data){
-  filterSelectContainer.innerHTML =`<option value="All Posts" selected> All Posts</option>`;
+  filterSelectContainer.innerHTML =`<option value="All" selected> All</option>`;
   data.forEach(element => {
     const option = `<option value="${element.id}" name="${element.name}"> ${element.name}</option>`;
     filterSelectContainer.innerHTML += option;
   });
 }
 
+//update headings
+function updateHeadings(){
+  pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
+  title.innerText = `${filterSelectContainer.options[filterSelectContainer.selectedIndex].text} Posts | The Fluffy Piranha`
+}
+
 //add filter for categories to data
 filterSelectContainer.addEventListener("change", updateResults);
 sortSelector.addEventListener("change", updateResults);
 
-//combines filter and sort to generate results
+//combines filter and sort url additions to generate results
 function updateResults(){
   addLoader(postResultsContainer);
   filterResults();
@@ -153,12 +161,11 @@ function updateResults(){
 function filterResults(){
   //stops search query string over writing heading
   searchTerms = null;
-  if(filterSelectContainer.value === "All Posts"){
+  if(filterSelectContainer.value === "All"){
     initialUrl = blogPostUrl;
   } else {
     initialUrl = blogPostUrl + "&categories=" + filterSelectContainer.value;
   }
-  pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
 }
 
 //add appropriate sort to the url

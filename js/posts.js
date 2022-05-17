@@ -1,4 +1,4 @@
-import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
+import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage, createSponsors, addLoader} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
@@ -13,15 +13,17 @@ searchForm.addEventListener("submit", productSearch);
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
-const searchTerms = params.get("search");
+let searchTerms = params.get("search");
+const title = document.querySelector("title");
 
 /*-------------- defining the initial url --------------*/
+
+
 
 let initialUrl = blogPostUrl;
 if(tags !== null){
   initialUrl = blogPostUrl + "&categories=" + tags;
 } else if(searchTerms !== null){
-  console.log("yes")
   initialUrl = searchBlogPostsUrl + searchTerms;
 }
 
@@ -30,13 +32,6 @@ if(tags !== null){
 createSponsors(sponsorUrl, sponsorsContainer)
 
 
-/*-------------- add filter options --------------*/
-async function addFilterOptions(){
-  const categoriesData = await callAPI(categoriesUrl);
-  
-  createFilterOptions(categoriesData);
-}
-addFilterOptions()
 
 /*-------------- Main Page Content Creation --------------*/
 
@@ -48,9 +43,13 @@ let pagesAndPosts = [];
 async function createPageContent(){
   //initial api call, also grabbing headers for pages and results
   let data = await callApiGetPages(initialUrl);
-  //search data lacking so additional call done with post ids for more data
-  if(searchTerms !== null && data[0].length > 0){
-    data = await getSearchData(data)
+  console.log(data)
+  //search data lacking some info so additional call done with post ids for more data
+  if(searchTerms !== null ){
+    if(data[0].length > 0){
+      data = await getSearchData(data);
+    }
+    pageHeading.innerText = `Search Results For; ${searchTerms}`
   }
  
   postData = data[0]
@@ -112,10 +111,23 @@ function showMorePosts(){
   createPageHTML(postData)
 }
 
+/*-------------- add filter options --------------*/
+async function addFilterOptions(){
+  const categoriesData = await callAPI(categoriesUrl);
+  createFilterOptions(categoriesData);
+  //sets category drop down to selected tag
+  if(tags !== null){
+    filterSelectContainer.value = tags;
+  }
+}
+
+addFilterOptions()
+
 //create filter options
 const pageHeading = document.querySelector("h1");
 
 let filterSelectContainer = document.querySelector("#filter");
+let sortSelector = document.querySelector("#sort");
 
 function createFilterOptions(data){
   filterSelectContainer.innerHTML =`<option value="All Posts" selected> All Posts</option>`;
@@ -126,27 +138,35 @@ function createFilterOptions(data){
 }
 
 //add filter for categories to data
-filterSelectContainer.addEventListener("change", filterDataCreateHTML)
+filterSelectContainer.addEventListener("change", updateResults);
+sortSelector.addEventListener("change", updateResults);
 
-async function filterDataCreateHTML(){
+//combines filter and sort to generate results
+function updateResults(){
+  addLoader(postResultsContainer);
+  filterResults();
+  sortResults();
+  createPageContent();
+}
+
+//updates the categories for url
+function filterResults(){
+  //stops search query string over writing heading
+  searchTerms = null;
   if(filterSelectContainer.value === "All Posts"){
-    createPageContent();
+    initialUrl = blogPostUrl;
   } else {
-    postResultsContainer.innerHTML = "";
-    let filteredPostData = postData.filter(data => {
-      return data.categories.includes(Number(filterSelectContainer.value))});
-
-    fillResultsDetails(filteredPostData);
-    totalNumberPostsContainer.innerText = filteredPostData.length;
-    createPageHTML(filteredPostData);
+    initialUrl = blogPostUrl + "&categories=" + filterSelectContainer.value;
   }
-  
   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
 }
 
-//sort data by data
-
-
+//add appropriate sort to the url
+function sortResults(){
+  if(sortSelector.value === "Oldest"){
+    initialUrl = initialUrl + "&filter[orderby]=date&order=asc";
+  } 
+}
 
 //do extra api call with search ids
 
@@ -159,32 +179,3 @@ async function getSearchData(data){
   data = await callApiGetPages(searchResultsUrl)
   return data
   }
-
-
-
-
-/*-------- Trying to do too much at once ----------*/
-// with pagination I can just run query parameters through the initial page build function
-
-
-// filterSelectContainer.addEventListener("change", filterDataCreateHTML)
-
-// async function filterDataCreateHTML(){
-//   if(filterSelectContainer.value === "All Posts"){
-//     createPageHTML(postData);
-//   } else if(postData.length < 50){
-//     postResultsContainer.innerHTML = "";
-//     let filteredPostData = postData.filter(data => {
-//       return data.categories.includes(Number(filterSelectContainer.value))});
-//     createPageHTML(filteredPostData);
-//   } else {
-//     //for when the number of posts cause pagination
-//     addLoader(postResultsContainer);
-//     let filterUrl = baseUrl + routes.categories + "/" + filterSelectContainer.value + "?" + parameters.acf + "&" + parameters.results50
-//     let filteredPostData = await callAPI(filterUrl);
-//     console.log(filteredPostData);
-//     createPageHTML(filteredPostData);
-//   }
-  
-//   pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
-// }

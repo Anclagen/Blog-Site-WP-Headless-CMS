@@ -3,12 +3,6 @@ import {createPost, productSearch, openCloseMenu, openCloseSearch, createPostCom
 import {callAPI, latestPostsUrl, sponsorUrl, addLoader, sortOldestUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 
-//const corsUrl = "https://noroffcors.herokuapp.com/";
-const latestContainer = document.querySelector(".latest-post-slider");
-const newestContainer = document.querySelector(".newest-posts");
-const popularContainer = document.querySelector(".most-commented");
-
-
 /*-------------- navigation menu --------------*/
 menuBtn.addEventListener("click", openCloseMenu);
 //search
@@ -19,33 +13,46 @@ searchForm.addEventListener("submit", productSearch);
 createSponsors(sponsorUrl, sponsorsContainer)
 
 /*-------------- Creating main page content --------------*/
+const latestContainer = document.querySelector(".latest-post-slider");
+const newestContainer = document.querySelector(".newest-posts");
+const popularContainer = document.querySelector(".most-commented");
+
 // variables for next and previous button functions of latest images slider.
 let latestPageCurrent = 1;
 let latestPageCurrentMobile = 1;
 let latestPageCurrentDesktop = 1;
-let latestPageMax = 1;
 let latestPageMaxMobile = 10;
 let latestPageMaxDesktop = 5;
 let latestPostsData = [];
 
 async function createPageContent(){
-  latestPostsData = await callAPI(latestPostsUrl);
-  //set adjusting max if I don't add more than 20 posts
-  if(latestPostsData.length < 20){
-  latestPageMaxMobile = Math.ceil(latestPostsData.length/2);
-  latestPageMaxDesktop = Math.ceil(latestPostsData.length/4);
-  }
-  //adds page content
-  createPostImageSlider(latestPostsData, latestContainer);
-  createPosts(latestPostsData , newestContainer, 2);
-  // resize slider listener
-  window.addEventListener("resize", adjustSliderWidths);
- 
-  const commentedPosts = latestPostsData.filter(filterCommentedPosts);
-  const sortedCommentedPosts = sortMostCommented(commentedPosts);
-  createPosts(sortedCommentedPosts, popularContainer, 4);
+  try{
+    latestPostsData = await callAPI(latestPostsUrl);
 
+    //adjusting page max if I don't add more than 20 posts
+    if(latestPostsData.length < 20){
+    latestPageMaxMobile = Math.ceil(latestPostsData.length/2);
+    latestPageMaxDesktop = Math.ceil(latestPostsData.length/4);
+    }
+
+    //adds page content for slider and new
+    createPostImageSlider(latestPostsData, latestContainer);
+    createPosts(latestPostsData , newestContainer, 2);
+
+    // resize slider listener
+    window.addEventListener("resize", adjustSliderWidths);
+    
+    //filtering results for commented posts and sorting by most commented
+    const commentedPosts = latestPostsData.filter(filterCommentedPosts);
+    const sortedCommentedPosts = sortMostCommented(commentedPosts);
+
+    //adds page content for popular
+    createPosts(sortedCommentedPosts, popularContainer, 4);
+  } catch(error){
+    console.log(error)
+    createErrorMessage(latestContainer)
   }
+}
 
 createPageContent()
 
@@ -60,7 +67,7 @@ function createPosts(data, container, amount){
 
 /*--------------- Popular/Most commented posts ----------------*/
 
-//filters out undefined
+//filters out undefined(posts with no embedded replies)
 function filterCommentedPosts(data){
   if(data._embedded !== undefined){
     if(data._embedded.replies !== undefined){
@@ -69,33 +76,33 @@ function filterCommentedPosts(data){
   }
 }
 
+//sorts high to low
 function sortMostCommented(data){
   return data.sort((a, b) => b._embedded.replies[0].length - a._embedded.replies[0].length);
 }
 
 /*-------------- Responsive Latest content slider -----------------*/
 
-/* designed to handle the 20 results the call was limited to (also makes
-   the math easier) and shrink on mobile to 2 posts at a time from 4*/
+/* designed to handle the 20 results the call was limited (could be expanded to more)
+   and shrink on mobile to 2 posts at a time from 4*/
 
 let slidePercentage = 10;
 
 //function for resize listener to update slider on window resize.
 function adjustSliderWidths(){
-  getWidths()
-  changePageNumber(0)
-  transformSlider()
+  getWidths();
+  changePageNumber(0);
+  disableButtons();
+  transformSlider();
 }
 
 // updates max number of pages and slide % amount
 function getWidths(){
   if(window.innerWidth < 720){
-    slidePercentage = 10
-    latestPageMax = Math.ceil(latestPostsData.length/2);
+    slidePercentage = 10;
   }
   else if(window.innerWidth >= 720){
-    slidePercentage = 20
-    latestPageMax = Math.ceil(latestPostsData.length/4);
+    slidePercentage = 20;
   };
 }
 
@@ -103,54 +110,65 @@ function getWidths(){
 function transformSlider(){
   if(window.innerWidth < 720){
     let transform = (latestPageCurrent- 1) * slidePercentage;
-    latestContainer.style.transform = `translateX(-${transform}%)`
+    latestContainer.style.transform = `translateX(-${transform}%)`;
   }
   else if(window.innerWidth >= 720){
     let transform = (latestPageCurrent - 1) * slidePercentage;
-    latestContainer.style.transform = `translateX(-${transform}%)`
+    latestContainer.style.transform = `translateX(-${transform}%)`;
   };
 }
 
-/*function to update the page number and disable buttons (little bit messy)
+/*  function to update the page number 
 throw in 0 just for resize, 1 for next, -1 for previous page changes*/
 function changePageNumber(Num){
   if(window.innerWidth < 720){
     latestPageCurrentMobile = latestPageCurrentMobile + (Num * 1);
     latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 0.5);
     latestPageCurrent = latestPageCurrentMobile;
-    // page 2 button would be disabled
-    if(latestPageCurrent > 1){
-      latestPrevious.disabled = false;
-    }
-    if(latestPageCurrent < latestPageMaxMobile){
-      latestNext.disabled = false;
-    }
   }
   else if(window.innerWidth >= 720){
     latestPageCurrentMobile = latestPageCurrentMobile + (Num * 2);
     latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 1);
+    //rounds down if desktop page is a decimal
     latestPageCurrent  = Math.floor(latestPageCurrentDesktop);
-    if(latestPageCurrent > 1){
-      latestPrevious.disabled = false;
+  }
+}
+
+// disables buttons 
+function disableButtons(){
+  if(latestPageCurrent === 1){
+    latestPrevious.setAttribute('disabled', 'disabled');
+    latestPreviousArrow.style.display = "none";
+  } else {
+    latestPrevious.disabled = false;
+    latestPreviousArrow.style.display = "block";
+  }
+  if(window.innerWidth < 720){
+    if(latestPageCurrent === latestPageMaxMobile){
+      latestNext.setAttribute('disabled', 'disabled');
+      latestNextArrow.style.display = "none";
     }
+    if(latestPageCurrent < latestPageMaxMobile){
+      latestNext.disabled = false;
+      latestNextArrow.style.display = "block";
+    }
+  } else {
     if(latestPageCurrent === latestPageMaxDesktop){
-      latestNext.disabled = true;
-      latestNextArrow.style.display = "none"
+      latestNext.setAttribute('disabled', 'disabled');
+      latestNextArrow.style.display = "none";
+    }
+    if(latestPageCurrent < latestPageMaxDesktop){
+      latestNext.disabled = false;
+      latestNextArrow.style.display = "block";
     }
   }
-  if(latestPageCurrent === 1){
-    latestPrevious.disabled = true;
-    latestPreviousArrow.style.display = "none"
-    }
 }
 
 //create responsive image slider
 function createPostImageSlider(data, container){
   container.innerHTML= "";
-  latestPageMax = latestPageMaxDesktop;
-  //adjusting width variables for container style updates
   getWidths();
-  //variable for translate percentage on buttons.
+  disableButtons();
   let slide = document.createElement("div");
   slide.classList = "latest-slider-content";
 
@@ -186,26 +204,14 @@ latestPreviousArrow.style.display = "none";
 //change page functions for latest posts
 function previousPage(){
   changePageNumber(-1);
-  transformSlider()
-  latestNext.disabled = false;
-  latestNextArrow.style.display = "block"
-  //disables button on first page
-  if(latestPageCurrent === 1){
-    latestPrevious.setAttribute('disabled', 'disabled');
-    latestPreviousArrow.style.display = "none";
-  }
+  disableButtons();
+  transformSlider();
 }
 
 function nextPage(){
   changePageNumber(1);
-  transformSlider()
-  latestPrevious.disabled = false;
-  latestPreviousArrow.style.display = "block";
-  //disables button on last page
-  if(latestPageCurrent === latestPageMax){
-    latestNext.setAttribute('disabled', 'disabled');
-    latestNextArrow.style.display = "none"
-  }
+  disableButtons();
+  transformSlider();
 }
 
 

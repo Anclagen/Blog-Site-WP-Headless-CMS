@@ -1,11 +1,5 @@
 {
   "liveServer.settings.port": 5501,
-  "cSpell.ignoreWords": [
-    "Eukx",
-    "doubletime"
-  ],
-  "cSpell.words": [
-    "signup",
-    "youtube"
-  ]
+  "cSpell.ignoreWords": ["Eukx", "doubletime"],
+  "cSpell.words": ["signup", "walkis", "youtube"]
 }

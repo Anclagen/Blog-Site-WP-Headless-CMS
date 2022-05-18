@@ -1,4 +1,4 @@
-import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, sortOldestUrl, searchBlogPostsUrl, createErrorMessage, createSponsors, addLoader} from "./components/api_utilities.js"
+import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, searchBlogPostsUrl, createErrorMessage, createSponsors, addLoader} from "./components/api_utilities.js"
 import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
 import {createPost, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
 
@@ -25,12 +25,11 @@ if(tags !== null){
 } else if(searchTerms !== null){
   initialUrl = searchBlogPostsUrl + searchTerms;
   title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
-
 }
 
 /*-------------- get sponsors data --------------*/
 
-createSponsors(sponsorUrl, sponsorsContainer)
+createSponsors(sponsorUrl, sponsorsContainer);
 
 /*-------------- Main Page Content Creation --------------*/
 
@@ -40,37 +39,70 @@ let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
 
+// get data and creates page content
 async function createPageContent(){
-  //initial api call, also grabbing headers for pages and results
-  let data = await callApiGetPages(initialUrl);
-  console.log(data)
-  //search data lacking some info so additional call done with post ids for more data
-  if(searchTerms !== null ){
-    if(data[0].length > 0){
-      data = await getSearchData(data);
+  try{
+    //initial api call, also grabbing headers for pages and results
+    let data = await callApiGetPages(initialUrl);
+    
+    //search data lacking some info so additional call done with post ids for more data
+    if(searchTerms !== null ){
+      if(data[0].length > 0){
+        data = await getSearchData(data);
+      }
     }
-    pageHeading.innerText = `Search Results For; ${searchTerms}`
-    title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
-  }
- 
-  postData = data[0]
-  pagesAndPosts = [data[1], data[2]];
-
-  //get number of results
-  if(postData.length <= 10){
-    currentPostCreated = postData.length
-    showMoreBtn.disabled = true;
-  } else {
-    currentPostCreated = 10;
-    showMoreBtn.disabled = false;
-  }
   
-  createPageHTML(postData);
-  fillResultsDetails(postData);
-  updateHeadings();
+    postData = data[0];
+    //pages could be used later
+    pagesAndPosts = [data[1], data[2]];
+
+    //get number of results
+    if(postData.length <= 10){
+      currentPostCreated = postData.length;
+      showMoreBtn.disabled = true;
+    } else {
+      currentPostCreated = 10;
+      showMoreBtn.disabled = false;
+    }
+
+    createPageHTML(postData);
+    fillResultsDetails(postData);
+    updateHeading();
+  }catch(error){
+    console.log(error)
+    createErrorMessage(postResultsContainer);
+  }
 }
 
-createPageContent();
+// add filter options 
+async function addFilterOptions(){
+  const categoriesData = await callAPI(categoriesUrl);
+  createFilterOptions(categoriesData);
+  //sets category drop down to selected tag
+  if(tags !== null){
+    filterSelectContainer.value = tags;
+  }
+}
+
+//do extra api call with search ids
+async function getSearchData(data){
+  let searchIds = "";
+  data[0].forEach(element => {
+    searchIds += element.id + ",";
+  })
+  const searchResultsUrl = blogPostUrl + "&include=" + searchIds;
+  data = await callApiGetPages(searchResultsUrl);
+  return data
+}
+
+/*function to fill the initial page kept getting intermittent
+random errors if filters weren't filled first*/
+async function fillPage(){
+  await addFilterOptions();
+  createPageContent();
+}
+
+fillPage();
 
 //create page html
 function createPageHTML(data){
@@ -78,7 +110,7 @@ function createPageHTML(data){
   let count = 0;
   for(let i = 0; i < data.length; i++){
     count += 1;
-    let post = createPost(data[i])
+    let post = createPost(data[i]);
     postResultsContainer.innerHTML += post;
     if(count === currentPostCreated){
       break
@@ -105,29 +137,15 @@ showMoreBtn.addEventListener("click", showMorePosts);
 
 function showMorePosts(){
   if(currentPostCreated + 10 >= postData.length){
-    currentPostCreated = postData.length
+    currentPostCreated = postData.length;
     showMoreBtn.disabled = true;
   } else{
     currentPostCreated += 10}
   numberShownPostsContainer.innerHTML = currentPostCreated;
-  createPageHTML(postData)
+  createPageHTML(postData);
 }
-
-/*-------------- add filter options --------------*/
-async function addFilterOptions(){
-  const categoriesData = await callAPI(categoriesUrl);
-  createFilterOptions(categoriesData);
-  //sets category drop down to selected tag
-  if(tags !== null){
-    filterSelectContainer.value = tags;
-  }
-}
-
-addFilterOptions()
 
 //create filter options
-const pageHeading = document.querySelector("h1");
-
 let filterSelectContainer = document.querySelector("#filter");
 let sortSelector = document.querySelector("#sort");
 
@@ -137,12 +155,23 @@ function createFilterOptions(data){
     const option = `<option value="${element.id}" name="${element.name}"> ${element.name}</option>`;
     filterSelectContainer.innerHTML += option;
   });
+  //sets category drop down to selected tag
+  if(tags !== null){
+    filterSelectContainer.value = tags;
+  }
 }
 
-//update headings
-function updateHeadings(){
-  pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
-  title.innerText = `${filterSelectContainer.options[filterSelectContainer.selectedIndex].text} Posts | The Fluffy Piranha`
+//update heading
+const pageHeading = document.querySelector("h1");
+function updateHeading(){
+  if(searchTerms !== null ){
+    pageHeading.innerText = `Search Results For; ${searchTerms}`;
+    title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
+    searchTerms = null;
+  } else{
+    pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
+    title.innerText = `${filterSelectContainer.options[filterSelectContainer.selectedIndex].text} Posts | The Fluffy Piranha`;
+  }
 }
 
 //add filter for categories to data
@@ -174,15 +203,3 @@ function sortResults(){
     initialUrl = initialUrl + "&filter[orderby]=date&order=asc";
   } 
 }
-
-//do extra api call with search ids
-
-async function getSearchData(data){
-  let searchIds = "";
-  data[0].forEach(element => {
-    searchIds += element.id + ",";
-  })
-  const searchResultsUrl = blogPostUrl + "&include=" + searchIds;
-  data = await callApiGetPages(searchResultsUrl)
-  return data
-  }

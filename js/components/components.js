@@ -1,5 +1,5 @@
-
-/*-------------- standard post layout creator -----------------*/
+/*----------------------HTML Content Creators -----------------------*/ 
+/*------ standard post layout creator -------*/
 export function createPost(data){
   let tags ="";
   data.category.forEach((tag, i) => {
@@ -50,37 +50,112 @@ export function createPostCompressed(data){
   return post
 }
 
-
-/*-----------------  Menu Open/Close -----------------*/
-//menu on phone
-export function openCloseMenu(){
-  const menuLinks = document.querySelector(".navigation-menu");
-  const hamTopLine = document.querySelector(".line1");
-  const hamMidLine = document.querySelector(".line2");
-  const hamBotLine = document.querySelector(".line3");
-  menuLinks.classList.toggle("hide-menu");
-  hamTopLine.classList.toggle("menu-open-rotate1");
-  hamBotLine.classList.toggle("menu-open-rotate3");
-  hamMidLine.classList.toggle("menu-open-transparent");
+/*------- Loader and error messages for API calls --------*/
+export function addLoader(container){
+  container.innerHTML = `<div class="loader">
+                          <div class="outer-loader"></div>
+                          <div class="inner-loader"></div>
+                          <p>Getting products, please wait...</p>
+                        </div>`;
 }
 
-//displays search input
-export function openCloseSearch(){
-  const searchContainer = document.querySelector(".search-container");
-  searchContainer.classList.toggle("hidden-search");
-  focus(document.querySelector(".search-input"))
+// catch error message generator
+export function createErrorMessage(container){
+  container.innerHTML = `<div class="error message">
+                          <p> An error occurred while fetching the data </p>
+                          <p> Please try reloading the page, if this error persists please contact us using a query form </p>
+                        </div>`;
 }
 
-/*----------------- search function -----------------*/
-export function productSearch(submit) {
-  submit.preventDefault();
-  //define the search input and value
-  const searchInput = document.querySelector(".search-input");
-  const searchTerms = searchInput.value.split(" ");
-  window.location = `posts.html?search=${searchTerms}`;
+/*------ sponsor content creator ------*/
+export function createSponsoredContent(sponsorData, sponsorsContainer){
+  sponsorsContainer.innerHTML="";
+  let sponsorPost = "<p>No Sponsors, No Money!</p>";
+  for(let i = 0; i < sponsorData.length; i++){
+    sponsorPost = `<div class="sponsor-container">
+                    <div>
+                      <a href="${sponsorData[i].acf.sponsor_url}">
+                        <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
+                      </a>
+                    </div>
+                    <div class="leo-sponsor-comment">
+                      <p>${sponsorData[i].acf.our_quote}</p>
+                      <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
+                    </div>
+                  </div>`
+    sponsorsContainer.innerHTML += sponsorPost
+  }
 }
 
-/*----------------- Form Validation -----------------*/
+/*-------- create comments --------*/
+export function createComments(data, commentsContainer){
+  commentsContainer.innerHTML ="";
+  let countLeft = 1;
+  let countRight = 1;
+  for(let i = 0; i < data.length; i++){
+    if((i+1)%2 !== 0){
+      if(countRight%2 !== 0){
+        commentsContainer.innerHTML +=`<div class="comment-right">
+                                        <img src="/images/head_of_leo.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        </div>`;
+        countRight++;
+      } else{ 
+        commentsContainer.innerHTML += `<div class="comment-right">
+                                      <img src="/images/head_of_dog_2.png" alt="image of dog head" class="comment-img hidden-on-mobile">
+                                      <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                      </div>`;
+        countRight++;
+      }
+    } else{
+      if(countLeft%2 !== 0){
+        commentsContainer.innerHTML +=`<div class="comment-left">
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        <img src="/images/head_of_beagle.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        </div>`;
+        countLeft++;
+      } else{ 
+        commentsContainer.innerHTML += `<div class="comment-left">
+                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
+                                        <img src="/images/head_of_dog.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
+                                        </div>`;
+        countLeft++;
+      }
+    }
+  }
+}
+
+/*---------------------------------- image modal ----------------------------------*/
+
+export function addImageModals(){
+  const imageModalBackground = document.querySelector(".modal-background-container");
+  const imageModal = document.querySelector(".image-modal");
+  const imageModalCaption = document.querySelector(".image-modal-caption");
+  const imageModalContent = document.querySelector(".image-modal-content")
+  const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
+  
+  imagesModals.forEach(function(image) {
+    //assign event listener to all images
+    image.addEventListener('click', function() {
+      imageModal.src = this.src;
+      imageModal.alt = this.alt;
+      imageModalCaption.innerText = this.alt
+      imageModalContent.classList.add("image-modal-content-expanded");
+      imageModalBackground.style.display = "block";
+    })  
+  });
+
+  //assign event listener to background for closing modal
+  imageModalBackground.addEventListener("click", function(){
+  imageModal.src = "";
+  imageModal.alt = "";
+  imageModalCaption.innerText = "";
+  imageModalContent.classList.remove("image-modal-content-expanded");
+  imageModalBackground.style.display = "none";
+  })
+}
+
+/*------------------------------ Form Validation ----------------------------------*/
 
 //validates text inputs
 export function validatedInputLength(input, length, errorContainer) {
@@ -127,71 +202,6 @@ export function resetBorders(input){
 }
 
 
-/*---------- image modal ----------*/
 
-export function addImageModals(){
-  const imageModalBackground = document.querySelector(".modal-background-container");
-  const imageModal = document.querySelector(".image-modal");
-  const imageModalCaption = document.querySelector(".image-modal-caption");
-  const imageModalContent = document.querySelector(".image-modal-content")
-  const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
-  
-  imagesModals.forEach(function(image) {
-    //assign event listener to all images
-    image.addEventListener('click', function() {
-      imageModal.src = this.src;
-      imageModal.alt = this.alt;
-      imageModalCaption.innerText = this.alt
-      imageModalContent.classList.add("image-modal-content-expanded");
-      imageModalBackground.style.display = "block";
-    })  
-  });
 
-  //assign event listener to background for closing modal
-  imageModalBackground.addEventListener("click", function(){
-  imageModal.src = "";
-  imageModal.alt = "";
-  imageModalCaption.innerText = "";
-  imageModalContent.classList.remove("image-modal-content-expanded");
-  imageModalBackground.style.display = "none";
-})
-}
-
-/*---------- create comments ----------*/
-export function createComments(data, commentsContainer){
-  commentsContainer.innerHTML ="";
-  let countLeft = 1;
-  let countRight = 1;
-  for(let i = 0; i < data.length; i++){
-    if((i+1)%2 !== 0){
-      if(countRight%2 !== 0){
-        commentsContainer.innerHTML +=`<div class="comment-right">
-                                        <img src="/images/head_of_leo.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        </div>`;
-        countRight++;
-      } else{ 
-        commentsContainer.innerHTML += `<div class="comment-right">
-                                      <img src="/images/head_of_dog_2.png" alt="image of dog head" class="comment-img hidden-on-mobile">
-                                      <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                      </div>`;
-        countRight++;
-      }
-    } else{
-      if(countLeft%2 !== 0){
-        commentsContainer.innerHTML +=`<div class="comment-left">
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        <img src="/images/head_of_beagle.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
-                                        </div>`;
-        countLeft++;
-      } else{ 
-        commentsContainer.innerHTML += `<div class="comment-left">
-                                        <div><p><b>${data[i].author_name}</b>, posted on: ${data[i].date_gmt.slice(0, -9)}</p>${data[i].content.rendered}</div>
-                                        <img src="/images/head_of_dog.png" alt="image of dog head" class="comment-img hidden-on-mobile" />
-                                        </div>`;
-        countLeft++;
-      }
-    }
-  }
-}
 

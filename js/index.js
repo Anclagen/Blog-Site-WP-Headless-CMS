@@ -1,16 +1,7 @@
 // ------- imports --------
-import {createPost, productSearch, openCloseMenu, openCloseSearch, createPostCompressed} from "./components/components.js"
-import {callAPI, latestPostsUrl, sponsorUrl, addLoader, sortOldestUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
-import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
+import {createPost, createPostCompressed, createErrorMessage} from "./components/components.js"
+import {callAPI, latestPostsUrl} from "./components/api_utilities.js"
 
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
-
-/*-------------- get sponsors data --------------*/
-createSponsors(sponsorUrl, sponsorsContainer)
 
 /*-------------- Creating main page content --------------*/
 const latestContainer = document.querySelector(".latest-post-slider");

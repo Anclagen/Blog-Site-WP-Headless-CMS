@@ -1,6 +1,6 @@
-import {baseUrl, routes, callAPI, parameters, addLoader, blogPostUrl, sponsorUrl, postComment, createErrorMessage, createSponsors} from "./components/api_utilities.js"
-import { menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
-import {productSearch, resetBorders, validatedInputLength, openCloseMenu, openCloseSearch, addImageModals, createComments} from "./components/components.js"
+import {baseUrl, routes, callAPI, parameters, postComment} from "./components/api_utilities.js"
+import {fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
+import { resetBorders, validatedInputLength, addImageModals, createComments, addLoader, createErrorMessage} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
@@ -9,16 +9,6 @@ const id = params.get("id");
 console.log(id)
 const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf;
 // const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed=1";
-
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
-
-/*-------------- get sponsors data --------------*/
-
-createSponsors(sponsorUrl, sponsorsContainer)
 
 /*-------------- Api Call and Page Creation --------------*/
 

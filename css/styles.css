@@ -19,14 +19,14 @@
 /*
 Font Sizes:
 10px = 0.625rem
-12px = 0.75rem      captions sorting
+12px = 0.75rem  
 14px = 0.875rem 
-16px = 1rem         (base) regular (400) - body, medium (500) - subhead 2
-18px = 1.125rem     medium (500)- buttons + subhead 1
-20px = 1.25rem      medium (500)- page header
-24px = 1.5rem       medium (500)- home pic caption text
+16px = 1rem 
+18px = 1.125rem     
+20px = 1.25rem      
+24px = 1.5rem       
 30px = 1.875rem
-32px = 2rem         regular (400) - picture headers
+32px = 2rem         
 
 */
 
@@ -100,6 +100,23 @@ p{
 }
 
 /*-------------- Navigation -------------*/
+
+/*skip to main content for keyboard users*/
+#skip a {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+} 
+
+#skip a:focus {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
 /*logo*/
 .logo-header{
   height: fit-content;
@@ -184,22 +201,6 @@ nav a {
   height: 43px;
 }
 
-/*skip to main content for keyboard users*/
-#skip a {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-} 
-
-#skip a:focus {
-  position: static;
-  width: auto;
-  height: auto;
-}
-
 /*hamburger menu icon and animation*/
 
 nav button {
@@ -255,7 +256,7 @@ nav button {
   width: 15vw;
 }
 
-/*-----footer------*/
+/*---------------- footer ----------------*/
 
 footer{
   margin-top: 50px;
@@ -379,7 +380,7 @@ footer{
   font-size: 1.125rem;
 }
 
-/*------Loader styles------*/
+/*----------------- Loader -------------------*/
 
 .loader{
   padding: 30px;
@@ -429,7 +430,7 @@ footer{
   }
 }
 
-/*------post items and slider css---------*/
+/*---------------- slider --------------*/
 
 .latest-post-slider-container{
   overflow: hidden;
@@ -450,6 +451,8 @@ footer{
   grid-auto-flow: row;
   width: 20%;
 }
+
+/*--------------- post items -----------------*/
 
 .post-details{
   font-weight: 700;
@@ -546,6 +549,7 @@ footer{
 
 /*------ Post content styling for post specific/about/contacts ------*/
 
+/*modal block styling*/
 .post-details-container,
 .featured-image{
   width: 100%;
@@ -583,6 +587,7 @@ footer{
   padding: 0 10px 10px 10px;
 }
 
+/*text block styling*/
 .text-box{
   width:100%;
   background-color: var(--light-brown);
@@ -596,6 +601,7 @@ footer{
   box-shadow: none;
 }
 
+/*block alignment styling*/
 .left,
 .right,
 .centre {
@@ -608,7 +614,7 @@ footer{
   border-radius: 8px;
 }
 
-/*form styles*/
+/*------------- form styles ------------*/
 
 #contact-form,
 #comment-form{
@@ -690,7 +696,7 @@ border-radius: 5px;
 
 
 @media only screen and (min-width: 720px) {
-
+  /*Desktop font-size increases*/
   :root {
     --h1: normal 800 3rem 'Courgette', cursive;
     --h2: normal 800 2rem 'Courgette', cursive;
@@ -782,12 +788,13 @@ border-radius: 5px;
 
   .hide-menu{
     display: flex;  
+    width: 100%;
   }
 
   /*------ footer adjustments ---------*/
 
   .sponsor-container{
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.9fr 1fr;
   }
 
    /*------post items-------*/

@@ -1,12 +1,5 @@
-import {callAPI, callApiGetPages, blogPostUrl, sponsorUrl, categoriesUrl, searchBlogPostsUrl, createErrorMessage, createSponsors, addLoader} from "./components/api_utilities.js"
-import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
-import {createPost, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
-
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
+import {callAPI, callApiGetPages, blogPostUrl, categoriesUrl, searchBlogPostsUrl} from "./components/api_utilities.js"
+import {createPost, createErrorMessage, addLoader} from "./components/components.js"
 
 /*-------------- query string grabs --------------*/
 
@@ -14,7 +7,6 @@ const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
 let searchTerms = params.get("search");
-
 
 /*-------------- defining the initial url --------------*/
 const title = document.querySelector("title");
@@ -27,12 +19,7 @@ if(tags !== null){
   title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
 }
 
-/*-------------- get sponsors data --------------*/
-
-createSponsors(sponsorUrl, sponsorsContainer);
-
 /*-------------- Main Page Content Creation --------------*/
-
 
 const postResultsContainer = document.querySelector(".post-results-container");
 let currentPostCreated = 0;

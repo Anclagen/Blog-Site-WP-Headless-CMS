@@ -1,17 +1,8 @@
 // ------- imports --------
-import {createPost, productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
-import {baseUrl, routes, callAPI, parameters, blogPostUrl, sponsorUrl, addLoader, sortOldestUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
-import {errorMessage, menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
+import {} from "./components/components.js"
+import {baseUrl, callAPI} from "./components/api_utilities.js"
+import {errorMessage} from "./constants/constants.js"
 
-
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
-
-/*-------------- get sponsors data --------------*/
-createSponsors(sponsorUrl, sponsorsContainer)
 
 const diaryMediaUrl = baseUrl + "/media?_embed&categories=11&per_page=100";
 const walkiesMediaUrl = baseUrl + "/media?_embed&categories=20&per_page=100";

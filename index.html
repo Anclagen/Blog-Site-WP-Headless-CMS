@@ -10,6 +10,7 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/pages/index.css" rel="stylesheet" />
     <script src="/js/index.js" type="module" defer></script>
+    <script src="/js/components/nav_footer.js" type="module" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -86,11 +87,23 @@
 
         <section class="page-wrapper-large">
           <h2>New Posts</h2>
-          <div class="newest-posts"></div>
+          <div class="newest-posts">
+            <div class="loader">
+              <div class="outer-loader"></div>
+              <div class="inner-loader"></div>
+              <p>Getting posts, please wait...</p>
+            </div>
+          </div>
         </section>
         <section class="page-wrapper-large">
           <h2>Most Barked About</h2>
-          <div class="most-commented"></div>
+          <div class="most-commented">
+            <div class="loader">
+              <div class="outer-loader"></div>
+              <div class="inner-loader"></div>
+              <p>Getting posts, please wait...</p>
+            </div>
+          </div>
         </section>
       </div>
       <section class="page-wrapper-large">

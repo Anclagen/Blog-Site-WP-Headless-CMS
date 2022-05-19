@@ -1,16 +1,5 @@
-import {baseUrl, routes, callAPI, callApiGetPages, parameters, addLoader, blogPostUrl, sponsorUrl, categoriesUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
-import {menuBtn, searchBtn, searchForm, sponsorsContainer} from "./constants/constants.js"
-import { productSearch, openCloseMenu, openCloseSearch} from "./components/components.js"
-
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
-
-/*-------------- get sponsors data --------------*/
-createSponsors(sponsorUrl, sponsorsContainer)
-
+import {baseUrl, routes, callAPI} from "./components/api_utilities.js"
+import {addLoader, createErrorMessage} from "./components/components.js"
 
 /*-------------- create main page content --------------*/
 const aboutContentContainer = document.querySelector(".about-content-container")
@@ -26,4 +15,4 @@ async function createPageContent(){
 
 }
 
-createPageContent()
+createPageContent();

@@ -19,22 +19,21 @@ export const parameters = {
   results50: "per_page=50",
   results100: "per_page=100",
   search: "search=", //add search terms
-  embed: "_embed", //add search terms
+  embed: "_embed", 
 }
 
 // reused urls
-export const blogPostUrl = baseUrl + routes.blogPosts + "?_embed&" + parameters.acf + "&" + parameters.results50;
-export const latestPostsUrl = baseUrl + routes.blogPosts + "?_embed&" + parameters.acf + "&" + parameters.results100;
-export const sponsorUrl = baseUrl + routes.sponsors + "?_embed&" + parameters.acf;
-export const categoriesUrl = baseUrl + routes.categories + "?_embed&" + parameters.acf + "&" + parameters.results50;
-export const sortOldestUrl = baseUrl + routes.blogPosts + "?_embed&" + "filter[orderby]=date&order=asc" + parameters.acf + "&" + parameters.results50;
-export const searchBlogPostsUrl = baseUrl + "/search?_embed&"+ parameters.acf + "&" + parameters.results50 +"&type=post&subtype=blog_posts&search=";
+export const blogPostUrl = baseUrl + "/blog_posts?_embed&acf_format=standard&per_page=50";
+export const latestPostsUrl = baseUrl + "/blog_posts?_embed&acf_format=standard&per_page=100";
+export const sponsorUrl = baseUrl + "/sponsor?_embed&acf_format=standard&per_page=50"
+export const categoriesUrl = baseUrl + "/categories?_embed&acf_format=standard&per_page=50";
+export const sortOldestUrl = baseUrl + "/blog_posts?_embed&filter[orderby]=date&order=asc&acf_format=standard&per_page=50";
+export const searchBlogPostsUrl = baseUrl + "/search?_embed&acf_format=standard&per_page=50&type=post&subtype=blog_posts&search=";
 
 // callAPI (url) and return data
 export async function callAPI (url){
   const response = await fetch(url);
   const data = await response.json();
-  
  return data
 }
 
@@ -46,22 +45,6 @@ export async function callApiGetPages (url){
   const pages = response.headers.get("X-WP-TotalPages");
   const numberPosts = response.headers.get("X-WP-Total");
   return [data, pages, numberPosts]
-}
-
-export function addLoader(container){
-  container.innerHTML = `<div class="loader">
-                          <div class="outer-loader"></div>
-                          <div class="inner-loader"></div>
-                          <p>Getting products, please wait...</p>
-                        </div>`;
-}
-
-// catch error message generator
-export function createErrorMessage(container){
-  container.innerHTML = `<div class="error message">
-                          <p> An error occurred while fetching the data </p>
-                          <p> Please try reloading the page, if this error persists please contact us using a query form </p>
-                        </div>`;
 }
 
 /*---------- Posts --------------*/
@@ -82,38 +65,5 @@ export async function postComment(data, formReportingContainer){
   } catch(error){
     console.log(error)
     formReportingContainer.innerHTML = `<p class="error">An error occurred when posting your message</p>`
-  }
-}
-
-/*---------- Sponsored ------------*/
-
-export async function createSponsors(sponsorUrl, sponsorsContainer){
-  try{
-  //fill sponsor content
-  const sponsorData = await callAPI(sponsorUrl);
-  createSponsoredContent(sponsorData, sponsorsContainer);
-  } catch(error){
-    console.log(error);
-    createErrorMessage(sponsorsContainer);
-  }
-}
-
-/*-------------- sponsor content creator -----------------*/
-export function createSponsoredContent(sponsorData, sponsorsContainer){
-  sponsorsContainer.innerHTML="";
-  let sponsorPost = "<p>No Sponsors, No Money!</p>";
-  for(let i = 0; i < sponsorData.length; i++){
-    sponsorPost = `<div class="sponsor-container">
-                    <div>
-                      <a href="${sponsorData[i].acf.sponsor_url}">
-                        <img src="${sponsorData[i].acf.logo}" alt="${sponsorData[i].acf.name}'s logo" class="sponsor-logo-image" loading=lazy>
-                      </a>
-                    </div>
-                    <div class="leo-sponsor-comment">
-                      <p>${sponsorData[i].acf.our_quote}</p>
-                      <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
-                    </div>
-                  </div>`
-    sponsorsContainer.innerHTML += sponsorPost
   }
 }

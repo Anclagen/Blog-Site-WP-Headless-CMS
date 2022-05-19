@@ -1,16 +1,6 @@
-import {baseUrl, routes, callAPI, parameters, sponsorUrl, createErrorMessage, createSponsors} from "./components/api_utilities.js"
-import {menuBtn, searchBtn, searchForm, sponsorsContainer, fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
-import {productSearch, resetBorders, validateEmailInput, validatedInputLength, openCloseMenu, openCloseSearch} from "./components/components.js"
-
-/*-------------- navigation menu --------------*/
-menuBtn.addEventListener("click", openCloseMenu);
-
-//search
-searchBtn.addEventListener("click", openCloseSearch);
-searchForm.addEventListener("submit", productSearch);
-
-/*-------------- get sponsors data --------------*/
-createSponsors(sponsorUrl, sponsorsContainer)
+import {baseUrl, routes, callAPI} from "./components/api_utilities.js"
+import { fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js"
+import {resetBorders, validateEmailInput, validatedInputLength, createErrorMessage} from "./components/components.js"
 
 /*-------------- Api Call and Page Creation --------------*/
 const additionalDetailsContainer = document.querySelector(".extra-contact-info")
@@ -78,35 +68,3 @@ function postQuery(data, formReportingContainer){
 
     formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`
 }
-
-/* old way using comments on the contact page but technically anyone can read your queries.
-const commentsForm = document.querySelector("#contact-form");
-commentsForm.addEventListener("submit", validateSubmitComment);
-
-//validates inputs and when passed, posts form to server.
-function validateSubmitComment(submission) {
-  submission.preventDefault();
-
-  //clear success/error container .
-  formReporting.innerHTML = "";
-
-  //variables assigned true if they pass, and errors generated on fail.
-  const a = validatedInputLength(fullname, 5, errorName);
-  const b = validatedInputLength(message, 25, errorMessage);
-  const c = validateEmailInput(email, errorEmail);
-  const d = validatedInputLength(subject, 15, errorSubject);
-
-  
-  if(a && b && c && d) {
-  //create data for post with id corresponding to page or post
-  const data = JSON.stringify({post:Number(id), author_name: fullname.value, author_email:email.value, content:`<b>${subject.value}:</b>\n ${message.value}`});
-  
-  postComment(data, formReporting);
-
-  commentsForm.reset();
-  resetBorders(fullname);
-  resetBorders(message);
-  resetBorders(email);
-  resetBorders(subject);
-  }
-}*/

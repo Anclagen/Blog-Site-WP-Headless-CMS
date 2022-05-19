@@ -40,7 +40,6 @@ async function createPageContent(){
     }
   
     postData = data[0];
-    //pages could be used later
     pagesAndPosts = [data[1], data[2]];
 
     //get number of results

@@ -1,12 +1,11 @@
-import {baseUrl, routes, callAPI, parameters, postComment} from "./components/api_utilities.js"
+import {baseUrl, routes, callAPI, parameters, postComment, blogPostUrl} from "./components/api_utilities.js"
 import {fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
-import { resetBorders, validatedInputLength, addImageModals, createComments, addLoader, createErrorMessage} from "./components/components.js"
+import { resetBorders, validatedInputLength, addImageModals, createComments, addLoader, createErrorMessage, createPostCompressed, createPost} from "./components/components.js"
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
-console.log(id)
 const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf;
 // const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed=1";
 
@@ -14,14 +13,17 @@ const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf;
 
 async function createPageContent(){
   try{
-    let postData = await callAPI(url);
-    await createPageHTML(postData);
+    const postData = await callAPI(url);
+    await createPostHTML(postData);
     createHeadInformation(postData);
-    console.log(postData)
-    addImageModals()
+    addImageModals();
+
+    const similarPosts = await callAPI(getIds(postData));
+    createRelatedPosts(similarPosts, postData);
+
   } catch(error){
     console.log(error);
-    createErrorMessage(mainContentContainer)
+    createErrorMessage(mainContentContainer);
   }
 }
 
@@ -31,19 +33,17 @@ createPageContent();
 const title = document.querySelector("title");
 
 function createHeadInformation(data){
-  console.log(data.title.rendered)
   title.innerText = `The Fluffy Piranha | ${data.title.rendered} `;
 }
 
-/*-------------- Page Creation --------------*/
+/*-------------- Page HTML Creation --------------*/
 /* sorting data onto page */
 const titleContainer = document.querySelector("h1");
 const featuredImageContainer = document.querySelector(".featured-image-container");
 const mainContentContainer = document.querySelector(".post-content-container");
 const postDateContainer = document.querySelector(".post-date");
 
-
-async function createPageHTML(data){
+async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
   //using file name for alt probably a better way to do it
   let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
@@ -59,6 +59,40 @@ async function createPageHTML(data){
   mainContentContainer.innerHTML = data.content.rendered;
 }
 
+//adds related posts
+
+const relatedPostsContainer = document.querySelector(".related-posts");
+
+//gets ids for related ids call
+function getIds(data){
+  let ids = "";
+  data.categories.forEach(element => {
+    ids += element + ",";})
+  const relatedUrl = blogPostUrl + "&categories="  + ids;
+  console.log(relatedUrl)
+  return relatedUrl
+}
+
+
+function createRelatedPosts(data, postData){
+  for(let i = 0; i< data.length; i++){
+    if(data[i].id === postData.id){
+      if(i < data.length - 1 && i > 0){
+        relatedPostsContainer.innerHTML += `${createPostCompressed(data[i-1])} ${createPostCompressed(data[i+1])}`;
+      } else if(i + 1 < data.length && i === 0){
+          relatedPostsContainer.innerHTML += createPostCompressed(data[i+1]);
+          if(i + 2 < data.length){
+            relatedPostsContainer.innerHTML += createPostCompressed(data[i+2]);
+          }
+      } else if(i === data.length - 1 && i - 1 >= 0){
+        relatedPostsContainer.innerHTML += createPostCompressed(data[i-1]);
+        if(i - 2 >= 0){
+          relatedPostsContainer.innerHTML += createPostCompressed(data[i-2]);
+        }
+      }
+    }
+  }
+}
 /*-------------- Get Comments  --------------*/
 const commentsContainer = document.querySelector(".comments-container");
 const commentUrl = baseUrl + "/comments?post=" + id
@@ -86,7 +120,7 @@ const commentsForm = document.querySelector("#comment-form");
 commentsForm.addEventListener("submit", validateSubmitComment);
 
 //validates inputs and when passed, posts form to server.
-function validateSubmitComment(submission) {
+async function validateSubmitComment(submission) {
   submission.preventDefault();
 
   //clear success/error container.
@@ -94,17 +128,16 @@ function validateSubmitComment(submission) {
 
   //variables assigned true if they pass, and errors generated on fail.
   const a = validatedInputLength(fullname, 1, errorName);
-  const b = validatedInputLength(message, 0, errorMessage);
+  const b = validatedInputLength(message, 3, errorMessage);
   // const c = validateEmailInput(email, errorEmail);
 
   if(a && b) {
   //create data for post with id corresponding to page or post
   const data = JSON.stringify({post: Number(id), author_name: fullname.value, author_email:"anonymous@anonymous.com", content:message.value});
   
-  postComment(data, formReporting);
-
+  await postComment(data, formReporting);
+  await getComments()
   //give api time to update
-  setTimeout(() => {getComments()}, 1000);
   commentsForm.reset();
   resetBorders(fullname);
   resetBorders(message);

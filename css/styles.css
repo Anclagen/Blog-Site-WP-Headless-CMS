@@ -41,6 +41,7 @@ body {
   /* overflow-x: hidden; /*prevent drop down menu overflow*/
 }
 
+
 a{
   text-decoration: none;
   color: black;
@@ -156,6 +157,7 @@ nav li{
   cursor: pointer;
 }
 
+nav li i:hover,
 #current-page,
 nav li a:hover{
   transition: 0.3s;
@@ -163,11 +165,27 @@ nav li a:hover{
   color: var(--off-white);
 }
 
+nav i,
 nav a {
   text-decoration: none;
   color: black;
   padding: 20px;
 }
+
+/*https://benjaminjohnson.me/accessible-icon-buttons*/
+.visually-hidden {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal;
+}
+
 
 /* search */
 .hidden-search{
@@ -576,11 +594,6 @@ footer{
   width: 100%;
 }
 
-.featured-image,
-.modal-image{
-  cursor:pointer;
-}
-
 .caption{
   background-color: var(--light-brown);
   width:100%;
@@ -773,10 +786,10 @@ border-radius: 5px;
     justify-content: flex-start;
     padding: 0;
   }
-  
-  nav li:nth-last-of-type(2) {
+ 
+  nav li:nth-last-of-type(1) {
     margin-left: auto;
-  }
+  } 
   
   nav li{
     display: inline-block;
@@ -813,6 +826,8 @@ border-radius: 5px;
   .social-grid-container{
     grid-template-columns: 1fr 2fr;
   }
+
+  .related-posts,
   .most-commented,
   .newest-posts,
   .latest-slider-content{

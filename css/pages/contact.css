@@ -1,0 +1,18 @@
+.extra-contact-info ul{
+  list-style: none;
+}
+
+.extra-contact-info ul li ul{
+  margin-left: 20px;
+}
+
+.extra-contact-info i{
+  font-size: 1.5rem;
+  color: var(--dark-brown);
+  margin-right: 20px;
+}
+
+.extra-contact-info li{
+  margin: 20px 0;
+}
+

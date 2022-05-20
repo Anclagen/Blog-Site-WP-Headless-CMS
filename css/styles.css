@@ -350,6 +350,15 @@ footer{
   bottom: 20px;
 }
 
+.signed-up{
+  display: block;
+  width: 100%;
+  background-color: green !important;
+  color: white;
+  border-radius: 5px;
+  pointer-events: none;
+}
+
 /* footer links */
 
 .footer-links{

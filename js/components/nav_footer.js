@@ -1,5 +1,6 @@
-import {createSponsoredContent, createErrorMessage} from "./components.js"
+import {createSponsoredContent, createErrorMessage, validateEmailInput} from "./components.js"
 import {callAPI, sponsorUrl, } from "./api_utilities.js"
+import {errorEmail} from "../constants/constants.js"
 /*-------------------- Navigation -------------------------*/
 
 /*--------  Menu Open/Close --------*/
@@ -42,6 +43,24 @@ searchBtn.addEventListener("click", openCloseSearch);
 searchForm.addEventListener("submit", productSearch);
 
 /*--------------------- Footer ------------------------*/
+
+//sign up email submission
+const signUpForm = document.querySelector(".signup-form");
+const SignUpInput = document.querySelector("#signup");
+const signUpSubmit = document.querySelector(".signup-submit");
+
+signUpForm.addEventListener("submit", validateSignUp);
+
+function validateSignUp(submission){
+  submission.preventDefault();
+  if(validateEmailInput(SignUpInput, errorEmail)){
+    signUpSubmit.setAttribute('disabled', 'disabled');
+    signUpSubmit.value = "Success!";
+    signUpSubmit.classList.add("signed-up");
+  }
+
+}
+
 
 //sponsor variables
 const sponsorsContainer = document.querySelector(".sponsors-post-container");

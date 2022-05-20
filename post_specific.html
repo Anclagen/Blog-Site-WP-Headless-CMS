@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/e4f6b5cf1a.js" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/e4f6b5cf1a.js" crossorigin="anonymous"></script>
     <!-- Hotjar Tracking Code for https://deft-scone-ef0e91.netlify.app/index.html -->
     <script>
       (function (h, o, t, j, a, r) {
@@ -135,10 +134,11 @@
         <div class="sign-up">
           <h3>Newsletter</h3>
           <label for="signup">Signup to are weekly newsletter</label>
-          <form action="POST" class="signup-form">
+          <form class="signup-form" novalidate>
             <input type="text" name="signup" id="signup" class="signup-input" />
             <input type="submit" value="Signup" class="signup-submit cta" />
           </form>
+          <div class="error" id="error-email"></div>
         </div>
         <div>
           <h3>Links</h3>

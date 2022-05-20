@@ -723,7 +723,7 @@ border-radius: 5px;
     --h1: normal 800 3rem 'Courgette', cursive;
     --h2: normal 800 2rem 'Courgette', cursive;
     --h3: normal 700 1.6rem "Raleway", sans-serif;
-    --body: normal 550 1.5rem "Raleway", sans-serif;
+    --body: normal 550 1.25rem "Raleway", sans-serif;
     --body-line-height: 1.8;
     --cta: normal 600 1.125rem "Raleway", sans-serif;
   }

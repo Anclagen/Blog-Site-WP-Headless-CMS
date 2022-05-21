@@ -45,9 +45,12 @@ const postDateContainer = document.querySelector(".post-date");
 
 async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
-  //using file name for alt probably a better way to do it
+  //using file names for alt
   let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
   featuredImgAlt = featuredImgAlt.split('.').slice(0, -1).join('.').replace(/_/g, ' ');
+
+  //removing styling tags injected by box creator plugin.
+  let postText = data.content.rendered.replace(/<style((.|\n|\r)*?)<\/style>/gm, '');
 
   titleContainer.innerHTML = data.title.rendered
   featuredImageContainer.innerHTML = `<img src="${featuredImgSrc}" alt="${featuredImgAlt}" class="featured-image">`;
@@ -56,7 +59,7 @@ async function createPostHTML(data){
                                  <div class="author-image">
                                   <img src="${data.acf.author_image}" alt="${data.acf.author}">
                                 </div>`
-  mainContentContainer.innerHTML = data.content.rendered;
+  mainContentContainer.innerHTML = postText;
 }
 
 //adds related posts

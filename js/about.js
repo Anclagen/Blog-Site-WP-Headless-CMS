@@ -5,7 +5,7 @@ import {addLoader, createErrorMessage} from "./components/components.js"
 const aboutContentContainer = document.querySelector(".about-content-container")
 async function createPageContent(){
   try{
-    let aboutData = await callAPI(baseUrl + routes.page + "/90");
+    const aboutData = await callAPI(baseUrl + routes.page + "/90");
     console.log(aboutData);
     aboutContentContainer.innerHTML = aboutData.content.rendered;
   } catch(error){

@@ -63,7 +63,6 @@
 
 .comment-right div,
 .comment-left div {
-  width: 100%;
   height: fit-content;
   border: 2px solid var(--dark-brown);
   background-color: white;

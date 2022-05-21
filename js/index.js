@@ -1,12 +1,14 @@
 // ------- imports --------
 import {createPost, createPostCompressed, createErrorMessage} from "./components/components.js"
-import {callAPI, latestPostsUrl} from "./components/api_utilities.js"
+import {callAPI, latestPostsUrl, baseUrl, routes, parameters} from "./components/api_utilities.js"
 
 
 /*-------------- Creating main page content --------------*/
 const latestContainer = document.querySelector(".latest-post-slider");
 const newestContainer = document.querySelector(".newest-posts");
 const popularContainer = document.querySelector(".most-commented");
+const bannerImageContainer = document.querySelector(".index-heading");
+const additionalContentContainer = document.querySelector(".additional-content");
 
 // variables for next and previous button functions of latest images slider.
 let latestPageCurrent = 1;
@@ -18,8 +20,14 @@ let latestPostsData = [];
 
 async function createPageContent(){
   try{
-    latestPostsData = await callAPI(latestPostsUrl);
+    //updates header image, and any additional content user wants to add
+    const homeData = await callAPI(baseUrl + routes.page + "/168" + "?" + parameters.embed);
+    bannerImageContainer.style.backgroundImage = `url("${homeData.featured_image.size_full}")`;
+    additionalContentContainer.innerHTML = homeData.content.rendered;
 
+    //grabs post data
+    latestPostsData = await callAPI(latestPostsUrl);
+    console.log(latestPostsData)
     //adjusting page max if I don't add more than 20 posts
     if(latestPostsData.length < 20){
     latestPageMaxMobile = Math.ceil(latestPostsData.length/2);

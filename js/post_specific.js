@@ -33,7 +33,15 @@ createPageContent();
 const title = document.querySelector("title");
 
 function createHeadInformation(data){
-  title.innerText = `The Fluffy Piranha | ${data.title.rendered} `;
+  const titleContent = decodeHtmlSymbols(data.title.rendered);
+  title.innerText = `The Fluffy Piranha | ${titleContent} `;
+}
+
+//page title wasn't converting html symbols codes.
+function decodeHtmlSymbols(data) {
+  var text = document.createElement("textarea");
+  text.innerHTML = data;
+  return text.value;
 }
 
 /*-------------- Page HTML Creation --------------*/

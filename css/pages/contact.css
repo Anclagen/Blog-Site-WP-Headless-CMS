@@ -1,9 +1,10 @@
 .extra-contact-info ul{
   list-style: none;
+padding: 0;
 }
 
 .extra-contact-info ul li ul{
-  margin-left: 20px;
+  margin-left: 35px;
 }
 
 .extra-contact-info i{

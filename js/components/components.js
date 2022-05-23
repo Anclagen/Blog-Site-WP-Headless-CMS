@@ -10,24 +10,26 @@ export function createPost(data){
   });
 
   let post = `
-                <div class="post-container">
-                  <div class="post-image-container">
-                    <a href="post_specific.html?id=${data.id}"><img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image"></a>
+              <div class="post-container">
+                <div class="post-image-container">
+                    <a href="post_specific.html?id=${data.id}" tabindex="-1">
+                      <img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image">
+                    </a>
                     <div class="author-image">
                       <img src="${data.acf.author_image}" alt="Picture of ${data.acf.author}">
                     </div>
-                    <div class="post-date">
-                      <span>${data.acf.published}</span><span class="author-text">Author: ${data.acf.author}</span>
-                    </div>
                   </div>
-                  <div class="post-heading">
-                    <a href="post_specific.html?id=${data.id}" ><h3>${data.title.rendered}</h3></a>
-                    <p>${data.acf.post_summary}</p>
+                  <div class="post-date">
+                    <span>${data.acf.published}</span><span class="author-text">Author: ${data.acf.author}</span>
                   </div>
-                  <div class="post-details">
-                    <span>Tags: ${tags}</span>
-                  </div>
+                <div class="post-heading">
+                  <a href="post_specific.html?id=${data.id}" ><h3>${data.title.rendered}</h3></a>
+                  <p>${data.acf.post_summary}</p>
                 </div>
+                <div class="post-details">
+                  <span>Tags: ${tags}</span>
+                </div>
+              </div>
                 `;
   return post
 }

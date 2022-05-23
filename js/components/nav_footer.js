@@ -28,6 +28,18 @@ function openCloseSearch(){
   focus(document.querySelector(".search-input"));
 }
 
+// https://dev.to/tylerjdev/when-role-button-is-not-enough-dac
+function keyDown(event) {
+  const keyD = event.key !== undefined ? event.key : event.keyCode;
+    if ( (keyD === 'Enter' || keyD === 13) || (['Spacebar', ' '].indexOf(keyD) >= 0 || keyD === 32)) {
+    event.preventDefault();
+    this.click();
+  }
+};
+
+
+
+
 /*--------- search function ---------*/
 function productSearch(submit) {
   submit.preventDefault();
@@ -40,6 +52,7 @@ function productSearch(submit) {
 /*------- Add Listeners -------*/
 menuBtn.addEventListener("click", openCloseMenu);
 searchBtn.addEventListener("click", openCloseSearch);
+searchBtn.addEventListener('keydown', keyDown);
 searchForm.addEventListener("submit", productSearch);
 
 /*--------------------- Footer ------------------------*/

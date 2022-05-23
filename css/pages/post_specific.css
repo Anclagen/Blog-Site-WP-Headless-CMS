@@ -59,6 +59,7 @@
 /*------- Comments Styling --------*/
 .comments-container div{
   margin-top: 15px;
+  box-sizing: border-box;
 }
 
 .comment-right div,

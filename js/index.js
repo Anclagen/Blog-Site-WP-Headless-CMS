@@ -36,11 +36,12 @@ async function createPageContent(){
 
     //adds page content for slider and new
     createPostImageSlider(latestPostsData, latestContainer);
-    createPosts(latestPostsData , newestContainer, 2);
-
     // resize slider listener
     window.addEventListener("resize", adjustSliderWidths);
-    
+
+    // 2 newest posts
+    createPosts(latestPostsData , newestContainer, 2);
+
     //filtering results for commented posts and sorting by most commented
     const commentedPosts = latestPostsData.filter(filterCommentedPosts);
     const sortedCommentedPosts = sortMostCommented(commentedPosts);
@@ -172,6 +173,9 @@ function createPostImageSlider(data, container){
   slide.classList = "latest-slider-content";
 
   for(let i = 0; i < data.length; i++){
+    if(i === 20){
+      break
+    }
     //every 4 posts creates new slide
     if(i!== 0 && i%4 === 0){
       container.appendChild(slide);

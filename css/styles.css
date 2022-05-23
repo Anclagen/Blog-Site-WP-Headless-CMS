@@ -38,7 +38,6 @@ body {
   grid-template-rows: auto 1fr auto;
   font: var(--body);
   background-color: var(--background-blue);
-  /* overflow-x: hidden; /*prevent drop down menu overflow*/
 }
 
 
@@ -621,6 +620,7 @@ footer{
   margin-top: 5px;
   margin-bottom: 10px;
   box-shadow: none;
+  box-sizing: border-box;
 }
 
 /*block alignment styling*/

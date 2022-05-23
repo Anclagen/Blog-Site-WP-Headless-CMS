@@ -32,7 +32,7 @@
   </head>
   <body>
     <header>
-      <div id="skip"><a href="#latest-posts">Skip to Main Content</a></div>
+      <div id="skip"><a href="#main-content">Skip to Main Content</a></div>
       <div class="logo-header page-wrapper-large">
         <a href="index.html"><img src="images/leo_page_logo.png" alt="The Fluffy Piranha, Logo" /></a>
       </div>
@@ -56,6 +56,7 @@
       </nav>
       <div class="hidden-search search-container">
         <form class="search-form page-wrapper-large">
+          <label for="search-input" class="visually-hidden">search</label>
           <input type="text" class="search-input" id="search-input" />
           <input type="submit" value="Search" class="search-btn cta" />
         </form>
@@ -63,7 +64,7 @@
     </header>
     <main class="page-wrapper-large">
       <section class="post-results">
-        <h1></h1>
+        <h1 id="main-content"></h1>
         <div class="search-terms"></div>
         <div class="filters-sort">
           <div>

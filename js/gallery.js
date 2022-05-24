@@ -27,7 +27,12 @@ async function CreatePageContent(){
     diaryTransform = 100/diaryData.length
     diaryMaxPages = diaryData.length
     addGalleryImages(diaryData, diaryContainer);
-    
+    const images = document.querySelectorAll(".gallery-image");
+   
+    images.forEach(element => {
+      element.style.width = `${diaryTransform}%`;
+    })
+    console.log(images)
     // adjustWidths(diaryData.length, walkiesMaxPages);
     // walkiesTransform = 100/walkiesData.length
     // addGalleryImages(walkiesData, walkiesContainer);
@@ -45,7 +50,7 @@ CreatePageContent();
 
 function addGalleryImages(data, container){
   for(let i = 0; i < data.length; i++){
-    container.innerHTML += `<img src="${data[i].media_details.sizes.full.source_url}" alt="${data[i].alt_text}" />`
+    container.innerHTML += `<img src="${data[i].media_details.sizes.full.source_url}" class="gallery-image"alt="${data[i].alt_text}" />`
   }
 }
 

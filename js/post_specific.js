@@ -35,6 +35,7 @@ const title = document.querySelector("title");
 function createHeadInformation(data){
   const titleContent = decodeHtmlSymbols(data.title.rendered);
   title.innerText = `The Fluffy Piranha | ${titleContent} `;
+  document.querySelector('meta[name="description"]').content = data.acf.post_summary;
 }
 
 //page title wasn't converting html symbols codes.
@@ -80,7 +81,6 @@ function getIds(data){
   data.categories.forEach(element => {
     ids += element + ",";})
   const relatedUrl = blogPostUrl + "&categories="  + ids;
-  console.log(relatedUrl)
   return relatedUrl
 }
 

@@ -131,17 +131,14 @@ export function createComments(data, commentsContainer){
 
 export function addImageModals(){
   const imageModalBackground = document.querySelector(".modal-background-container");
-  const imageModal = document.querySelector(".image-modal");
-  const imageModalCaption = document.querySelector(".image-modal-caption");
   const imageModalContent = document.querySelector(".image-modal-content")
   const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
   
   imagesModals.forEach(function(image) {
     //assign event listener to all images
     image.addEventListener('click', function() {
-      imageModal.src = this.src;
-      imageModal.alt = this.alt;
-      imageModalCaption.innerText = this.alt
+      imageModalContent.innerHTML = `<img class="image-modal" src="${this.src}" alt="${this.alt}">
+                                     <span class="image-modal-caption">${this.alt}</span>`;
       imageModalContent.classList.add("image-modal-content-expanded");
       imageModalBackground.style.display = "block";
     })  
@@ -149,10 +146,8 @@ export function addImageModals(){
 
   //assign event listener to background for closing modal
   imageModalBackground.addEventListener("click", function(){
-  imageModal.src = "";
-  imageModal.alt = "";
-  imageModalCaption.innerText = "";
   imageModalContent.classList.remove("image-modal-content-expanded");
+  imageModalContent.innerHTML =" ";
   imageModalBackground.style.display = "none";
   })
 }

@@ -334,7 +334,7 @@ footer{
 }
 
 .signup-input {
-  height: 39px;
+  height: 48px;
   border: 1px solid var(--dark-brown);
   padding: 0px;
   padding-left: 5px;
@@ -352,6 +352,7 @@ footer{
 .signed-up{
   display: block;
   width: 101%;
+  height: 50px;
   background-color: green !important;
   color: white;
   border-radius: 5px;
@@ -584,23 +585,6 @@ footer{
 }
 
 /*----Buttons plus slider buttons-----*/
-.signup-submit,
-.search-container .search-btn{
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.signup-submit:hover{
-  border: 2px solid var(--dark-brown);
-  box-sizing: content-box;
-  cursor: pointer;
-}
-
-.slider-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-}
 
 .cta{
   background-color: var(--dark-brown);
@@ -614,6 +598,28 @@ footer{
   transition: 0.3s;
   background-color: var(--light-brown);
   color: black;
+}
+
+.slider-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.signup-submit,
+.search-container .search-btn{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.signup-submit{
+  padding: 14px;
+}
+
+.signup-submit:hover{
+  border: 2px solid var(--dark-brown);
+  box-sizing: content-box;
+  cursor: pointer;
 }
 
 .latest-previous, 

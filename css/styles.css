@@ -367,6 +367,10 @@ footer{
   padding: 0;
 }
 
+.footer-links li {
+  margin-bottom: 20px;
+}
+
 /* sponsor */
 
 .sponsor-logo-image{

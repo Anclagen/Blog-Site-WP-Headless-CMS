@@ -74,21 +74,21 @@
               <span class="caption">I'm all ears, get in touch.</span>
             </div>
           </div>
-          <form id="contact-form" novalidate>
+          <form id="contact-form">
             <div id="form-reporting-container"></div>
             <label for="your-name">Name*</label>
-            <input type="text" id="your-name" name="your-name" />
+            <input type="text" id="your-name" name="name" />
             <div class="error" id="error-name"></div>
             <label for="your-email">E-mail*</label>
-            <input type="email" id="your-email" name="your-email" />
+            <input type="email" id="your-email" name="email" />
             <div class="error" id="error-email"></div>
             <label for="your-subject">Subject*</label>
-            <input type="text" id="your-subject" name="your-subject" />
+            <input type="text" id="your-subject" name="subject" />
             <div class="error" id="error-subject"></div>
             <label for="your-message">Message*</label>
-            <textarea id="your-message" name="your-message"></textarea>
+            <textarea id="your-message" name="message"></textarea>
             <div class="error" id="error-message"></div>
-            <input type="submit" value="Submit" class="cta" />
+            <input type="submit" value="Submit" class="cta" id="contact-form-submit" disabled />
           </form>
         </div>
       </section>

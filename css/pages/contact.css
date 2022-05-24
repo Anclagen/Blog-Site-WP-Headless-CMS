@@ -17,3 +17,15 @@ padding: 0;
   margin: 20px 0;
 }
 
+.error{
+  font-size: 1rem;
+}
+
+#contact-form input{
+  box-sizing: border-box;
+}
+
+#contact-form input:disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}

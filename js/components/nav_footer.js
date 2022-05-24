@@ -56,14 +56,15 @@ searchForm.addEventListener("submit", productSearch);
 
 //sign up email submission
 const signUpForm = document.querySelector(".signup-form");
-const SignUpInput = document.querySelector("#signup");
+const signUpInput = document.querySelector("#signup");
 const signUpSubmit = document.querySelector(".signup-submit");
+const signUpError = document.querySelector("#error-signup-email");
 
 signUpForm.addEventListener("submit", validateSignUp);
 
 function validateSignUp(submission){
   submission.preventDefault();
-  if(validateEmailInput(SignUpInput, errorEmail)){
+  if(validateEmailInput(signUpInput, signUpError)){
     signUpSubmit.setAttribute('disabled', 'disabled');
     signUpSubmit.value = "Success!";
     signUpSubmit.classList.add("signed-up");

@@ -27,7 +27,6 @@ async function createPageContent(){
 
     //grabs post data
     latestPostsData = await callAPI(latestPostsUrl);
-    console.log(latestPostsData)
     //adjusting page max if I don't add more than 20 posts
     if(latestPostsData.length < 20){
     latestPageMaxMobile = Math.ceil(latestPostsData.length/2);

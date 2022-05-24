@@ -37,9 +37,6 @@ function keyDown(event) {
   }
 };
 
-
-
-
 /*--------- search function ---------*/
 function productSearch(submit) {
   submit.preventDefault();

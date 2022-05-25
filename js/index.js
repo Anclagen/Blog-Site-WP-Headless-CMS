@@ -12,9 +12,12 @@ const additionalContentContainer = document.querySelector(".additional-content")
 
 // variables for next and previous button functions of latest images slider.
 let latestPageCurrent = 1;
+let latestPageMax = 20;
 let latestPageCurrentMobile = 1;
+let latestPageCurrentTablet = 1;
 let latestPageCurrentDesktop = 1;
-let latestPageMaxMobile = 10;
+let latestPageMaxMobile = 20;
+let latestPageMaxTablet = 10;
 let latestPageMaxDesktop = 5;
 let latestPostsData = [];
 
@@ -29,7 +32,8 @@ async function createPageContent(){
     latestPostsData = await callAPI(latestPostsUrl);
     //adjusting page max if I don't add more than 20 posts
     if(latestPostsData.length < 20){
-    latestPageMaxMobile = Math.ceil(latestPostsData.length/2);
+    latestPageMaxMobile = latestPostsData.length;
+    latestPageMaxTablet = Math.ceil(latestPostsData.length/2);
     latestPageMaxDesktop = Math.ceil(latestPostsData.length/4);
     }
 
@@ -85,7 +89,7 @@ function sortMostCommented(data){
 /* designed to handle the 20 results the call was limited (could be expanded to more)
    and shrink on mobile to 2 posts at a time from 4*/
 
-let slidePercentage = 10;
+let slidePercentage = 5;
 
 //function for resize listener to update slider on window resize.
 function adjustSliderWidths(){
@@ -98,43 +102,75 @@ function adjustSliderWidths(){
 // updates max number of pages and slide % amount
 function getWidths(){
   if(window.innerWidth < 720){
-    slidePercentage = 10;
+    slidePercentage = 5;
   }
-  else if(window.innerWidth >= 720){
+  else if(window.innerWidth >= 1100){
     slidePercentage = 20;
+  }else if(window.innerWidth >= 720){
+    slidePercentage = 10;
   };
 }
 
 // calculates the amount of transform depending on screen width
 function transformSlider(){
-  if(window.innerWidth < 720){
-    let transform = (latestPageCurrent- 1) * slidePercentage;
-    latestContainer.style.transform = `translateX(-${transform}%)`;
-  }
-  else if(window.innerWidth >= 720){
     let transform = (latestPageCurrent - 1) * slidePercentage;
     latestContainer.style.transform = `translateX(-${transform}%)`;
-  };
+    console.log(transform)
 }
 
 /*  function to update the page number 
 throw in 0 just for resize, 1 for next, -1 for previous page changes*/
 function changePageNumber(Num){
+  //calculates page number depending on screen size
   if(window.innerWidth < 720){
     latestPageCurrentMobile = latestPageCurrentMobile + (Num * 1);
-    latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 0.5);
+    latestPageCurrentTablet = latestPageCurrentTablet + (Num * 0.5);
+    latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 0.25);
     latestPageCurrent = latestPageCurrentMobile;
+  }else if(window.innerWidth >= 1100){
+    latestPageCurrentMobile = latestPageCurrentMobile + (Num * 4);
+    latestPageCurrentTablet = latestPageCurrentTablet + (Num * 2);
+    latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 1);
+    latestPageCurrent  = Math.floor(latestPageCurrentDesktop);
   }
   else if(window.innerWidth >= 720){
     latestPageCurrentMobile = latestPageCurrentMobile + (Num * 2);
-    latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 1);
-    //rounds down if desktop page is a decimal
-    latestPageCurrent  = Math.floor(latestPageCurrentDesktop);
+    latestPageCurrentTablet = latestPageCurrentTablet + (Num * 1);
+    latestPageCurrentDesktop = latestPageCurrentDesktop + (Num * 0.5);
+    latestPageCurrent = Math.floor(latestPageCurrentTablet);
   }
+
+  //correct for the end and start of the slider due to decimals
+  if(latestPageCurrentDesktop < 1){
+    latestPageCurrentDesktop = 1;
+  }
+  if(latestPageCurrentTablet < 1){
+    latestPageCurrentTablet = 1;
+  }
+  if(latestPageCurrentTablet > latestPageMaxTablet){
+    latestPageCurrentTablet = latestPageMaxTablet;
+  }
+  if(latestPageCurrentDesktop > latestPageMaxDesktop){
+    latestPageCurrentDesktop = latestPageMaxDesktop;
+  }
+  console.log(latestPageCurrentDesktop, latestPageCurrentTablet, latestPageCurrentMobile);
 }
 
 // disables buttons 
 function disableButtons(){
+  if(window.innerWidth < 720){
+    latestPageMax =latestPageMaxMobile;
+    latestPageCurrent = latestPageCurrentMobile;
+  }else if(window.innerWidth >= 1100){
+    //rounds down if desktop page is a decimal
+    latestPageMax = latestPageMaxDesktop;
+    latestPageCurrent  = latestPageCurrentDesktop;
+  }
+  else if(window.innerWidth >= 720){
+    latestPageMax = latestPageMaxTablet;
+    latestPageCurrent = latestPageCurrentTablet;
+  }
+
   if(latestPageCurrent === 1){
     latestPrevious.setAttribute('disabled', 'disabled');
     latestPreviousArrow.style.display = "none";
@@ -142,26 +178,17 @@ function disableButtons(){
     latestPrevious.disabled = false;
     latestPreviousArrow.style.display = "block";
   }
-  if(window.innerWidth < 720){
-    if(latestPageCurrent === latestPageMaxMobile){
+
+  if(latestPageCurrent === latestPageMax){
       latestNext.setAttribute('disabled', 'disabled');
       latestNextArrow.style.display = "none";
-    }
-    if(latestPageCurrent < latestPageMaxMobile){
-      latestNext.disabled = false;
-      latestNextArrow.style.display = "block";
-    }
-  } else {
-    if(latestPageCurrent === latestPageMaxDesktop){
-      latestNext.setAttribute('disabled', 'disabled');
-      latestNextArrow.style.display = "none";
-    }
-    if(latestPageCurrent < latestPageMaxDesktop){
-      latestNext.disabled = false;
-      latestNextArrow.style.display = "block";
-    }
   }
-}
+    if(latestPageCurrent < latestPageMax){
+      latestNext.disabled = false;
+      latestNextArrow.style.display = "block";
+    }
+} 
+
 
 //create responsive image slider
 function createPostImageSlider(data, container){

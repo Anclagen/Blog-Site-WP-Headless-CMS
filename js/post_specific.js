@@ -16,7 +16,6 @@ async function createPageContent(){
     const postData = await callAPI(url);
     await createPostHTML(postData);
     console.log(postData._embedded['wp:featuredmedia'][0].alt_text)
-
     createHeadInformation(postData);
     addImageModals();
 
@@ -56,6 +55,7 @@ const postDateContainer = document.querySelector(".post-date");
 
 async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
+
   //using file names for alt
   // let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
   // featuredImgAlt = featuredImgAlt.split('.').slice(0, -1).join('.').replace(/_/g, ' ');
@@ -157,4 +157,3 @@ async function validateSubmitComment(submission) {
   resetBorders(message);
   }
 }
-

@@ -13,7 +13,7 @@ export function createPost(data){
               <div class="post-container">
                 <div class="post-image-container">
                     <a href="post_specific.html?id=${data.id}" tabindex="-1">
-                      <img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image">
+                      <img src="${data.featured_image.size_large}" alt="${data._embedded['wp:featuredmedia'][0].alt_text}" class="post-image">
                     </a>
                     <div class="author-image">
                       <img src="${data.acf.author_image}" alt="Picture of ${data.acf.author}">
@@ -39,7 +39,7 @@ export function createPostCompressed(data){
   let post = `<div class="post-container">
                   <div class="post-image-container">
                     <a href="post_specific.html?id=${data.id}">
-                      <img src="${data.featured_image.size_large}" alt="${data.acf.post_summary}" class="post-image">
+                      <img src="${data.featured_image.size_large}" alt="${data._embedded['wp:featuredmedia'][0].alt_text}" class="post-image">
                       <h3>${data.title.rendered}</h3>
                     </a>
                   </div>

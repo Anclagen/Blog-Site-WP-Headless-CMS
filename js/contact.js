@@ -54,8 +54,8 @@ function submitForm(submission) {
 }
 
 /*validates inputs as they are filled in, displaying green when valid, 
-orange if not valid, and red with error when focus lost, when all inputs
-are valid submit button is enabled */ 
+orange if not valid, and red with error if invalid when focus lost. 
+When all inputs are valid submit button is enabled */ 
 function validateInputs(event){
   //probably could of used a switch
   if(event.target.name === "name"){
@@ -111,6 +111,7 @@ function postQuery(data, formReportingContainer){
     
 }
 
+//old form validation
 // const contactForm = document.querySelector("#contact-form");
 // contactForm.addEventListener("submit", validateSubmitComment);
 

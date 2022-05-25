@@ -6,7 +6,7 @@ import { resetBorders, validatedInputLength, addImageModals, createComments, add
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
-const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf;
+const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed";
 // const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed=1";
 
 /*-------------- Api Call and Page Creation --------------*/
@@ -15,6 +15,8 @@ async function createPageContent(){
   try{
     const postData = await callAPI(url);
     await createPostHTML(postData);
+    console.log(postData._embedded['wp:featuredmedia'][0].alt_text)
+
     createHeadInformation(postData);
     addImageModals();
 
@@ -55,8 +57,9 @@ const postDateContainer = document.querySelector(".post-date");
 async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
   //using file names for alt
-  let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
-  featuredImgAlt = featuredImgAlt.split('.').slice(0, -1).join('.').replace(/_/g, ' ');
+  // let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
+  // featuredImgAlt = featuredImgAlt.split('.').slice(0, -1).join('.').replace(/_/g, ' ');
+  let featuredImgAlt = data._embedded['wp:featuredmedia'][0].alt_text;
 
   //removing styling tags injected by box creator plugin.
   let postText = data.content.rendered.replace(/<style((.|\n|\r)*?)<\/style>/gm, '');

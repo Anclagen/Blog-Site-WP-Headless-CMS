@@ -8,6 +8,7 @@
 .diary-gallery-slide,
 .walkies-gallery-slide{
   display: flex;
+  align-items: flex-start;
   /*transition: 0.3s all ease-out;*/
 }
 

@@ -147,6 +147,12 @@ function changePageNumber(Num){
   if(latestPageCurrentTablet < 1){
     latestPageCurrentTablet = 1;
   }
+  if(latestPageCurrentMobile < 1){
+    latestPageCurrentMobile = 1;
+  }
+  if(latestPageCurrentMobile > latestPageMaxMobile){
+    latestPageCurrentMobile = latestPageMaxMobile;
+  }
   if(latestPageCurrentTablet > latestPageMaxTablet){
     latestPageCurrentTablet = latestPageMaxTablet;
   }

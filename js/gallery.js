@@ -1,5 +1,4 @@
 // ------- imports --------
-import {keyDown} from "./components/nav_footer";
 import {baseUrl, callAPI} from "./components/api_utilities.js";
 import {errorMessage} from "./constants/constants.js";
 

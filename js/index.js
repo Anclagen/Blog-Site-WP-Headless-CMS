@@ -140,6 +140,7 @@ function disableButtons(){
     latestPrevious.disabled = false;
     latestPreviousArrow.style.display = "block";
   }
+  //calculates max transform
   if(window.innerWidth < 720){
     transformMax = (sliderLengthMax-1) * slidePercentage;
   }if(window.innerWidth >= 1100){
@@ -147,6 +148,7 @@ function disableButtons(){
   }else if(window.innerWidth >= 720){
     transformMax = (sliderLengthMax-2) * slidePercentage;
   }
+  
   if(transform === transformMax){
       latestNext.setAttribute('disabled', 'disabled');
       latestNextArrow.style.display = "none";

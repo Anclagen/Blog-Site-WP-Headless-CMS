@@ -13,10 +13,8 @@ const additionalContentContainer = document.querySelector(".additional-content")
 // variables for next and previous button functions of latest images slider.
 let latestPageCurrent = 1;
 let latestPageCurrentMobile = 1;
-let latestPageCurrentTablet = 1;
 let latestPageCurrentDesktop = 1;
 let latestPageMaxMobile = 20;
-let latestPageMaxTablet = 10;
 let latestPageMaxDesktop = 5;
 let latestPostsData = [];
 

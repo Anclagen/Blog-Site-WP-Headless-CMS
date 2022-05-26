@@ -87,7 +87,8 @@ function sortMostCommented(data){
 /*-------------- Responsive Latest content slider -----------------*/
 
 /* designed to handle the 20 results the call was limited (could be expanded to more)
-   and shrink on mobile to 2 posts at a time from 4*/
+   and on mobile 1 post, tablet 2 and desktop 4 a testament to with enough if statements
+   you can make anything work*/
 
 let slidePercentage = 5;
 

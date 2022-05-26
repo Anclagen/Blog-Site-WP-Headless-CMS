@@ -30,7 +30,7 @@ function openCloseSearch(){
 
 /* https://dev.to/tylerjdev/when-role-button-is-not-enough-dac
   keyboard input converted to click to open search bar*/
-export function keyDown(event) {
+function keyDown(event) {
   const keyD = event.key !== undefined ? event.key : event.keyCode;
     if ( (keyD === 'Enter' || keyD === 13) || (['Spacebar', ' '].indexOf(keyD) >= 0 || keyD === 32)) {
     event.preventDefault();

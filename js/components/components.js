@@ -31,9 +31,10 @@ export function createPost(data){
                 </div>
               </div>
                 `;
-  return post
+  return post;
 }
 
+/*------ compressed post layout creator -------*/
 export function createPostCompressed(data){
 
   let post = `<div class="post-container">
@@ -49,7 +50,7 @@ export function createPostCompressed(data){
                   </div>
                 </div>
                 `;
-  return post
+  return post;
 }
 
 /*------- Loader and error messages for API calls --------*/
@@ -84,8 +85,8 @@ export function createSponsoredContent(sponsorData, sponsorsContainer){
                       <p>${sponsorData[i].acf.our_quote}</p>
                       <img src="${sponsorData[i].acf.our_image}" alt="Leo giving his speech"/>
                     </div>
-                  </div>`
-    sponsorsContainer.innerHTML += sponsorPost
+                  </div>`;
+    sponsorsContainer.innerHTML += sponsorPost;
   }
 }
 
@@ -131,7 +132,7 @@ export function createComments(data, commentsContainer){
 
 export function addImageModals(){
   const imageModalBackground = document.querySelector(".modal-background-container");
-  const imageModalContent = document.querySelector(".image-modal-content")
+  const imageModalContent = document.querySelector(".image-modal-content");
   const imagesModals = document.querySelectorAll(".modal-image, .featured-image");
   
   imagesModals.forEach(function(image) {
@@ -141,7 +142,7 @@ export function addImageModals(){
                                      <span class="image-modal-caption">${this.alt}</span>`;
       imageModalContent.classList.add("image-modal-content-expanded");
       imageModalBackground.style.display = "block";
-    })  
+    });  
   });
 
   //assign event listener to background for closing modal
@@ -149,12 +150,10 @@ export function addImageModals(){
   imageModalContent.classList.remove("image-modal-content-expanded");
   imageModalContent.innerHTML =" ";
   imageModalBackground.style.display = "none";
-  })
+  });
 }
 
 /*------------------------------ Form Validation ----------------------------------*/
-
-
 
 //validates text inputs
 export function validatedInputLength(input, length, errorContainer) {
@@ -188,8 +187,7 @@ export function resetBorders(input){
   input.style.border = "3px solid grey";
 }
 
-//needed simpler versions
-
+//Validators without error messaging
 export function validateLength(input, length) {
   if (input.value.trim().length > length) {
     return true;

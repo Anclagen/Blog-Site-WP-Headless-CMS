@@ -1,13 +1,12 @@
-import {baseUrl, routes, callAPI, parameters, postComment, blogPostUrl} from "./components/api_utilities.js"
-import {fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js"
-import { resetBorders, validatedInputLength, addImageModals, createComments, addLoader, createErrorMessage, createPostCompressed, createPost} from "./components/components.js"
+import {baseUrl, routes, callAPI, parameters, postComment, blogPostUrl} from "./components/api_utilities.js";
+import {fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js";
+import {resetBorders, validatedInputLength, addImageModals, createComments, createErrorMessage, createPostCompressed} from "./components/components.js";
 
 /*-------------- Query string grabs --------------*/
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
 const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed";
-// const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed=1";
 
 /*-------------- Api Call and Page Creation --------------*/
 
@@ -15,7 +14,7 @@ async function createPageContent(){
   try{
     const postData = await callAPI(url);
     await createPostHTML(postData);
-    console.log(postData._embedded['wp:featuredmedia'][0].alt_text)
+
     createHeadInformation(postData);
     addImageModals();
 
@@ -55,22 +54,18 @@ const postDateContainer = document.querySelector(".post-date");
 
 async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
+  const featuredImgAlt = data._embedded['wp:featuredmedia'][0].alt_text;
 
-  //using file names for alt
-  // let featuredImgAlt = featuredImgSrc.substring(featuredImgSrc.lastIndexOf('/') + 1);
-  // featuredImgAlt = featuredImgAlt.split('.').slice(0, -1).join('.').replace(/_/g, ' ');
-  let featuredImgAlt = data._embedded['wp:featuredmedia'][0].alt_text;
-
-  //removing styling tags injected by box creator plugin.
+  //removing inline styling tags injected by box creator plugin.
   let postText = data.content.rendered.replace(/<style((.|\n|\r)*?)<\/style>/gm, '');
 
-  titleContainer.innerHTML = data.title.rendered
+  titleContainer.innerHTML = data.title.rendered;
   featuredImageContainer.innerHTML = `<img src="${featuredImgSrc}" alt="${featuredImgAlt}" class="featured-image">`;
   postDateContainer.innerHTML = `<span>${data.acf.published}</span>
                                  <span class="author-text">Author: ${data.acf.author}</span>
                                  <div class="author-image">
                                   <img src="${data.acf.author_image}" alt="${data.acf.author}">
-                                </div>`
+                                </div>`;
   mainContentContainer.innerHTML = postText;
 }
 
@@ -82,9 +77,9 @@ const relatedPostsContainer = document.querySelector(".related-posts");
 function getIds(data){
   let ids = "";
   data.categories.forEach(element => {
-    ids += element + ",";})
+    ids += element + ",";});
   const relatedUrl = blogPostUrl + "&categories="  + ids;
-  return relatedUrl
+  return relatedUrl;
 }
 
 
@@ -107,9 +102,10 @@ function createRelatedPosts(data, postData){
     }
   }
 }
+
 /*-------------- Get Comments  --------------*/
 const commentsContainer = document.querySelector(".comments-container");
-const commentUrl = baseUrl + "/comments?post=" + id
+const commentUrl = baseUrl + "/comments?post=" + id;
 
 async function getComments(){
   try{
@@ -122,11 +118,11 @@ async function getComments(){
     
   } catch(error){
     console.log(error);
-    createErrorMessage(commentsContainer)
+    createErrorMessage(commentsContainer);
   }
 }
 
-getComments()
+getComments();
 
 
 /*-------------- Comment Posting --------------*/
@@ -150,7 +146,7 @@ async function validateSubmitComment(submission) {
   const data = JSON.stringify({post: Number(id), author_name: fullname.value, author_email:"anonymous@anonymous.com", content:message.value});
   
   await postComment(data, formReporting);
-  await getComments()
+  await getComments();
   //give api time to update
   commentsForm.reset();
   resetBorders(fullname);

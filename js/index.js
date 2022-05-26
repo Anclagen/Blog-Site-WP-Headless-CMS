@@ -1,6 +1,6 @@
 // ------- imports --------
-import {createPost, createPostCompressed, createErrorMessage} from "./components/components.js"
-import {callAPI, latestPostsUrl, baseUrl, routes, parameters} from "./components/api_utilities.js"
+import {createPost, createPostCompressed, createErrorMessage} from "./components/components.js";
+import {callAPI, latestPostsUrl, baseUrl, routes, parameters} from "./components/api_utilities.js";
 
 
 /*-------------- Creating main page content --------------*/
@@ -16,34 +16,35 @@ let latestPostsData = [];
 
 async function createPageContent(){
   try{
-    //updates header image, and any additional content user wants to add
+    //updates header image, and adds additional content
     const homeData = await callAPI(baseUrl + routes.page + "/168" + "?" + parameters.embed);
     bannerImageContainer.style.backgroundImage = `url("${homeData.featured_image.size_full}")`;
     additionalContentContainer.innerHTML = homeData.content.rendered;
 
     //grabs post data
     latestPostsData = await callAPI(latestPostsUrl);
-    //latestPostsData = latestPostsData.concat(latestPostsData)
+
     
-    //adds page content for slider and new
+    //adds page content for slider and new.
     createSliderContent(latestPostsData, latestContainer);
-    // resize slider listener
+    // resize slider listener.
     window.addEventListener("resize", adjustSliderWidths);
 
+    //adds two newest posts to new section.
     createPosts(latestPostsData , newestContainer, 2);
 
     //filtering results for commented posts and sorting by most commented
     const commentedPosts = latestPostsData.filter(filterCommentedPosts);
     const sortedCommentedPosts = sortMostCommented(commentedPosts);
-
     createPosts(sortedCommentedPosts, popularContainer, 4);
+
   } catch(error){
-    console.log(error)
-    createErrorMessage(latestContainer)
+    console.log(error);
+    createErrorMessage(latestContainer);
   }
 }
 
-createPageContent()
+createPageContent();
 
 /*-------------- Newest Posts -----------------*/
 
@@ -60,7 +61,7 @@ function createPosts(data, container, amount){
 function filterCommentedPosts(data){
   if(data._embedded !== undefined){
     if(data._embedded.replies !== undefined){
-      return true
+      return true;
     }
   }
 }
@@ -74,21 +75,21 @@ function sortMostCommented(data){
 
 /* Limited to 20 posts max, resizes from 1 to 2 to 4 posts at a time 
    depending on the screen size, and*/
-
 //
 let slidePercentage = 5;
 let transformMax = 95;
 let transform = 0;
 
-//create slider content
+//creates upto 20 slides content
 function createSliderContent(data, container){
   container.innerHTML= "";
-  sliderLengthMax = data.length;
+  if(data.length < 20){
+    sliderLengthMax = data.length;}
   disableButtons();
   for(let i = 0; i < data.length; i++){
     if(i === 20){
-      sliderLengthMax = 20
-      break
+      sliderLengthMax = 20;
+      break;
     }
     container.innerHTML += `<div class="latest-slider-content">${createPostCompressed(data[i])}</div>`;
   }
@@ -101,31 +102,27 @@ function adjustSliderWidths(){
   disableButtons();
 }
 
-// calculates the amount of transform depending on screen width
+// transforms slider
 function transformSlider(){
-    //transform = (latestPageCurrent - 1) * slidePercentage;
-      if(window.innerWidth >= 1100){
-        if(transform > ((sliderLengthMax-4) * slidePercentage)){
-          transform = (sliderLengthMax-4) * slidePercentage;
-        }
-      }else if(window.innerWidth >= 720){
-        if(transform > ((sliderLengthMax-2) * slidePercentage)){
-          transform = (sliderLengthMax-2) * slidePercentage;
-      };
-      }
     latestContainer.style.transform = `translateX(-${transform}%)`;
 }
 
-/*  function to update the page number 
-throw in 0 just for resize, 1 for next, -1 for previous page changes*/
+/* Calculates and correct transform for screen size
+   use 0 to resize, 1 for next, and -1 for previous page changes*/
 function calculateTransform(num){
   if(window.innerWidth < 720){
-    transform += (5*num)
+    transform += (5*num);
   }else if(window.innerWidth >= 1100){
-    transform += (20*num)
+    transform += (20*num);
+    if(transform > ((sliderLengthMax-4) * slidePercentage)){
+      transform = (sliderLengthMax-4) * slidePercentage;
+    }
   }else if(window.innerWidth >= 720){
-    transform += (10*num)
-  };
+    transform += (10*num);
+    if(transform > ((sliderLengthMax-2) * slidePercentage)){
+      transform = (sliderLengthMax-2) * slidePercentage;
+    }
+  }
   if(transform < 0){
     transform = 0;
   }
@@ -133,6 +130,7 @@ function calculateTransform(num){
 
 // disables buttons and adjust the max transform according to screen size
 function disableButtons(){
+  //disables previous at slider start
   if(transform === 0){
     latestPrevious.setAttribute('disabled', 'disabled');
     latestPreviousArrow.style.display = "none";
@@ -140,7 +138,8 @@ function disableButtons(){
     latestPrevious.disabled = false;
     latestPreviousArrow.style.display = "block";
   }
-  //calculates max transform
+
+  //calculates max transform base on screen size
   if(window.innerWidth < 720){
     transformMax = (sliderLengthMax-1) * slidePercentage;
   }if(window.innerWidth >= 1100){
@@ -149,6 +148,7 @@ function disableButtons(){
     transformMax = (sliderLengthMax-2) * slidePercentage;
   }
   
+  //disables next if max transform reached
   if(transform === transformMax){
       latestNext.setAttribute('disabled', 'disabled');
       latestNextArrow.style.display = "none";

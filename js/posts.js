@@ -1,5 +1,5 @@
-import {callAPI, callApiGetPages, blogPostUrl, categoriesUrl, searchBlogPostsUrl} from "./components/api_utilities.js"
-import {createPost, createErrorMessage, addLoader} from "./components/components.js"
+import {callAPI, callApiGetPages, blogPostUrl, categoriesUrl, searchBlogPostsUrl} from "./components/api_utilities.js";
+import {createPost, createErrorMessage, addLoader} from "./components/components.js";
 
 /*-------------- query string grabs --------------*/
 
@@ -16,7 +16,7 @@ if(tags !== null){
   initialUrl = blogPostUrl + "&categories=" + tags;
 } else if(searchTerms !== null){
   initialUrl = searchBlogPostsUrl + searchTerms;
-  title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`
+  title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
 }
 
 /*-------------- Main Page Content Creation --------------*/
@@ -55,7 +55,7 @@ async function createPageContent(){
     fillResultsDetails(postData);
     updateHeading();
   }catch(error){
-    console.log(error)
+    console.log(error);
     createErrorMessage(postResultsContainer);
   }
 }
@@ -75,10 +75,10 @@ async function getSearchData(data){
   let searchIds = "";
   data[0].forEach(element => {
     searchIds += element.id + ",";
-  })
+  });
   const searchResultsUrl = blogPostUrl + "&include=" + searchIds;
   data = await callApiGetPages(searchResultsUrl);
-  return data
+  return data;
 }
 
 /*function to fill the initial page kept getting intermittent
@@ -99,7 +99,7 @@ function createPageHTML(data){
     let post = createPost(data[i]);
     postResultsContainer.innerHTML += post;
     if(count === currentPostCreated){
-      break
+      break;
     }
   }
 }
@@ -126,7 +126,8 @@ function showMorePosts(){
     currentPostCreated = postData.length;
     showMoreBtn.disabled = true;
   } else{
-    currentPostCreated += 10}
+    currentPostCreated += 10;
+  }
   numberShownPostsContainer.innerHTML = currentPostCreated;
   createPageHTML(postData);
 }

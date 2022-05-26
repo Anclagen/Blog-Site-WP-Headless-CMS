@@ -471,16 +471,15 @@ footer{
 }
 
 .latest-post-slider{
-  display: flex;
-  transition: transform 1s;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  transition: transform 0.5s;
   width: 2000%;
 }
 
 .latest-slider-content {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-flow: row;
-  width: 20%;
+  width: 100%;
+  align-self: flex-start;
 }
 
 .latest-post-arrow-container{
@@ -547,7 +546,7 @@ footer{
 }
 
 .post-container {
-  padding: 10px;
+  padding: 15px;
 }
 
 .post-image{
@@ -894,10 +893,5 @@ border-radius: 5px;
   /*----------- Slider adjustments -----------*/
   .latest-post-slider{
     width: 500%;
-  }
-
-   .latest-slider-content{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
   }
 }

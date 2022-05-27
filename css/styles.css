@@ -723,6 +723,12 @@ footer{
   padding: 10px;
 }
 
+#contact-form label,
+#comment-form label {
+  margin: 10px 0 5px 0;
+}
+
+
 #fullname {
   max-width: 25rem;
 }

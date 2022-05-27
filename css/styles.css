@@ -617,6 +617,7 @@ footer{
 
 .signup-submit{
   padding: 14px;
+  border: 1px solid var(--dark-brown);
 }
 
 .signup-submit:hover{

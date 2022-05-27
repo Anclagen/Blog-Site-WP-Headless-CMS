@@ -153,6 +153,12 @@ export function addImageModals(){
   });
 }
 
+/*References;
+  https://www.youtube.com/watch?v=4SQXOA8Z-lo
+  https://dev.to/salehmubashar/create-an-image-modal-with-javascript-2lf3
+  https://www.w3schools.com/howto/howto_css_modal_images.asp
+*/
+
 /*------------------------------ Form Validation ----------------------------------*/
 
 //validates text inputs

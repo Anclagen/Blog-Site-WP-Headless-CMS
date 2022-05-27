@@ -2,30 +2,32 @@
 import {baseUrl, callAPI} from "./components/api_utilities.js";
 import {errorMessage} from "./constants/constants.js";
 
+/*-------------- Containers and variables --------------*/
 const diaryMediaUrl = baseUrl + "/media?_embed&categories=11&per_page=100";
-
-/*-------------- Create Page Content -----------------*/
 const diaryContainer = document.querySelector(".diary-gallery-slide");
+const diaryNextBtn = document.querySelector(".diary-next-arrow");
+const diaryPreviousBtn = document.querySelector(".diary-previous-arrow");
 
 //slider variables
 let diaryTransform = 0;
 let diaryCurrentPage = 0;
 let diaryMaxPages = 0;
 
+/*-------------- Event listeners For Slider -----------------*/
+diaryNextBtn.addEventListener("click", nextSlide);
+diaryPreviousBtn.addEventListener("click", previousSlide);
+
+/*-------------- Create Page Content -----------------*/
 async function CreatePageContent(){
   try{
     const diaryData = await callAPI(diaryMediaUrl);
-
-    adjustWidths(diaryData.length);
-    diaryTransform = 100/diaryData.length;
-    diaryMaxPages = diaryData.length;
+    adjustSliderVariables(diaryData.length);
     addGalleryImages(diaryData, diaryContainer);
+    //get images after slider creation and adjust widths
     const images = document.querySelectorAll(".gallery-image");
-
     images.forEach(element => {
       element.style.width = `${diaryTransform}%`;
     });
-
   }catch(error){
     console.log(error);
     errorMessage(diaryContainer);
@@ -42,15 +44,11 @@ function addGalleryImages(data, container){
 }
 
 //adjust sliders width base on number of images
-function adjustWidths(length){
+function adjustSliderVariables(length){
   diaryContainer.style.width = `${(100 * length)}%`;
+  diaryTransform = 100/length;
+  diaryMaxPages = length;
 }
-
-const diaryNextBtn = document.querySelector(".diary-next-arrow");
-const diaryPreviousBtn = document.querySelector(".diary-previous-arrow");
-
-diaryNextBtn.addEventListener("click", nextSlide);
-diaryPreviousBtn.addEventListener("click", previousSlide);
 
 function nextSlide(){
   if(diaryCurrentPage + 1 === diaryMaxPages){

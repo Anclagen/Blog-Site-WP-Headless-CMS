@@ -101,7 +101,8 @@ p{
 
 /*-------------- Navigation -------------*/
 
-/*skip to main content for keyboard users*/
+/*https://webaim.org/techniques/css/invisiblecontent/
+  skip to main content for keyboard users*/
 #skip a {
   position: absolute;
   left: -10000px;
@@ -780,17 +781,13 @@ border-radius: 5px;
     float: left;
     margin: 15px 20px 15px 0px;
     max-width: 300px;
-    
 }
 
 .right {
     float: right;
     margin: 15px 0px 15px 20px;
     max-width: 300px;
-    
 }
-
-
 
   /*------ navigation adjustments ------*/
   nav button {

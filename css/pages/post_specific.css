@@ -46,21 +46,6 @@
   cursor:pointer;
 }
 
-/*next-previous links*/
-
-.similar-posts{
-  margin: 50px auto;
-  display: flex;
-  justify-content: space-between;
-}
-
-.similar-posts div{
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-}
-
-
 /*------- Comments Styling --------*/
 .comments-container div{
   margin-top: 15px;

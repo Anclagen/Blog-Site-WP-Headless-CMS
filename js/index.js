@@ -3,17 +3,34 @@ import {createPost, createPostCompressed, createErrorMessage} from "./components
 import {callAPI, latestPostsUrl, baseUrl, routes, parameters} from "./components/api_utilities.js";
 
 
-/*-------------- Creating main page content --------------*/
+/*-------------- Containers and variables --------------*/
 const latestContainer = document.querySelector(".latest-post-slider");
 const newestContainer = document.querySelector(".newest-posts");
 const popularContainer = document.querySelector(".most-commented");
 const bannerImageContainer = document.querySelector(".index-heading");
 const additionalContentContainer = document.querySelector(".additional-content");
 
+//grabs for arrows and button on slider
+const latestNext = document.querySelector(".latest-next");
+const latestPrevious = document.querySelector(".latest-previous");
+const latestPreviousArrow = document.querySelector(".previous-arrow");
+const latestNextArrow = document.querySelector(".next-arrow");
+
 // variables for slider functionality.
 let sliderLengthMax = 20;
+let slidePercentage = 5;
+let transformMax = 95;
+let transform = 0;
 let latestPostsData = [];
 
+/*-------------- Event listeners For Slider -----------------*/
+window.addEventListener("resize", adjustSliderWidths);
+latestPrevious.addEventListener("click", previousPage);
+latestPreviousArrow.addEventListener("click", previousPage);
+latestNext.addEventListener("click", nextPage);
+latestNextArrow.addEventListener("click", nextPage);
+
+/*-------------- Creating main page content --------------*/
 async function createPageContent(){
   try{
     //updates header image, and adds additional content
@@ -24,12 +41,8 @@ async function createPageContent(){
     //grabs post data
     latestPostsData = await callAPI(latestPostsUrl);
 
-    
     //adds page content for slider and new.
     createSliderContent(latestPostsData, latestContainer);
-    // resize slider listener.
-    window.addEventListener("resize", adjustSliderWidths);
-
     //adds two newest posts to new section.
     createPosts(latestPostsData , newestContainer, 2);
 
@@ -37,7 +50,6 @@ async function createPageContent(){
     const commentedPosts = latestPostsData.filter(filterCommentedPosts);
     const sortedCommentedPosts = sortMostCommented(commentedPosts);
     createPosts(sortedCommentedPosts, popularContainer, 4);
-
   } catch(error){
     console.log(error);
     createErrorMessage(latestContainer);
@@ -75,10 +87,6 @@ function sortMostCommented(data){
 
 /* Limited to 20 posts max, resizes from 1 to 2 to 4 posts at a time 
    depending on the screen size, and*/
-//
-let slidePercentage = 5;
-let transformMax = 95;
-let transform = 0;
 
 //creates upto 20 slides content
 function createSliderContent(data, container){
@@ -95,32 +103,28 @@ function createSliderContent(data, container){
   }
 }
 
-//function for resize listener to update slider on window resize.
-function adjustSliderWidths(){
-  calculateTransform(0);
-  transformSlider();
-  disableButtons();
-}
-
 // transforms slider
 function transformSlider(){
     latestContainer.style.transform = `translateX(-${transform}%)`;
 }
 
-/* Calculates and correct transform for screen size
+/* Calculates correct transform and transform max for screen size
    use 0 to resize, 1 for next, and -1 for previous page changes*/
 function calculateTransform(num){
   if(window.innerWidth < 720){
     transform += (5*num);
+    transformMax = (sliderLengthMax-1) * slidePercentage;
   }else if(window.innerWidth >= 1100){
     transform += (20*num);
-    if(transform > ((sliderLengthMax-4) * slidePercentage)){
+    transformMax = (sliderLengthMax-4) * slidePercentage;
+    if(transform > transformMax){
       transform = (sliderLengthMax-4) * slidePercentage;
     }
   }else if(window.innerWidth >= 720){
     transform += (10*num);
-    if(transform > ((sliderLengthMax-2) * slidePercentage)){
-      transform = (sliderLengthMax-2) * slidePercentage;
+    transformMax = (sliderLengthMax-2) * slidePercentage;
+    if(transform > transformMax){
+      transform = (sliderLengthMax-2) * slidePercentage;  
     }
   }
   if(transform < 0){
@@ -128,7 +132,7 @@ function calculateTransform(num){
   }
 }
 
-// disables buttons and adjust the max transform according to screen size
+// disables buttons
 function disableButtons(){
   //disables previous at slider start
   if(transform === 0){
@@ -139,15 +143,6 @@ function disableButtons(){
     latestPreviousArrow.style.display = "block";
   }
 
-  //calculates max transform base on screen size
-  if(window.innerWidth < 720){
-    transformMax = (sliderLengthMax-1) * slidePercentage;
-  }if(window.innerWidth >= 1100){
-    transformMax = (sliderLengthMax-4) * slidePercentage;
-  }else if(window.innerWidth >= 720){
-    transformMax = (sliderLengthMax-2) * slidePercentage;
-  }
-  
   //disables next if max transform reached
   if(transform === transformMax){
       latestNext.setAttribute('disabled', 'disabled');
@@ -159,20 +154,14 @@ function disableButtons(){
     }
 }
 
-//grabs for arrows and button variables
-const latestNext = document.querySelector(".latest-next");
-const latestPrevious = document.querySelector(".latest-previous");
-const latestPreviousArrow = document.querySelector(".previous-arrow");
-const latestNextArrow = document.querySelector(".next-arrow");
+//function for resize listener to update slider on window resize.
+function adjustSliderWidths(){
+  calculateTransform(0);
+  transformSlider();
+  disableButtons();
+}
 
-//event listeners for next and previous buttons
-latestPrevious.addEventListener("click", previousPage);
-latestPreviousArrow.addEventListener("click", previousPage);
-latestNext.addEventListener("click", nextPage);
-latestNextArrow.addEventListener("click", nextPage);
-latestPreviousArrow.style.display = "none";
-
-//change page functions for latest posts
+//change page functions for listeners
 function previousPage(){
   calculateTransform(-1);
   transformSlider();

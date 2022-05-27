@@ -1,17 +1,15 @@
 import {callAPI, callApiGetPages, blogPostUrl, categoriesUrl, searchBlogPostsUrl} from "./components/api_utilities.js";
 import {createPost, createErrorMessage, addLoader} from "./components/components.js";
 
-/*-------------- query string grabs --------------*/
+/*-------------- query string grabs and url --------------*/
 
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
 let searchTerms = params.get("search");
-
 /*-------------- defining the initial url --------------*/
-const title = document.querySelector("title");
+//sorting out url based on queries
 let initialUrl = blogPostUrl;
-
 if(tags !== null){
   initialUrl = blogPostUrl + "&categories=" + tags;
 } else if(searchTerms !== null){
@@ -19,16 +17,31 @@ if(tags !== null){
   title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
 }
 
-/*-------------- Main Page Content Creation --------------*/
-
+/*-------------- Containers and variables --------------*/
+const title = document.querySelector("title");
+const pageHeading = document.querySelector("h1");
+let filterSelector = document.querySelector("#filter");
+let sortSelector = document.querySelector("#sort");
 const postResultsContainer = document.querySelector(".post-results-container");
+// results and pages containers
+const numberShownPostsContainer = document.querySelector(".current-shown-results");
+const totalNumberPostsContainer = document.querySelector(".total-results");
+const showMoreBtn = document.querySelector(".show-more-results");
+
+// variables
 let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
 
-// get data and creates page content
+/*-------------- Event listeners -----------------*/
+filterSelector.addEventListener("change", updateResults);
+sortSelector.addEventListener("change", updateResults);
+showMoreBtn.addEventListener("click", showMorePosts);
+
+/*-------------- Main Page Content Creation --------------*/
 async function createPageContent(){
   try{
+    await addFilterOptions()
     //initial api call, also grabbing headers for pages and results
     let data = await callApiGetPages(initialUrl);
     
@@ -38,11 +51,12 @@ async function createPageContent(){
         data = await getSearchData(data);
       }
     }
-  
+    
+    //update variables
     postData = data[0];
     pagesAndPosts = [data[1], data[2]];
 
-    //get number of results
+    //get number of results disable show more button
     if(postData.length <= 10){
       currentPostCreated = postData.length;
       showMoreBtn.disabled = true;
@@ -60,17 +74,9 @@ async function createPageContent(){
   }
 }
 
-// add filter options 
-async function addFilterOptions(){
-  const categoriesData = await callAPI(categoriesUrl);
-  createFilterOptions(categoriesData);
-  //sets category drop down to selected tag
-  if(tags !== null){
-    filterSelectContainer.value = tags;
-  }
-}
+createPageContent();
 
-//do extra api call with search ids
+/*------ Improve Search Data ---------*/
 async function getSearchData(data){
   let searchIds = "";
   data[0].forEach(element => {
@@ -81,16 +87,32 @@ async function getSearchData(data){
   return data;
 }
 
-/*function to fill the initial page kept getting intermittent
-random errors if filters weren't filled first*/
-async function fillPage(){
-  await addFilterOptions();
-  createPageContent();
+/*------- Get Filter Options -------*/
+async function addFilterOptions(){
+  const categoriesData = await callAPI(categoriesUrl);
+  createFilterOptions(categoriesData);
+  //sets category drop down to selected tag
+  if(tags !== null){
+    filterSelector.value = tags;
+  }
 }
 
-fillPage();
+/*-------------- Creating Page Html --------------*/
 
-//create page html
+//creates the filter options html
+function createFilterOptions(data){
+  filterSelector.innerHTML =`<option value="All" selected> All</option>`;
+  data.forEach(element => {
+    const option = `<option value="${element.id}" name="${element.name}"> ${element.name}</option>`;
+    filterSelector.innerHTML += option;
+  });
+  //sets category drop down to selected tag
+  if(tags !== null){
+    filterSelector.value = tags;
+  }
+}
+
+//adds posts to page
 function createPageHTML(data){
   postResultsContainer.innerHTML = "";
   let count = 0;
@@ -104,10 +126,19 @@ function createPageHTML(data){
   }
 }
 
-//fill in results showing containers
-const numberShownPostsContainer = document.querySelector(".current-shown-results");
-const totalNumberPostsContainer = document.querySelector(".total-results");
+//update heading
+function updateHeading(){
+  if(searchTerms !== null ){
+    pageHeading.innerText = `Search Results For; ${searchTerms}`;
+    title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
+    searchTerms = null;
+  } else{
+    pageHeading.innerHTML = filterSelector.options[filterSelector.selectedIndex].text;
+    title.innerText = `${filterSelector.options[filterSelector.selectedIndex].text} Posts | The Fluffy Piranha`;
+  }
+}
 
+//updates result shown
 function fillResultsDetails(data){
   if(data.length >=10){
     numberShownPostsContainer.innerText = currentPostCreated;
@@ -117,10 +148,7 @@ function fillResultsDetails(data){
   totalNumberPostsContainer.innerText = pagesAndPosts[1];
 }
 
-//show more button functionality
-const showMoreBtn = document.querySelector(".show-more-results");
-showMoreBtn.addEventListener("click", showMorePosts);
-
+/*-------------- Show more posts --------------*/
 function showMorePosts(){
   if(currentPostCreated + 10 >= postData.length){
     currentPostCreated = postData.length;
@@ -132,38 +160,7 @@ function showMorePosts(){
   createPageHTML(postData);
 }
 
-//create filter options
-let filterSelectContainer = document.querySelector("#filter");
-let sortSelector = document.querySelector("#sort");
-
-function createFilterOptions(data){
-  filterSelectContainer.innerHTML =`<option value="All" selected> All</option>`;
-  data.forEach(element => {
-    const option = `<option value="${element.id}" name="${element.name}"> ${element.name}</option>`;
-    filterSelectContainer.innerHTML += option;
-  });
-  //sets category drop down to selected tag
-  if(tags !== null){
-    filterSelectContainer.value = tags;
-  }
-}
-
-//update heading
-const pageHeading = document.querySelector("h1");
-function updateHeading(){
-  if(searchTerms !== null ){
-    pageHeading.innerText = `Search Results For; ${searchTerms}`;
-    title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
-    searchTerms = null;
-  } else{
-    pageHeading.innerHTML = filterSelectContainer.options[filterSelectContainer.selectedIndex].text;
-    title.innerText = `${filterSelectContainer.options[filterSelectContainer.selectedIndex].text} Posts | The Fluffy Piranha`;
-  }
-}
-
-//add filter for categories to data
-filterSelectContainer.addEventListener("change", updateResults);
-sortSelector.addEventListener("change", updateResults);
+/*-------------- Filter and Sort Functionality --------------*/
 
 //combines filter and sort url additions to generate results
 function updateResults(){
@@ -177,10 +174,10 @@ function updateResults(){
 function filterResults(){
   //stops search query string over writing heading
   searchTerms = null;
-  if(filterSelectContainer.value === "All"){
+  if(filterSelector.value === "All"){
     initialUrl = blogPostUrl;
   } else {
-    initialUrl = blogPostUrl + "&categories=" + filterSelectContainer.value;
+    initialUrl = blogPostUrl + "&categories=" + filterSelector.value;
   }
 }
 

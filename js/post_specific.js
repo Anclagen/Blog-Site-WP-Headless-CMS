@@ -2,14 +2,32 @@ import {baseUrl, routes, callAPI, parameters, postComment, blogPostUrl} from "./
 import {fullname, errorName, message, errorMessage, formReporting} from "./constants/constants.js";
 import {resetBorders, validatedInputLength, addImageModals, createComments, createErrorMessage, createPostCompressed} from "./components/components.js";
 
-/*-------------- Query string grabs --------------*/
+/*-------------- Query string grabs and url --------------*/
 const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
 const url = baseUrl + routes.blogPosts + "/" + id + "?" + parameters.acf + "&_embed";
 
-/*-------------- Api Call and Page Creation --------------*/
+/*-------------- Containers and variables --------------*/
+//head variables
+const title = document.querySelector("title");
+const headDetails = document.querySelector('meta[name="description"]');
+//main content
+const titleContainer = document.querySelector("h1");
+const featuredImageContainer = document.querySelector(".featured-image-container");
+const mainContentContainer = document.querySelector(".post-content-container");
+const postDateContainer = document.querySelector(".post-date");
+//related posts
+const relatedPostsContainer = document.querySelector(".related-posts");
+//comments
+const commentsContainer = document.querySelector(".comments-container");
+const commentUrl = baseUrl + "/comments?post=" + id;
+const commentsForm = document.querySelector("#comment-form");
 
+/*-------------- Event listeners For Comments -----------------*/
+commentsForm.addEventListener("submit", validateSubmitComment);
+
+/*-------------- Api Call and Page Creation --------------*/
 async function createPageContent(){
   try{
     const postData = await callAPI(url);
@@ -30,12 +48,10 @@ async function createPageContent(){
 createPageContent();
 
 /*-------------- Page Information --------------*/
-const title = document.querySelector("title");
-
 function createHeadInformation(data){
   const titleContent = decodeHtmlSymbols(data.title.rendered);
   title.innerText = `The Fluffy Piranha | ${titleContent} `;
-  document.querySelector('meta[name="description"]').content = data.acf.post_summary;
+  headDetails.content = data.acf.post_summary;
 }
 
 //page title wasn't converting html symbols codes.
@@ -45,18 +61,22 @@ function decodeHtmlSymbols(data) {
   return text.value;
 }
 
-/*-------------- Page HTML Creation --------------*/
-/* sorting data onto page */
-const titleContainer = document.querySelector("h1");
-const featuredImageContainer = document.querySelector(".featured-image-container");
-const mainContentContainer = document.querySelector(".post-content-container");
-const postDateContainer = document.querySelector(".post-date");
+//gets ids for related ids call
+function getIds(data){
+  let ids = "";
+  data.categories.forEach(element => {
+    ids += element + ",";});
+  const relatedUrl = blogPostUrl + "&categories="  + ids;
+  return relatedUrl;
+}
 
+/*-------------- Page HTML Creation --------------*/
 async function createPostHTML(data){
   const featuredImgSrc = data.featured_image.size_full;
   const featuredImgAlt = data._embedded['wp:featuredmedia'][0].alt_text;
 
-  //removing inline styling tags injected by box creator plugin.
+  /*removing inline styling tags injected by box creator plugin.
+  https://stackoverflow.com/questions/52212030/js-how-to-remove-style-tags-and-their-content-from-an-html-string-using-regula */
   let postText = data.content.rendered.replace(/<style((.|\n|\r)*?)<\/style>/gm, '');
 
   titleContainer.innerHTML = data.title.rendered;
@@ -68,20 +88,6 @@ async function createPostHTML(data){
                                 </div>`;
   mainContentContainer.innerHTML = postText;
 }
-
-//adds related posts
-
-const relatedPostsContainer = document.querySelector(".related-posts");
-
-//gets ids for related ids call
-function getIds(data){
-  let ids = "";
-  data.categories.forEach(element => {
-    ids += element + ",";});
-  const relatedUrl = blogPostUrl + "&categories="  + ids;
-  return relatedUrl;
-}
-
 
 function createRelatedPosts(data, postData){
   for(let i = 0; i< data.length; i++){
@@ -104,9 +110,6 @@ function createRelatedPosts(data, postData){
 }
 
 /*-------------- Get Comments  --------------*/
-const commentsContainer = document.querySelector(".comments-container");
-const commentUrl = baseUrl + "/comments?post=" + id;
-
 async function getComments(){
   try{
     let commentData = await callAPI(commentUrl);
@@ -115,7 +118,6 @@ async function getComments(){
     } else{
       createComments(commentData, commentsContainer);
     }
-    
   } catch(error){
     console.log(error);
     createErrorMessage(commentsContainer);
@@ -124,10 +126,7 @@ async function getComments(){
 
 getComments();
 
-
 /*-------------- Comment Posting --------------*/
-const commentsForm = document.querySelector("#comment-form");
-commentsForm.addEventListener("submit", validateSubmitComment);
 
 //validates inputs and when passed, posts form to server.
 async function validateSubmitComment(submission) {

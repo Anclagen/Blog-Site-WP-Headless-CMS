@@ -2,13 +2,19 @@ import {baseUrl, routes, callAPI} from "./components/api_utilities.js";
 import { fullname, errorName, email, errorEmail, subject, errorSubject, message, errorMessage, formReporting} from "./constants/constants.js";
 import {resetBorders, validateEmailInput, validatedInputLength, createErrorMessage, validateLength, validateEmail} from "./components/components.js";
 
-/*-------------- Api Call and Page Creation --------------*/
+/*-------------- Containers and variables --------------*/
 const additionalDetailsContainer = document.querySelector(".extra-contact-info");
-
+const contactForm = document.querySelector("#contact-form");
+const contactFormSubmit = document.querySelector("#contact-form-submit");
 //contact forms id for posting info to.
 const id = 106;
 const url = baseUrl + routes.page + "/" + id;
 
+/*-------------- Event listener -----------------*/
+contactForm.addEventListener("submit", submitForm);
+contactForm.addEventListener("input", validateInputs);
+
+/*-------------- Api Call and Page Creation --------------*/
 async function createPageContent(){
   try{
     let contactDetails = await callAPI(url);
@@ -22,12 +28,9 @@ async function createPageContent(){
 createPageContent();
 
 /*-------------- Contact Form Posting --------------*/
+//validates inputs and when passed, posts form to server. 
+//https://stackoverflow.com/questions/56731006/what-parameter-contact-form-7-using-json-to-sent-using-api/61956314#61956314
 
-const contactForm = document.querySelector("#contact-form");
-const contactFormSubmit = document.querySelector("#contact-form-submit");
-contactForm.addEventListener("submit", submitForm);
-
-//validates inputs and when passed, posts form to server.
 function submitForm(submission) {
   submission.preventDefault();
   //probably not needed but just in case some manages to clear an input and submit or something
@@ -35,6 +38,7 @@ function submitForm(submission) {
     //clear success/error container .
     formReporting.innerHTML = "";
     //create data for post with id corresponding to page or post
+   
     let formData = new FormData();
     formData.append("your-name", fullname.value);
     formData.append("your-subject", subject.value);
@@ -83,18 +87,15 @@ function validateInputs(event){
       event.target.addEventListener("focusout", function(){validatedInputLength(message, 25, errorMessage);});
     }
   } 
-
   //check if all inputs are valid to enable button
   if(validateLength(fullname, 5) && validateLength(message, 25) && validateEmail(email) && validateLength(subject, 15)){
     contactFormSubmit.disabled = false;
-
   } else{
     contactFormSubmit.setAttribute('disabled', 'disabled');
   }
 }
 
-contactForm.addEventListener("input", validateInputs);
-
+//posts form to CF7 form template
 function postQuery(data, formReportingContainer){
   fetch("https://fluffypiranha.one/exam_project_1/wp-json/contact-form-7/v1/contact-forms/113/feedback", 
         {method: "POST",
@@ -110,37 +111,37 @@ function postQuery(data, formReportingContainer){
   formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`;
 }
 
-//old form validation
-// const contactForm = document.querySelector("#contact-form");
-// contactForm.addEventListener("submit", validateSubmitComment);
+/* //old form validation
+const contactForm = document.querySelector("#contact-form");
+contactForm.addEventListener("submit", validateSubmitComment);
 
-// //validates inputs and when passed, posts form to server.
-// function validateSubmitComment(submission) {
-//   submission.preventDefault();
+//validates inputs and when passed, posts form to server.
+function validateSubmitComment(submission) {
+  submission.preventDefault();
 
-//   //clear success/error container .
-//   formReporting.innerHTML = "";
+  //clear success/error container .
+  formReporting.innerHTML = "";
 
-//   //variables assigned true if they pass, and errors generated on fail.
-//   const a = validatedInputLength(fullname, 5, errorName);
-//   const b = validatedInputLength(message, 25, errorMessage);
-//   const c = validateEmailInput(email, errorEmail);
-//   const d = validatedInputLength(subject, 15, errorSubject);
+  //variables assigned true if they pass, and errors generated on fail.
+  const a = validatedInputLength(fullname, 5, errorName);
+  const b = validatedInputLength(message, 25, errorMessage);
+  const c = validateEmailInput(email, errorEmail);
+  const d = validatedInputLength(subject, 15, errorSubject);
 
   
-//   if(a && b && c && d) {
-//   //create data for post with id corresponding to page or post
-//   let formData = new FormData();
-//   formData.append("your-name", fullname.value);
-//   formData.append("your-subject", subject.value);
-//   formData.append("your-message", message.value);
-//   formData.append("your-email", email.value);
+  if(a && b && c && d) {
+  //create data for post with id corresponding to page or post
+  let formData = new FormData();
+  formData.append("your-name", fullname.value);
+  formData.append("your-subject", subject.value);
+  formData.append("your-message", message.value);
+  formData.append("your-email", email.value);
 
-//   postQuery(formData, formReporting);
-//   contactForm.reset();
-//   resetBorders(fullname);
-//   resetBorders(message);
-//   resetBorders(email);
-//   resetBorders(subject);
-//   }
-// }
+  postQuery(formData, formReporting);
+  contactForm.reset();
+  resetBorders(fullname);
+  resetBorders(message);
+  resetBorders(email);
+  resetBorders(subject);
+  }
+}*/

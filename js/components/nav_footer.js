@@ -1,20 +1,26 @@
 import {createSponsoredContent, createErrorMessage, validateEmailInput} from "./components.js";
 import {callAPI, sponsorUrl} from "./api_utilities.js";
 
-/*-------------------- Navigation -------------------------*/
-
+/*------------------------------ Navigation -------------------------*/
 /*--------  Menu Open/Close --------*/
 //navigation variables
 const menuBtn = document.querySelector(".menu-button");
 const searchBtn = document.querySelector(".search-button");
 const searchForm = document.querySelector(".search-form");
+const menuLinks = document.querySelector(".navigation-menu");
+const hamTopLine = document.querySelector(".line1");
+const hamMidLine = document.querySelector(".line2");
+const hamBotLine = document.querySelector(".line3");
+const searchContainer = document.querySelector(".search-container");
 
-//menu on phone
+/*------- Add Navigation Listeners -------*/
+menuBtn.addEventListener("click", openCloseMenu);
+searchBtn.addEventListener("click", openCloseSearch);
+searchBtn.addEventListener('keydown', keyDown);
+searchForm.addEventListener("submit", productSearch);
+
+//Open/close menu phone
 function openCloseMenu(){
-  const menuLinks = document.querySelector(".navigation-menu");
-  const hamTopLine = document.querySelector(".line1");
-  const hamMidLine = document.querySelector(".line2");
-  const hamBotLine = document.querySelector(".line3");
   menuLinks.classList.toggle("hide-menu");
   hamTopLine.classList.toggle("menu-open-rotate1");
   hamBotLine.classList.toggle("menu-open-rotate3");
@@ -23,7 +29,6 @@ function openCloseMenu(){
 
 //displays search input
 function openCloseSearch(){
-  const searchContainer = document.querySelector(".search-container");
   searchContainer.classList.toggle("hidden-search");
   focus(document.querySelector(".search-input"));
 }
@@ -47,21 +52,18 @@ function productSearch(submit) {
   window.location = `posts.html?search=${searchTerms}`;
 }
 
-/*------- Add Navigation Listeners -------*/
-menuBtn.addEventListener("click", openCloseMenu);
-searchBtn.addEventListener("click", openCloseSearch);
-searchBtn.addEventListener('keydown', keyDown);
-searchForm.addEventListener("submit", productSearch);
-
-/*--------------------- Footer ------------------------*/
-//sign up email submission
+/*-------------------------- Footer -------------------------*/
+//sign up email submission variables
 const signUpForm = document.querySelector(".signup-form");
 const signUpInput = document.querySelector("#signup");
 const signUpSubmit = document.querySelector(".signup-submit");
 const signUpError = document.querySelector("#error-signup-email");
+const sponsorsContainer = document.querySelector(".sponsors-post-container");
+
+/*------- Add Signup Listeners -------*/
+signUpForm.addEventListener("submit", validateSignUp);
 
 /*---------- Validate Sign Up ------------*/
-
 function validateSignUp(submission){
   submission.preventDefault();
   if(validateEmailInput(signUpInput, signUpError)){
@@ -71,13 +73,7 @@ function validateSignUp(submission){
   }
 }
 
-signUpForm.addEventListener("submit", validateSignUp);
-
 /*---------- Sponsored ------------*/
-
-//sponsor variables
-const sponsorsContainer = document.querySelector(".sponsors-post-container");
-
 async function createSponsors(sponsorUrl, sponsorsContainer){
   try{
   //fill sponsor content

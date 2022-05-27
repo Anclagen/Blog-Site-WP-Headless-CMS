@@ -101,7 +101,8 @@ p{
 
 /*-------------- Navigation -------------*/
 
-/*skip to main content for keyboard users*/
+/*skip to main content for keyboard users
+  https://webaim.org/techniques/css/invisiblecontent/*/
 #skip a {
   position: absolute;
   left: -10000px;

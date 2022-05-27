@@ -70,6 +70,7 @@ function validateSignUp(submission){
     signUpSubmit.setAttribute('disabled', 'disabled');
     signUpSubmit.value = "Success!";
     signUpSubmit.classList.add("signed-up");
+    signUpSubmit.style.bottom = "22px";
   }
 }
 

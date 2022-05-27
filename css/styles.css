@@ -336,11 +336,11 @@ footer{
 
 .signup-input {
   height: 48px;
-  border: 1px solid var(--dark-brown);
+  border: 2px solid var(--dark-brown);
   padding: 0px;
   padding-left: 5px;
   margin: 20px auto;
-  width: 98%;
+  width: 97%;
   border-radius: 5px;
 }
 
@@ -740,7 +740,7 @@ textarea {
   font: var(--body);
 }
 
-.search-input,
+
 #contact-form input,
 #comment-form input,
 textarea {
@@ -749,6 +749,10 @@ border-right: 3px solid var(--light-brown);
 border-left: 3px solid var(--dark-brown);
 border-bottom: 3px solid var(--light-brown);
 border-radius: 5px;
+}
+
+.search-input{
+  border: 3px solid var(--dark-brown);
 }
 
 #contact-form textarea{

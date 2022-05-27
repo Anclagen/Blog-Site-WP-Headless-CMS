@@ -921,6 +921,7 @@ border-radius: 5px;
 }
 
 @media only screen and (min-width: 800px){
+  /*footer update*/
   .footer-content-container{
     flex-direction: row;
     justify-content: space-between;

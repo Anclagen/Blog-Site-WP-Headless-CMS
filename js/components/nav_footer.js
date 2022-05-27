@@ -34,10 +34,12 @@ function openCloseSearch(){
 }
 
 /* https://dev.to/tylerjdev/when-role-button-is-not-enough-dac
-  keyboard input converted to click to open search bar*/
+   https://stackoverflow.com/questions/24386354/execute-js-code-after-pressing-the-spacebar
+   https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+   https://css-tricks.com/snippets/javascript/javascript-keycodes/
+  enter and space converted to click to open search bar*/
 function keyDown(event) {
-  const keyD = event.key !== undefined ? event.key : event.keyCode;
-    if ( (keyD === 'Enter' || keyD === 13) || (['Spacebar', ' '].indexOf(keyD) >= 0 || keyD === 32)) {
+    if (event.key === "Enter" || event.keyCode === 13 || event.key === " " || event.keyCode === 32 || event.code === "space") {
     event.preventDefault();
     this.click();
   }

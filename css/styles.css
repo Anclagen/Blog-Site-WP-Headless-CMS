@@ -196,21 +196,24 @@ nav a {
 .search-container{
   background-color: #D9C3B0;
   height: 69px;
+  padding-top: 15px ;
 }
 
 .search-form{
   position: relative;
   width: 40%;
   min-width: 300px;
-  padding-top: 10px;
 }
 
 .search-container .search-btn{
   position: absolute;
   font-size: 1.5rem;
   font-weight: 700;
-  top: 10px;
   right: -6px;
+}
+
+.search-btn:hover{
+  border: 1px solid var(--dark-brown);
 }
 
 .search-input{

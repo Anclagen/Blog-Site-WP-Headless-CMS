@@ -712,7 +712,6 @@ footer{
 #comment-form{
   display: flex;
   flex-direction: column;
-  gap: 10px;
   max-width: 400px;
   width: 100%;
 }
@@ -721,11 +720,12 @@ footer{
 #comment-form input {
   font: var(--body);
   padding: 10px;
+  margin-bottom: 5px;
 }
 
 #contact-form label,
 #comment-form label {
-  margin: 10px 0 5px 0;
+  margin: 20px 0 10px 0;
 }
 
 

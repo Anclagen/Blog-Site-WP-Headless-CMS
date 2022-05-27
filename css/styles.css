@@ -105,17 +105,17 @@ p{
   https://webaim.org/techniques/css/invisiblecontent/ */
 #skip a {
   position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
+  top: -100px;
   overflow: hidden;
+  border: 2px solid var(--dark-brown);
+  background-color: var(--light-brown);
+  padding: 5px;  
+  transition: 0.5s;
 } 
 
-#skip a:focus {
-  position: static;
-  width: auto;
-  height: auto;
+#skip a:focus { 
+  top: 0px;
+  position: absolute ;
 }
 
 /*logo*/
@@ -174,18 +174,13 @@ nav a {
 
 /*https://benjaminjohnson.me/accessible-icon-buttons*/
 .visually-hidden {
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
   padding: 0;
   position: absolute;
   width: 1px;
-  word-wrap: normal;
 }
-
 
 /* search */
 .hidden-search{
@@ -926,7 +921,6 @@ border-radius: 5px;
     flex-direction: row;
     justify-content: space-between;
   }
-  
 }
 
 @media only screen and (min-width: 1100px){

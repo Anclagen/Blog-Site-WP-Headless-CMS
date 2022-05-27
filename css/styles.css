@@ -102,7 +102,7 @@ p{
 /*-------------- Navigation -------------*/
 
 /*skip to main content for keyboard users
-  https://webaim.org/techniques/css/invisiblecontent/*/
+  https://webaim.org/techniques/css/invisiblecontent/ */
 #skip a {
   position: absolute;
   left: -10000px;
@@ -196,25 +196,21 @@ nav a {
 .search-container{
   background-color: #D9C3B0;
   height: 69px;
-  padding-top: 15px ;
 }
 
 .search-form{
   position: relative;
   width: 40%;
   min-width: 300px;
+  padding-top: 10px;
 }
 
 .search-container .search-btn{
   position: absolute;
   font-size: 1.5rem;
   font-weight: 700;
-  top: 0;
+  top: 10px;
   right: -6px;
-}
-
-.search-btn:hover{
-  border: 1px solid var(--dark-brown);
 }
 
 .search-input{
@@ -619,10 +615,6 @@ footer{
   border-bottom-right-radius: 5px;
 }
 
-.search-btn{
-  min-height: 100%;
-}
-
 .signup-submit{
   padding: 14px;
 }
@@ -757,11 +749,6 @@ border-right: 3px solid var(--light-brown);
 border-left: 3px solid var(--dark-brown);
 border-bottom: 3px solid var(--light-brown);
 border-radius: 5px;
-}
-
-.search-input{
-  border: 3px solid var(--dark-brown);
-  height: 50px;
 }
 
 #contact-form textarea{

@@ -7,15 +7,6 @@ const queryString = document.location.search;
 const params = new URLSearchParams(queryString);
 const tags = params.get("tags");
 let searchTerms = params.get("search");
-/*-------------- defining the initial url --------------*/
-//sorting out url based on queries
-let initialUrl = blogPostUrl;
-if(tags !== null){
-  initialUrl = blogPostUrl + "&categories=" + tags;
-} else if(searchTerms !== null){
-  initialUrl = searchBlogPostsUrl + searchTerms;
-  title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
-}
 
 /*-------------- Containers and variables --------------*/
 const title = document.querySelector("title");
@@ -28,10 +19,20 @@ const numberShownPostsContainer = document.querySelector(".current-shown-results
 const totalNumberPostsContainer = document.querySelector(".total-results");
 const showMoreBtn = document.querySelector(".show-more-results");
 
-// variables
+// variables for show more
 let currentPostCreated = 0;
 let postData = [];
 let pagesAndPosts = [];
+
+/*-------------- defining the initial url --------------*/
+//sorting out url based on queries
+let initialUrl = blogPostUrl;
+if(tags !== null){
+  initialUrl = blogPostUrl + "&categories=" + tags;
+} else if(searchTerms !== null){
+  initialUrl = searchBlogPostsUrl + searchTerms;
+  title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
+}
 
 /*-------------- Event listeners -----------------*/
 filterSelector.addEventListener("change", updateResults);
@@ -41,7 +42,6 @@ showMoreBtn.addEventListener("click", showMorePosts);
 /*-------------- Main Page Content Creation --------------*/
 async function createPageContent(){
   try{
-    await addFilterOptions()
     //initial api call, also grabbing headers for pages and results
     let data = await callApiGetPages(initialUrl);
     
@@ -74,7 +74,15 @@ async function createPageContent(){
   }
 }
 
-createPageContent();
+/*need filter created first for page load but need it separate 
+  from the page content creation function for headings to update*/
+async function fillPage(){
+  await addFilterOptions();
+  createPageContent();
+}
+
+fillPage();
+
 
 /*------ Improve Search Data ---------*/
 async function getSearchData(data){
@@ -89,11 +97,12 @@ async function getSearchData(data){
 
 /*------- Get Filter Options -------*/
 async function addFilterOptions(){
+  try{
   const categoriesData = await callAPI(categoriesUrl);
   createFilterOptions(categoriesData);
-  //sets category drop down to selected tag
-  if(tags !== null){
-    filterSelector.value = tags;
+  }catch(error){
+    console.log(error);
+    createErrorMessage(postResultsContainer);
   }
 }
 
@@ -115,12 +124,13 @@ function createFilterOptions(data){
 //adds posts to page
 function createPageHTML(data){
   postResultsContainer.innerHTML = "";
-  let count = 0;
+  if(data.length === 0){
+    postResultsContainer.innerHTML='<p class="no-results">Nothing to see here humans!</p>'
+  }
   for(let i = 0; i < data.length; i++){
-    count += 1;
     let post = createPost(data[i]);
     postResultsContainer.innerHTML += post;
-    if(count === currentPostCreated){
+    if(i === (currentPostCreated-1)){
       break;
     }
   }
@@ -131,6 +141,7 @@ function updateHeading(){
   if(searchTerms !== null ){
     pageHeading.innerText = `Search Results For; ${searchTerms}`;
     title.innerText = `Searching Posts For; ${searchTerms} | The Fluffy Piranha`;
+    //prevents search terms over writing filters headings
     searchTerms = null;
   } else{
     pageHeading.innerHTML = filterSelector.options[filterSelector.selectedIndex].text;

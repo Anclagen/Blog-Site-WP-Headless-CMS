@@ -26,3 +26,10 @@ h1{
 .show-more-container{
   text-align: center;
 }
+
+@media only screen and (min-width: 720px){
+  .no-results{
+  text-align: center;
+  grid-column: span 2;
+}
+}

@@ -620,6 +620,7 @@ footer{
   border: 1px solid var(--dark-brown);
 }
 
+.search-btn:hover,
 .signup-submit:hover{
   border: 2px solid var(--dark-brown);
   box-sizing: content-box;
@@ -770,6 +771,13 @@ border-radius: 5px;
 
 .contact-content-container .image-modal-container{
   margin: 10px auto;
+}
+
+#contact-form .form-submit-btn, 
+#comment-form .form-submit-btn {
+  margin-top: 15px;
+  border-right: 3px solid var(--dark-brown);
+border-bottom: 3px solid var(--dark-brown)
 }
 
 

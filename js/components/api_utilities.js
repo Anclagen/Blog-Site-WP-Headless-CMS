@@ -1,7 +1,7 @@
 // API constants
-export const baseUrl = "https://fluffypiranha.one/exam_project_1/wp-json/wp/v2";
+export const baseUrl = "https://fluffypiranha.ajbarrett.tech/wp-json/wp/v2";
 
-// routes 
+// routes
 export const routes = {
   page: "/pages",
   posts: "/posts",
@@ -19,7 +19,7 @@ export const parameters = {
   results50: "per_page=50",
   results100: "per_page=100",
   search: "search=", //add search terms
-  embed: "_embed", 
+  embed: "_embed",
 };
 
 // reused urls
@@ -33,14 +33,14 @@ export const searchBlogPostsUrl = baseUrl + "/search?_embed&acf_format=standard&
 /*---------- Fetch --------------*/
 
 // callAPI (url) and return data
-export async function callAPI (url){
+export async function callAPI(url) {
   const response = await fetch(url);
   const data = await response.json();
- return data;
+  return data;
 }
 
 //callApi and returns data, page, and number of posts
-export async function callApiGetPages (url){
+export async function callApiGetPages(url) {
   const response = await fetch(url);
   const data = await response.json();
   //might be needed for blog posts in the long run
@@ -56,16 +56,16 @@ export const subscriberUsername = "Anonymous";
 export const commentKey = "Eukx 4nvk mFvr Leod G1ld afv1";
 
 //posts comment
-export async function postComment(data, formReportingContainer){
-  try{
-    const response = await fetch("https://fluffypiranha.one/exam_project_1/wp-json/wp/v2/comments", 
-          {method: "POST",
-          headers:{"Content-Type": "application/json",
-                     "Authorization": "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1")},
-                     body: data});
+export async function postComment(data, formReportingContainer) {
+  try {
+    const response = await fetch("https://fluffypiranha.ajbarrett.tech/wp-json/wp/v2/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Basic " + btoa("Anonymous" + ":" + "Eukx 4nvk mFvr Leod G1ld afv1") },
+      body: data,
+    });
     console.log(response.json);
     formReportingContainer.innerHTML = `<p class="success">Success your message has been posted</p>`;
-  } catch(error){
+  } catch (error) {
     console.log(error);
     formReportingContainer.innerHTML = `<p class="error">An error occurred when posting your message</p>`;
   }

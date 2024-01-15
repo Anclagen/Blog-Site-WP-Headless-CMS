@@ -34,6 +34,7 @@ async function createPageContent(){
     await createPostHTML(postData);
 
     createHeadInformation(postData);
+    console.log(postData)
     addImageModals();
 
     const similarPosts = await callAPI(getIds(postData));

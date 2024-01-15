@@ -33,7 +33,7 @@ Font Sizes:
 body {
   margin: auto;
   padding-top: 0px;
-  min-height: 100vh;
+  min-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   font: var(--body);
